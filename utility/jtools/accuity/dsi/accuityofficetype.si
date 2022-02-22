@@ -1,0 +1,18 @@
+SERVER   @DN29
+CONNECT  NPUD00/CONTROL
+
+TABLE AccuityOfficeType
+	Id 			      INT
+	Type 		      CHAR(5)
+	Description       CHAR(250)
+	USId 		      CHAR(16)
+	Tmstamp 	      TIMESTAMP
+
+KEY AccuityOfficeTypeKey PRIMARY
+  ID
+
+PROC Insert 
+PROC Update 
+PROC SelectOne 
+PROC DeleteOne
+PROC Exists 

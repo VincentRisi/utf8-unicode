@@ -1,0 +1,633 @@
+DATABASE MCPE FLAGS "param=named"
+PACKAGE  putty3.accuity
+OUTPUT   accuitycorrespondent
+SERVER   DN29
+SCHEMA   NPUD00
+USERID   npu
+PASSWORD npudev
+
+TABLE AccuityCorrespondent
+    Id                            Int
+    LocationId                    int
+    ClearingSystem                char(20)		NULL
+	CurrencyCode                  char(3)		NULL
+	OwnerSwift                    char(11)		NULL
+	OwnerSwiftWOPadding           char(11)		NULL
+	OwnerSSIAccountNo             char(75)		NULL
+	ClearingAccuityId             char(8)		NULL
+	ClearingSwift                 char(11)		NULL
+	ClearingSwiftWOPadding        char(11)		NULL
+	HolderAccuityId               char(8)		NULL
+	HolderSwift                   char(11)		NULL
+	HolderSwiftWOPadding          char(11)		NULL
+	HolderSSIAccountNo            char(75)		NULL
+	PreferredSSIInd               char(1)		NULL
+	FurtherAccuityId              char(8)		NULL
+	FurtherSwift                  char(11)		NULL
+	FurtherSwiftWOPadding         char(11)		NULL
+	Further2AccuityId             char(8)		NULL
+	Further2Swift                 char(11)		NULL
+	Further2SwiftWOPadding        char(11)		NULL
+	CorrespondentEffectiveDate    char(10)		NULL
+	CorrespondentDeactivationDate char(10)		NULL
+	CorrespondentUpdateDate       char(10)		NULL
+	SSINotes                      char(600)		NULL	 
+	Status                        byte			(Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+	USId                          char(16)
+	TmStamp                       timestamp
+
+KEY AccuityCorrespondentKey PRIMARY
+  Id
+
+KEY KEY01
+  LocationId
+  
+PROC SelectOne
+PROC Insert
+PROC DeleteOne
+PROC Update
+PROC Exists
+
+proc bulkinsert (1000)
+
+PROC UpdateAllStatus
+INPUT
+  Status        byte
+  USId          char  (16)
+SQLCODE
+  Update
+    AccuityCorrespondent
+  Set
+      Status = :Status
+     ,USId = :USId
+     ,TMStamp = SYSDATE
+ENDCODE
+
+
+proc UpdStatus
+input
+  Id     =
+  Status =
+  USId   =
+sqlcode
+  update AccuityRoutingAtt set Status = :Status, USId = :USId, TmStamp = SYSDATE where Id = :Id
+endcode
+
+
+PROC GetCorrespondentsBySwift
+INPUT
+	SwiftAddress		char(11)
+	Currency			char(5)
+OUTPUT
+    Id					Int
+	LocationId			Int
+	SwiftAddress		char(11)
+	BankName			Char(100)
+	BankTown			Char(30)
+	BankType			char(52)
+	PhysicalCountry		Char (35)
+	BranchName			Char(70)	
+	AuthKeysExchd		Char(1)
+    HasHolder           CHAR(5)
+SQLCODE
+SELECT
+	x.Id,
+	x.ClearingAccuityId as LocationId,
+	x.ClearingSwiftWOPadding as SwiftAddress, 
+	alCor.namefull as BankName, 
+	alCor.City as BankTown, 
+	'' as BankType,
+	alCor.countryname as PhysicalCountry, 
+	'' as BranchName, 
+	NVL(bf.AuthKeysExchd, 'N') as AuthKeysExchd,
+    Case WHEN x.HolderSwift is not null THEN 'True' ELSE 'False' END as HasHolder
+	FROM 
+		 NPUD00.AccuityRoutingCode y 
+	JOIN NPUD00.accuitylocation al ON al.locationid = y.locationid AND al.Status = '0' 
+	JOIN NPUD00.accuitycorrespondent x ON al.corrLocationId = x.locationid AND x.ClearingSystem IN ('FIN', 'COM', 'COM FIN') AND x.Status = '0'
+	JOIN NPUD00.accuitylocation alCor ON alCor.locationid = x.ClearingAccuityId 
+	LEFT JOIN NPUD00.bankfile bf ON x.ClearingSwiftWOPadding = bf.swiftaddress AND bf.Status = '0' 
+	WHERE 
+        y.RoutingCodeAlt = :SwiftAddress 
+	AND y.RoutingType = 'SWIFT'
+	AND y.Status = '0' 
+	AND x.CurrencyCode = :Currency
+ENDCODE
+
+
+PROC GetCorrespondentsFullBySwift
+INPUT
+	SwiftAddress		char(11)
+	Currency			char(5)
+OUTPUT
+    Id                            Int
+    LocationId                    int
+    ClearingSystem                char(20)
+    CurrencyCode                  char(3)	
+    OwnerSwift                    char(11)
+    OwnerSwiftWOPadding           char(11)
+    OwnerSSIAccountNo             char(75)
+    ClearingAccuityId             char(8)	
+    ClearingSwift                 char(11)
+    ClearingSwiftWOPadding        char(11)
+    HolderAccuityId               char(8)	
+    HolderSwift                   char(11)
+    HolderSwiftWOPadding          char(11)
+    HolderSSIAccountNo            char(75)
+    PreferredSSIInd               char(1)	
+    FurtherAccuityId              char(8)	
+    FurtherSwift                  char(11)
+    FurtherSwiftWOPadding         char(11)
+    Further2AccuityId             char(8)	
+    Further2Swift                 char(11)
+    Further2SwiftWOPadding        char(11)
+    CorrespondentEffectiveDate    char(10)
+    CorrespondentDeactivationDate char(10)
+    CorrespondentUpdateDate       char(10)
+    SSINotes                      char(600)
+    Status                        byte		
+    USId                          char(16)
+    TmStamp                       timestamp
+	AuthKeysExchd		Char(1)
+SQLCODE
+SELECT
+    x.Id,                           
+    x.LocationId,                   
+    x.ClearingSystem,               
+    x.CurrencyCode,                 
+    x.OwnerSwift,                   
+    x.OwnerSwiftWOPadding,          
+    x.OwnerSSIAccountNo,            
+    x.ClearingAccuityId,            
+    x.ClearingSwift,                
+    x.ClearingSwiftWOPadding,       
+    x.HolderAccuityId,              
+    x.HolderSwift,                  
+    x.HolderSwiftWOPadding,         
+    x.HolderSSIAccountNo,           
+    x.PreferredSSIInd,              
+    x.FurtherAccuityId,             
+    x.FurtherSwift,                 
+    x.FurtherSwiftWOPadding,        
+    x.Further2AccuityId,            
+    x.Further2Swift,                
+    x.Further2SwiftWOPadding,       
+    x.CorrespondentEffectiveDate,   
+    x.CorrespondentDeactivationDate,
+    x.CorrespondentUpdateDate,      
+    x.SSINotes,                     
+    x.Status,                       
+    x.USId,                         
+    x.TmStamp,                      
+    NVL(bf.AuthKeysExchd, 'N') as AuthKeysExchd 
+	FROM 
+		 NPUD00.AccuityRoutingCode y 
+	JOIN NPUD00.accuitylocation al ON al.locationid = y.locationid AND al.Status = '0' 
+	JOIN NPUD00.accuitycorrespondent x ON al.corrLocationId = x.locationid AND x.ClearingSystem IN ('FIN', 'COM', 'COM FIN') AND x.Status = '0'
+	JOIN NPUD00.accuitylocation alCor ON alCor.locationid = x.ClearingAccuityId 
+	LEFT JOIN NPUD00.bankfile bf ON x.ClearingSwiftWOPadding = bf.swiftaddress AND bf.Status = '0' 
+	WHERE 
+        y.RoutingCodeAlt = :SwiftAddress 
+	AND y.RoutingType = 'SWIFT'
+	AND y.Status = '0' 
+	AND x.CurrencyCode = :Currency
+ENDCODE
+
+PROC GetCorrespondentsBySwiftIncludingBanks
+INPUT
+	SwiftAddress		char(11)
+	Currency			char(5)
+OUTPUT
+    Id					Int
+	LocationId			Int
+	SwiftAddress		char(11)
+	BankName			Char(100)
+	BankTown			Char(30)
+	BankType			char(52)
+	PhysicalCountry		Char (35)
+	BranchName			Char(70)	
+	AuthKeysExchd		Char(1)
+	BankAccount			CHAR(20)
+	Currency		    CHAR(4)
+	AccountType			CHAR(20)
+    HasHolder           CHAR(5)
+SQLCODE
+SELECT
+	x.Id,
+	x.ClearingAccuityId as LocationId,
+	x.ClearingSwiftWOPadding as SwiftAddress, 
+	alCor.namefull as BankName, 
+	alCor.City as BankTown, 
+	'' as BankType,
+	alCor.countryname as PhysicalCountry, 
+	'' as BranchName, 
+	NVL(bf.AuthKeysExchd, 'N') as AuthKeysExchd,
+	ba.AccountNo as BankAccount,
+	ba.CurrId as Currency,
+	ba.AccountTypeId as AccountType,
+    Case WHEN x.HolderSwift is not null THEN 'True' ELSE 'False' END as HasHolder
+	FROM 
+		 NPUD00.AccuityRoutingCode y 
+	JOIN NPUD00.accuitylocation al ON al.locationid = y.locationid AND al.Status = '0' 
+	JOIN NPUD00.accuitycorrespondent x ON al.corrLocationId = x.locationid AND x.ClearingSystem IN ('FIN', 'COM', 'COM FIN') AND x.Status = '0'
+	JOIN NPUD00.accuitylocation alCor ON alCor.locationid = x.ClearingAccuityId 
+	LEFT JOIN NPUD00.bankfile bf ON x.ClearingSwiftWOPadding = bf.swiftaddress AND bf.Status != '2' 
+	LEFT JOIN NPUD00.bankaccount ba ON x.ClearingSwiftWOPadding = ba.swiftaddress AND (:Currency IS NULL OR ba.CurrId = :Currency)
+	WHERE 
+        y.RoutingCodeAlt = :SwiftAddress 
+	AND y.RoutingType = 'SWIFT'
+	AND y.Status = '0' 
+	AND (:Currency IS NULL OR x.CurrencyCode = :Currency)
+ENDCODE
+
+PROC GetCorrespondentsBySwiftRanked
+INPUT
+	SwiftAddress		char(11)
+	Currency			char(5)
+OUTPUT
+    Id					Int
+	LocationId			Int
+	SwiftAddress		char(11)
+	BankName			Char(100)
+	BankTown			Char(30)
+	BankType			char(52)
+	PhysicalCountry		Char (35)
+	BranchName			Char(70)	
+	AuthKeysExchd		Char(1)
+	BankAccount			CHAR(20)
+	Currency		    CHAR(4)
+	AccountType			CHAR(20)
+	RankType			CHAR(1)
+	Rank				INT
+    HasHolder           CHAR(5)
+SQLCODE
+SELECT
+	x.Id,
+	x.ClearingAccuityId as LocationId,
+	x.ClearingSwiftWOPadding as SwiftAddress, 
+	alCor.namefull as BankName, 
+	alCor.City as BankTown, 
+	'' as BankType,
+	alCor.countryname as PhysicalCountry, 
+	'' as BranchName, 
+	NVL(bf.AuthKeysExchd, 'N') as AuthKeysExchd,
+	ba.AccountNo as BankAccount,
+	ba.CurrId as Currency,
+	ba.AccountTypeId as AccountType,
+	f.RankType,
+	f.Rank,
+    Case WHEN x.HolderSwift is not null THEN 'True' ELSE 'False' END as HasHolder
+	FROM 
+		 NPUD00.AccuityRoutingCode y 
+	JOIN NPUD00.accuitylocation al ON al.locationid = y.locationid AND al.Status = '0' 
+	JOIN NPUD00.accuitycorrespondent x ON al.corrLocationId = x.locationid AND x.ClearingSystem IN ('FIN', 'COM', 'COM FIN') AND x.Status = '0'
+	JOIN NPUD00.accuitylocation alCor ON alCor.locationid = x.ClearingAccuityId 
+	LEFT JOIN NPUD00.bankfile bf ON x.ClearingSwiftWOPadding = bf.swiftaddress AND bf.Status != '2' 
+	LEFT JOIN NPUD00.bankaccount ba ON x.ClearingSwiftWOPadding = ba.swiftaddress AND (:Currency IS NULL OR ba.CurrId = :Currency)
+	JOIN FIGCorrespondentBank f ON f.SwiftAddress = x.ClearingSwiftWOPadding and f.Status != '2' and F.CurrId = ba.CurrId
+	WHERE 
+        y.RoutingCodeAlt = :SwiftAddress 
+	AND y.RoutingType = 'SWIFT'
+	AND y.Status = '0' 
+	AND (:Currency IS NULL OR x.CurrencyCode = :Currency)
+	ORDER BY f.Rank
+ENDCODE
+
+PROC GetCorrespondentsByLocation
+INPUT
+	LocationId			char(11)
+	Currency			char(5)
+OUTPUT
+    Id					Int
+	LocationId			Int
+	SwiftAddress		char(11)
+	BankName			Char(100)
+	BankTown			Char(30)
+	BankType			char(52)
+	PhysicalCountry		Char (35)
+	BranchName			Char(70)	
+	AuthKeysExchd		Char(1)
+    HasHolder           CHAR(5)
+SQLCODE
+SELECT  
+	x.Id,
+	x.ClearingAccuityId as LocationId,
+	x.ClearingSwiftWOPadding as SwiftAddress, 
+	alCor.namefull as BankName, 
+	alCor.City as BankTown,
+	'' as BankType,
+	alCor.countryname as PhysicalCountry, 
+	'' as BranchName,
+	NVL(bf.AuthKeysExchd, 'N') as AuthKeysExchd,
+    Case WHEN x.HolderSwift is not null THEN 'True' ELSE 'False' END as HasHolder
+	FROM 
+		NPUD00.accuitylocation al
+	JOIN NPUD00.accuitycorrespondent x ON al.corrLocationId = x.locationid AND x.ClearingSystem IN ('FIN', 'COM', 'COM FIN') AND x.Status = '0'
+	JOIN NPUD00.accuitylocation alCor ON alCor.locationid = x.ClearingAccuityId 
+	LEFT JOIN NPUD00.bankfile bf ON x.ClearingSwiftWOPadding = bf.swiftaddress AND bf.Status = '0' 
+	WHERE 
+        al.locationId = :LocationId
+	AND x.CurrencyCode = :Currency
+ENDCODE
+
+
+
+PROC GetCorrespondentsFullByLocation
+INPUT
+	LocationId			char(11)
+	Currency			char(5)
+OUTPUT
+    Id                            Int
+    LocationId                    int
+    ClearingSystem                char(20)
+    CurrencyCode                  char(3)	
+    OwnerSwift                    char(11)
+    OwnerSwiftWOPadding           char(11)
+    OwnerSSIAccountNo             char(75)
+    ClearingAccuityId             char(8)	
+    ClearingSwift                 char(11)
+    ClearingSwiftWOPadding        char(11)
+    HolderAccuityId               char(8)	
+    HolderSwift                   char(11)
+    HolderSwiftWOPadding          char(11)
+    HolderSSIAccountNo            char(75)
+    PreferredSSIInd               char(1)	
+    FurtherAccuityId              char(8)	
+    FurtherSwift                  char(11)
+    FurtherSwiftWOPadding         char(11)
+    Further2AccuityId             char(8)	
+    Further2Swift                 char(11)
+    Further2SwiftWOPadding        char(11)
+    CorrespondentEffectiveDate    char(10)
+    CorrespondentDeactivationDate char(10)
+    CorrespondentUpdateDate       char(10)
+    SSINotes                      char(600)
+    Status                        byte		
+    USId                          char(16)
+    TmStamp                       timestamp
+	AuthKeysExchd		Char(1)
+SQLCODE
+SELECT
+    x.Id,                           
+    x.LocationId,                   
+    x.ClearingSystem,               
+    x.CurrencyCode,                 
+    x.OwnerSwift,                   
+    x.OwnerSwiftWOPadding,          
+    x.OwnerSSIAccountNo,            
+    x.ClearingAccuityId,            
+    x.ClearingSwift,                
+    x.ClearingSwiftWOPadding,       
+    x.HolderAccuityId,              
+    x.HolderSwift,                  
+    x.HolderSwiftWOPadding,         
+    x.HolderSSIAccountNo,           
+    x.PreferredSSIInd,              
+    x.FurtherAccuityId,             
+    x.FurtherSwift,                 
+    x.FurtherSwiftWOPadding,        
+    x.Further2AccuityId,            
+    x.Further2Swift,                
+    x.Further2SwiftWOPadding,       
+    x.CorrespondentEffectiveDate,   
+    x.CorrespondentDeactivationDate,
+    x.CorrespondentUpdateDate,      
+    x.SSINotes,                     
+    x.Status,                       
+    x.USId,                         
+    x.TmStamp,                      
+    NVL(bf.AuthKeysExchd, 'N') as AuthKeysExchd 
+	FROM 
+		NPUD00.accuitylocation al
+	JOIN NPUD00.accuitycorrespondent x ON al.corrLocationId = x.locationid AND x.ClearingSystem IN ('FIN', 'COM', 'COM FIN') AND x.Status = '0'
+	JOIN NPUD00.accuitylocation alCor ON alCor.locationid = x.ClearingAccuityId 
+	LEFT JOIN NPUD00.bankfile bf ON x.ClearingSwiftWOPadding = bf.swiftaddress AND bf.Status = '0' 
+	WHERE 
+        al.locationId = :LocationId
+	AND x.CurrencyCode = :Currency
+ENDCODE
+
+
+
+PROC GetCorrespondentInformation
+INPUT
+    Swift           CHAR(11)  NULL
+    Currency        CHAR(3)   NULL
+    Status          BYTE      NULL
+OUTPUT
+	Title			CHAR(10)
+	Id				INT
+	LocationId	    INT
+	Swift			CHAR(11)  NULL
+	AccountNo		CHAR(75)  NULL
+	NameAbbrev		CHAR(35)  NULL
+	BranchName		CHAR(70)  NULL
+	AddressLine1	CHAR(35)  NULL 
+	AddressLine2	CHAR(35)  NULL
+	City			CHAR(30)  NULL
+	StateFull		CHAR(40)  NULL
+	PostalCode		CHAR(15)  NULL
+	CountryName		CHAR(35)  NULL
+	ClearingSystem	=
+	CurrencyCode	= 
+	Status			CHAR(15)  NULL
+	USId			= 
+	TMStamp			=
+SQLCODE
+
+WITH context AS (
+		SELECT DISTINCT
+			AC.Id, AC.ClearingSystem, AC.CurrencyCode, ac.LocationId, AC.OwnerSwift, AC.OwnerSSIAccountNo, AC.ClearingAccuityId, AC.ClearingSwift, AC.HolderAccuityId, AC.HolderSwift, AC.HolderSSIAccountNo, 
+            CASE AC.Status 
+                WHEN 0 THEN 'Active' 
+                WHEN 1 THEN 'Inactive'
+                WHEN 2 THEN 'MarkForDelete'
+                WHEN 3 THEN 'ConfirmDelete'
+                ELSE 'Inactive' 
+            END AS Status,
+		AC.USId, AC.TMStamp
+        FROM ACCUITYCORRESPONDENT AC
+        JOIN ACCUITYLOCATION AL ON AL.CorrLocationId = AC.LocationId
+        JOIN ACCUITYROUTINGCODE AR ON AR.LocationId = AL.LocationId AND AR.RoutingType = 'SWIFT'
+        WHERE (:Swift IS NULL OR AR.RoutingCodeAlt LIKE '%'||:Swift||'%') AND
+		(:Currency IS NULL OR AC.CURRENCYCODE = :Currency) AND
+		(:Status IS NULL OR (AC.STATUS = :Status AND AR.Status = :Status ))
+	),
+	Owner AS (
+		SELECT DISTINCT
+			c.Id, al.LocationId, c.OwnerSwift AS Swift, c.OwnerSSIAccountNo AS AccountNo, c.ClearingSystem, c.CurrencyCode, c.Status, c.USId, c.TMStamp,
+			al.NameAbbrev, al.BranchName, al.AddressLine1, al.AddressLine2, al.City, al.StateFull, al.PostalCode, al.CountryName
+		FROM context c
+		INNER JOIN ACCUITYLOCATION al ON c.LOCATIONID = al.LOCATIONID
+	),
+	Clearer AS (
+		SELECT DISTINCT
+			c.Id, al.LocationId, c.ClearingSwift AS Swift, '' AS AccountNo, c.ClearingSystem, c.CurrencyCode, c.Status, c.USId, c.TMStamp,
+			al.NameAbbrev, al.BranchName, al.AddressLine1, al.AddressLine2, al.City, al.StateFull, al.PostalCode, al.CountryName
+		FROM context c
+		INNER JOIN ACCUITYLOCATION al ON c.ClearingAccuityId = al.LOCATIONID
+	),
+	Holder AS (
+		SELECT DISTINCT
+			c.Id, al.LocationId, c.HolderSwift AS Swift, c.HolderSSIAccountNo AS AccountNo, c.ClearingSystem, c.CurrencyCode, c.Status, c.USId, c.TMStamp,
+			al.NameAbbrev, al.BranchName, al.AddressLine1, al.AddressLine2, al.City, al.StateFull, al.PostalCode, al.CountryName
+		FROM context c
+		INNER JOIN ACCUITYLOCATION al ON c.HolderAccuityId = al.LOCATIONID
+	)
+	SELECT DISTINCT
+        y.Title,
+        y.Id,
+        y.LocationId,
+        y.Swift,
+        y.AccountNo,
+        y.NameAbbrev,
+        y.BranchName,
+        y.AddressLine1,
+        y.AddressLine2,
+        y.City,
+        y.StateFull,
+        y.PostalCode,
+        y.CountryName,
+        y.ClearingSystem,
+        y.CurrencyCode,
+        y.Status,
+        y.USId,
+        y.TMStamp
+	FROM (
+		SELECT 'Owner' AS Title, x.* FROM Owner x
+		UNION ALL
+		SELECT 'Clearer' AS Title, c.* FROM Clearer c
+		UNION ALL
+		SELECT 'Holder' AS Title, h.* FROM Holder h
+	) y 
+    WHERE y.Status IN ( 'Active', 'Inactive')
+ENDCODE
+
+PROC UpdateCorrespondentStatusById
+INPUT
+	Id      =
+    Status  =
+    USId    =
+SQLCODE
+    UPDATE ACCUITYCORRESPONDENT 
+    SET 
+        STATUS = :Status, 
+        USID = :USId, 
+        TMSTAMP = SYSDATE 
+    WHERE 
+        ID = :Id
+ENDCODE
+
+
+PROC GetCorrespondentsWithHolderClearingBySwift
+INPUT
+	SwiftAddress		char(11)
+	Currency			char(5)
+OUTPUT
+    Id                            Int
+    LocationId                    int
+    ClearingSystem                char(20)
+    CurrencyCode                  char(3)	
+    OwnerSwift                    char(11)
+    ClearingSwift                 char(11)
+    HolderSwift                   char(11)
+    Status                        byte		
+    USId                          char(16)
+    TmStamp                       timestamp
+	OwnerAuthKeysExchd		      Char(1)
+    HolderAuthKeysExchd		      Char(1)
+	ClearingAuthKeysExchd		  Char(1)
+    HasHolder                     CHAR(5)
+SQLCODE
+SELECT
+    x.Id,                           
+    x.LocationId,                   
+    x.ClearingSystem,               
+    x.CurrencyCode,                 
+    x.OwnerSwiftWOPadding,          
+    x.ClearingSwiftWOPadding,       
+    x.HolderSwiftWOPadding,                           
+    x.Status,                       
+    x.USId,                         
+    x.TmStamp,                      
+    NVL(bf.AuthKeysExchd, 'N') as OwnerAuthKeysExchd,
+    NVL(hf.AuthKeysExchd, 'N') as HolderAuthKeysExchd,
+    NVL(cf.AuthKeysExchd, 'N') as ClearingAuthKeysExchd,
+    Case WHEN x.HolderSwift is not null THEN 'True' ELSE 'False' END as HasHolder
+	FROM 
+		 NPUD00.AccuityRoutingCode y 
+	JOIN NPUD00.accuitylocation al ON al.locationid = y.locationid AND al.Status = '0' 
+	JOIN NPUD00.accuitycorrespondent x ON al.corrLocationId = x.locationid AND x.ClearingSystem IN ('FIN', 'COM', 'COM FIN') AND x.Status = '0'
+	JOIN NPUD00.accuitylocation alCor ON alCor.locationid = x.ClearingAccuityId 
+	LEFT JOIN NPUD00.bankfile bf ON x.ClearingSwiftWOPadding = bf.swiftaddress AND bf.Status = '0' 
+    LEFT JOIN NPUD00.bankfile hf ON x.HolderSwiftWOPadding = hf.swiftaddress AND hf.Status = '0' 
+	LEFT JOIN NPUD00.bankfile cf ON x.ClearingSwiftWOPadding = cf.swiftaddress AND bf.Status = '0' 
+
+	WHERE 
+        y.RoutingCodeAlt = :SwiftAddress 
+	AND y.RoutingType in ('SWIFT', 'BIC')
+	AND y.Status = '0' 
+	AND x.CurrencyCode = :Currency
+ENDCODE
+
+
+
+PROC GetNedbankCorrespondents
+INPUT
+	Currency			char(5)
+OUTPUT
+    Id					Int
+	LocationId			Int
+	SwiftAddress		char(11)
+	BankName			Char(100)
+	BankTown			Char(30)
+	BankType			char(52)
+	PhysicalCountry		Char (35)
+	BranchName			Char(70)	
+	AuthKeysExchd		Char(1)
+    HasHolder           CHAR(5)
+SQLCODE
+SELECT
+	0,
+	CAST (x.ClearingAccuityId as number(10,0)) as LocationId,
+	x.ClearingSwiftWOPadding as SwiftAddress,
+	alCor.namefull as BankName, 
+	alCor.City as BankTown, 
+	'' as BankType,
+	alCor.countryname as PhysicalCountry, 
+	'' as BranchName, 
+	NVL(bf.AuthKeysExchd, 'N') as AuthKeysExchd,
+    Case WHEN x.HolderSwift is not null THEN 'True' ELSE 'False' END as HasHolder
+	FROM 
+		 NPUD00.AccuityRoutingCode y 
+	JOIN NPUD00.accuitylocation al ON al.locationid = y.locationid AND al.Status = '0' 
+	JOIN NPUD00.accuitycorrespondent x ON al.corrLocationId = x.locationid AND x.ClearingSystem IN ('FIN', 'COM', 'COM FIN') AND x.Status = '0'
+	JOIN NPUD00.accuitylocation alCor ON alCor.locationid = x.ClearingAccuityId 
+	LEFT JOIN NPUD00.bankfile bf ON x.ClearingSwiftWOPadding = bf.swiftaddress AND bf.Status = '0' 
+	WHERE 
+        y.RoutingCodeAlt IN (SELECT Value FROM Lookup WHERE Name = 'SWIFT ADDRESS' AND REF = 'NEDBANK')
+	AND y.RoutingType = 'SWIFT'
+	AND y.Status = '0' 
+	AND x.CurrencyCode = :Currency
+ UNION    
+    SELECT 
+        0,
+        Y.LocationId,
+        Y.RoutingCodeAlt,
+        alCor.namefull as BankName, 
+        alCor.City as BankTown, 
+        '' as BankType,
+        alCor.countryname as PhysicalCountry, 
+        '' as BranchName, 
+        NVL(bf.AuthKeysExchd, 'N') as AuthKeysExchd,
+         'False'
+    FROM 
+            FigCorrespondentBank F
+    JOIN NPUD00.AccuityRoutingCode y ON y.RoutingCodeAlt = F.SwiftAddress AND y.RoutingType = 'SWIFT' AND y.Status = '0' 
+	JOIN NPUD00.accuitylocation alCor ON alCor.locationid = y.LocationID 
+	LEFT JOIN NPUD00.bankfile bf ON F.SwiftAddress = bf.Swiftaddress AND bf.Status = '0' 
+    WHERE
+        CurrId = :Currency
+    AND f.ranktype = 'G'
+    AND F.Status = 0
+ENDCODE

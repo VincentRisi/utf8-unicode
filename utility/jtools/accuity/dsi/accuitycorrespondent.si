@@ -1,0 +1,119 @@
+SERVER   @DN29
+CONNECT  NPUD00/CONTROL
+
+TABLE AccuityCorrespondent
+    Id                            int
+    LocationId                    int
+    ClearingSystem                char(20)  NULL
+    CurrencyCode                  char(3)   NULL
+    OwnerSwift                    char(11)  NULL
+    OwnerSwiftWOPadding           char(11)  NULL
+    OwnerSSIAccountNo             char(75)  NULL
+    ClearingAccuityId             char(8)   NULL
+    ClearingSwift                 char(11)  NULL
+    ClearingSwiftWOPadding        char(11)  NULL
+    HolderAccuityId               char(8)   NULL
+    HolderSwift                   char(11)  NULL
+    HolderSwiftWOPadding          char(11)  NULL
+    HolderSSIAccountNo            char(75)  NULL
+    PreferredSSIInd               char(1)   NULL
+    FurtherAccuityId              char(8)   NULL
+    FurtherSwift                  char(11)  NULL
+    FurtherSwiftWOPadding         char(11)  NULL
+    Further2AccuityId             char(8)   NULL
+    Further2Swift                 char(11)  NULL
+    Further2SwiftWOPadding        char(11)  NULL
+    CorrespondentEffectiveDate    char(10)  NULL
+    CorrespondentDeactivationDate char(10)  NULL
+    CorrespondentUpdateDate       char(10)  NULL
+    SSINotes                      char(600) NULL     
+    Status                        tinyint   (Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+    USId                          char(16)
+    TmStamp                       timestamp
+
+KEY AccuityCorrespondentKey PRIMARY
+  Id
+
+KEY KEY01
+  LocationId
+  
+PROC Insert
+PROC Update
+PROC SelectOne
+PROC DeleteOne
+PROC DeleteAll
+PROC Exists
+
+# used by accuityimport
+PROC Truncate
+SQLCODE
+   TRUNCATE TABLE NPUD00.AccuityCorrespondent
+ENDCODE
+
+PROC UpdateAllStatus
+INPUT
+  Status        tinyint
+  USId          char  (16)
+SQL CODE
+    UPDATE NPUD00.accuitycorrespondent SET status = :Status, usid = :USId, tmstamp = SYSDATE;
+ENDCODE
+
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------- ALMANACCORRESPONDENT.SI ------------------------------------
+
+
+#Used By Router, IDE
+PROC Get
+INPUT
+   FinId            INT
+   CorrCurrency     CHAR(4)
+OUTPUT (Single)
+   CorrFinId        INT
+   CorrBankName     CHAR(504)
+   CorrTown         CHAR(70)
+   CorrCountry      CHAR(100)
+   CorrAccountNo    CHAR(50)
+   CorrSwiftAddress CHAR(11)
+   PreferredInd     CHAR(1)
+   Status           TINYINT     # (Active=0 Inactive=1 MarkForDelete=2)
+SQL CODE
+    SELECT DISTINCT
+        ac.locationid AS CorrFinId,
+        bf.bankname AS CorrBankName,
+        bf.banktown AS CorrTown,
+        al.countryname AS CorrCountry,
+        ac.ownerssiaccountno AS CorrAccountNo,
+        bf.swiftaddress AS CorrSwiftAddress,
+        ac.preferredssiind AS PreferredInd,
+        ac.Status
+    FROM NPUD00.accuitylocation al
+    LEFT OUTER JOIN NPUD00.accuitycorrespondent ac ON al.locationid = ac.locationid
+    LEFT OUTER JOIN NPUD00.accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN NPUD00.bankfile bf ON x.swiftpairingcode = bf.swiftaddress
+    WHERE al.status = 0 AND
+    ac.locationid = :FinId AND
+    ac.currencycode = :CorrCurrency
+ENDCODE
+
+PROC GetSwiftList
+INPUT
+   FinId            INT
+   CorrCurrency     CHAR(4)
+OUTPUT (Multiple)
+   CorrSwiftAddress CHAR(11)
+   Status           TINYINT     # (Active=0 Inactive=1 MarkForDelete=2)
+SQL CODE
+    SELECT DISTINCT
+        bf.swiftaddress AS CorrSwiftAddress,
+        ac.status
+    FROM NPUD00.accuitycorrespondent ac
+    LEFT OUTER JOIN NPUD00.accuityroutingcode x ON ac.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN NPUD00.bankfile bf ON x.swiftpairingcode = bf.swiftaddress
+    WHERE ac.locationid = :FinId AND
+    ac.currencycode = :CorrCurrency AND
+    bf.swiftaddress IS NOT NULL;
+ENDCODE
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------- ALMANACCORRESPONDENT.SI ------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="ReceiveNewDocument">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="req">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="requestorIdentifier" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="yearOfAssessment" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="caseNumber" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="contentCategory1" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="contentCategory2" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="contentType" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="entityIdentifierType1" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="entityIdentifierType2" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="entityIdentifierValue1" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="entityIdentifierValue2" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="dateOfDigitization" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="contentLocation" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="product" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="specialUserGroups" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="sourceChannel" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="subjectArea" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="restrictedContent" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="dateOfReceipt" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="binaryData" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ReceiveNewDocumentResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="ReceiveNewDocumentResult">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="resultCode" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="resultDescription" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="objectID" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="objectType" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="contentLocation" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RequestDocumentImage">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="req">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="requestorIdentifier" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="objectID" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="objectType" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="contentLocation" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="resolutionType" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RequestDocumentImageResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RequestDocumentImageResult">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="resultCode" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="resultDescription" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="binaryData" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RequestDocumentXML">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="req">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="requestorIdentifier" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="objectID" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="objectType" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="contentLocation" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RequestDocumentXMLResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RequestDocumentXMLResult">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="resultCode" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="resultDescription" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="xmlData" type="xsd:string" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="UpdateProcessStatus">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="req">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="requestorIdentifier" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="objectID" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="objectType" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="contentLocation" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="processStatus" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="processStatusRejectCode" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="processStatusRejectReason" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="UpdateProcessStatusResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="UpdateProcessStatusResult">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="resultCode" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="resultDescription" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="UpdateCaseNumber">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="req">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="requestorIdentifier" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="objectID" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="objectType" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="contentLocation" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="dateOfReceipt" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="caseNumber" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="UpdateCaseNumberResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="UpdateCaseNumberResult">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="resultCode" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="resultDescription" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>

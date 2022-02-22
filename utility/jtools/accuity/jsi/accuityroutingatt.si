@@ -1,0 +1,74 @@
+DATABASE MCPE FLAGS "param=named"
+PACKAGE  putty3.accuity
+OUTPUT   accuityroutingatt
+SERVER   DN29
+SCHEMA   NPUD00
+USERID   npu
+PASSWORD npudev
+
+TABLE AccuityRoutingAtt
+  Id                    int
+  RoutingType           Char(6)
+  RoutingCode           Char(20)	NULL
+  RoutingCodeAlt        Char(20)	NULL
+  OverrideRoutingCode   Char(20)	NULL
+  OverrideRoutingCodeAlt Char(20)	NULL
+  ClearingSystem        Char(20)	NULL
+  MembershipType        Char(17)	NULL
+  RoutingTypeInfo       Char(6)		NULL
+  RoutingCodeStatus     Char(1)		NULL
+  ACHFlag               Char(1)		NULL
+  FedwireFundStatus     Char(1)		NULL
+  FedwireSecurityStatus Char(1)		NULL
+  WireTranCode          Char(1)		NULL
+  EffectiveDate         Char(10)	NULL
+  DeactivatedDate       Char(10)	NULL
+  Status				byte     (Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+  USId					Char(16)
+  TmStamp				timestamp
+
+KEY AccuityRoutingAttKey PRIMARY
+  Id
+
+PROC Insert
+PROC Update
+PROC SelectOne
+PROC DeleteOne
+PROC Exists
+
+proc bulkinsert (1000)
+
+PROC UpdateAllStatus
+INPUT
+  Status        byte
+  USId          char  (16)
+SQLCODE
+  Update
+    AccuityRoutingAtt
+  Set
+      Status = :Status
+     ,USId = :USId
+     ,TMStamp = SYSDATE
+ENDCODE
+
+proc UpdStatus
+input
+  Id     =
+  Status =
+  USId   =
+sqlcode
+  update AccuityRoutingAtt set Status = :Status, USId = :USId, TmStamp = SYSDATE where Id = :Id
+endcode
+
+
+PROC UpdateStatusById
+INPUT
+	Id				Int
+	Status			Byte
+	USId			=
+SQLCODE
+	UPDATE AccuityRoutingAtt
+	SET Status = :Status, USId = :USId, TmStamp = SYSDATE
+	WHERE Id = :Id
+ENDCODE
+

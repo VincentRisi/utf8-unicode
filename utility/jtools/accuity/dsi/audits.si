@@ -1,0 +1,24 @@
+$PYTHON 1
+$PARMS 1
+$DESCR 'Audit Trail '
+$VIEWONLY
+
+SERVER   @dn29
+CONNECT  npud00/control
+
+TABLE Audits
+  Id        Sequence
+  TableName Char(64)
+  Action    char(64)    #(l'Add=0 l'Change=1 l'Delete=2)
+  Old       Char(2000)
+  New       Char(2000)  
+  USId      Char(16)
+  TmStamp   timestamp
+
+KEY AdaptorKey PRIMARY
+  TableName Id
+
+PROC Insert
+PROC Update
+PROC SelectOne
+PROC DeleteOne

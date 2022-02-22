@@ -1,0 +1,24 @@
+{
+  "newRec": 
+  {
+    "Id": 113478, 
+    "RoutingType": "ABA", 
+    "RoutingCode": "011500010",
+    "RoutingCodeAlt": "011500010",
+    "OverrideRoutingCode": "026009593",
+    "OverrideRoutingCodeAlt": "026009593",
+    "ClearingSystem": "FEDWIRE",
+    "MembershipType": "",
+    "RoutingTypeInfo": "R",
+    "RoutingCodeStatus": "A",
+    "ACHFlag": "Y",
+    "FedwireFundStatus": "I",
+    "FedwireSecurityStatus": "I",
+    "WireTranCode": "",
+    "EffectiveDate": "",
+    "DeactivatedDate": "",
+    "Status": 0,
+    "USId": "accuityimport",
+    "TmStamp": "20191029161234"
+  }
+}

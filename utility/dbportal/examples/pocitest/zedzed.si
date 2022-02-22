@@ -1,0 +1,30 @@
+SERVER @dn21
+CONNECT ntsd00/control
+
+TABLE ZedZed
+  Xavier    sequence
+  Ay        double(15,2)
+  Bee       double(16,4)
+  Cee       double(18,2)
+  Toppers   double
+  Dee       long
+  Epic      int
+  Efyou     smallint
+  Gee       tinyint
+  DOB       date NULL
+  Aitch     char(34)
+  Spatch    char(10000)  NULL
+  Snitch    char(4096)   NULL
+  Slobber   blob(64000)
+  tmStamp   timestamp
+  
+KEY prime PRIMARY Xavier  
+Key roger Xavier Ay Bee
+
+proc Insert
+proc SelectOne
+proc SelectAll
+proc DeleteOne
+proc DeleteAll
+proc Update   
+

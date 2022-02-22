@@ -1,0 +1,77 @@
+DATABASE MCPE FLAGS "param=named"
+PACKAGE  putty3.accuity
+OUTPUT   accuityofficer
+SERVER   DN29
+SCHEMA   NPUD00
+USERID   npu
+PASSWORD npudev
+
+TABLE AccuityOfficer
+  Id               Int
+  LocationId       int
+  Department       Char(5)		NULL
+  OfficerName      Char(100)	NULL
+  Status           byte     (Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+  USId             Char(16)
+  TmStamp          timestamp
+
+KEY AccuityOfficerKey PRIMARY
+  Id
+
+KEY KEY01
+  LocationId
+
+PROC SelectOne
+PROC Insert
+PROC DeleteOne
+PROC Update
+PROC Exists
+
+proc bulkinsert (1000)
+
+PROC UpdateAllStatus
+INPUT
+  Status        byte
+  USId          char  (16)
+SQLCODE
+  Update
+    AccuityOfficer
+  Set
+      Status = :Status
+     ,USId = :USId
+     ,TMStamp = SYSDATE
+ENDCODE
+
+proc UpdStatus
+input
+  Id     =
+  Status =
+  USId   =
+sqlcode
+  update AccuityOfficer set Status = :Status, USId = :USId, TmStamp = SYSDATE where Id = :Id
+endcode
+
+
+PROC SelectByLocationId
+INPUT
+	LocationId		=
+OUTPUT
+    Id              =
+    LocationId      =
+    Department      =
+    OfficerName     =
+    Status          =
+    USId            =
+    TmStamp         =
+
+SQLCODE
+	SELECT
+		ID,
+		LocationID,
+		Department,
+		OfficerName,
+		Status,
+		UsId,
+		TmStamp
+	FROM AccuityOfficer WHERE LocationId = :LocationId
+ENDCODE

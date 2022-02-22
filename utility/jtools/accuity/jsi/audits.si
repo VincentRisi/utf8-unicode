@@ -1,0 +1,120 @@
+DATABASE MCPE FLAGS "param=named"
+PACKAGE  putty3.accuity
+OUTPUT   audits
+SERVER   DN29
+SCHEMA   NPUD00
+USERID   npu
+PASSWORD npudev
+
+TABLE Audits
+  Id        SEQUENCE
+  TableName Char(64)    // length of 20 is 'AccuityCorrespondentSub' too small
+  Action    Char(10)    {l'Add' l'Change' l'Delete'}
+  Old       Char(2000)  // These could be 32000 from oracle 12
+  New       Char(2000)  // These could be 32000 from oracle 12
+  USId      Char(16)
+  TmStamp   timestamp
+
+KEY AuditsKey PRIMARY
+  Id
+
+PROC SelectOne
+PROC SelectAll  // should not be present here
+PROC Insert
+PROC DeleteOne  // should not be present here
+PROC Update     // should not be present here
+PROC Exists
+
+PROC SelectAccuity
+OUTPUT
+	Id				=
+	TableName	=
+	Action		=
+	UsId			=
+	TmStamp		=
+SQLCODE
+	SELECT
+		Id,
+		TableName,
+		Action,
+		UsId,
+		TmStamp
+		FROM Audits
+		where
+		TableName like '%AccuityCorrespondent%'
+ENDCODE
+
+PROC SelectAccuityByDateAndSwift
+INPUT
+  StartDate				datetime
+  EndDate				datetime
+  SwiftAddress			char(11)
+OUTPUT
+  Id			=
+  TableName		=
+  Action		=
+  UsId			=
+  TmStamp		=
+SQLCODE
+	with x as 
+    (
+        SELECT ac.LocationId, ac.RoutingCodeAlt FROM AccuityLocation al
+        JOIN AccuityRoutingCode ac ON ac.LocationId = al.LocationId AND ac.RoutingType = 'SWIFT' AND ac.RoutingCodeAlt like '%' || :SwiftAddress || '%'
+    )
+	SELECT DISTINCT
+		Id,
+		TableName,
+		Action,
+		UsId,
+		TmStamp
+		FROM Audits
+		JOIN X ON  (old like x.RoutingCodeAlt OR 
+					new like x.RoutingCodeAlt OR 
+					old like '%LocationId value="' || x.LocationId || '"%' OR
+					new like '%LocationId value="' || x.LocationId || '"%' ) 
+		where
+		TableName like '%AccuityCorrespondent%'
+		AND TmStamp >= To_Date(:StartDate, 'YYYY-MM-DD')
+		AND TmStamp <= To_Date(:EndDate, 'YYYY-MM-DD')
+ENDCODE
+
+PROC SelectAccuityByDate
+INPUT
+  StartDate				datetime
+  EndDate				datetime
+OUTPUT
+  Id			=
+  TableName		=
+  Action		=
+  UsId			=
+  TmStamp		=
+SQLCODE
+	SELECT
+		Id,
+		TableName,
+		Action,
+		UsId,
+		TmStamp
+		FROM Audits 
+		where
+		TableName like '%AccuityCorrespondent%'
+		AND TmStamp >= To_Date(:StartDate, 'YYYY-MM-DD')
+		AND TmStamp <= To_Date(:EndDate, 'YYYY-MM-DD')
+ENDCODE
+
+PROC SelectChangesById
+INPUT
+	Id			=
+OUTPUT
+	Id			=
+	Old			=
+	New			=
+SQLCODE
+		SELECT
+		Id,
+		Old,
+		New
+		FROM Audits
+		where
+		Id = :Id
+ENDCODE

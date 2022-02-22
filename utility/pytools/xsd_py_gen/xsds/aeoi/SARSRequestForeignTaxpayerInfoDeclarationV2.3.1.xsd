@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:reqFrgnTPInfoDecl="http://www.sars.gov.za/enterpriseMessagingModel/RequestForeignTaxpayerInfoDeclaration/xml/schemas/version/2.3"
+	xmlns:bt="http://www.sars.gov.za/enterpriseMessagingModel/GMD/BaseTypes/xml/schemas/version/54.19"
+	targetNamespace="http://www.sars.gov.za/enterpriseMessagingModel/RequestForeignTaxpayerInfoDeclaration/xml/schemas/version/2.3"
+	elementFormDefault="qualified"
+	xmlns:frgnTPInfoDecl="http://www.sars.gov.za/enterpriseMessagingModel/ForeignTaxpayerInfoDeclaration/xml/schemas/version/1.1">
+	<xsd:import
+		namespace="http://www.sars.gov.za/enterpriseMessagingModel/GMD/BaseTypes/xml/schemas/version/54.19"
+		schemaLocation="SARSGMD_BaseTypesV54.19.xsd" />
+	<xsd:import schemaLocation="SARSForeignTaxpayerInfoDeclarationV2.3.1.xsd" namespace="http://www.sars.gov.za/enterpriseMessagingModel/ForeignTaxpayerInfoDeclaration/xml/schemas/version/1.1"></xsd:import>
+	<xsd:annotation>
+		<xsd:documentation>
+			2020-05-25 Dirk Grobler. Updated to reference latest form schema. Namespace not changed (Production fix).
+			2017-01-27 Dirk Grobler. Updated to reference latest form schema. Namespace updated
+			2017-01-19 Dirk Grobler. Updated to reference latest form schema and base types schema. Namespace updated.
+									 TradingName made optional.
+			2016-10-25 Dirk Grobler. Updated to reference latest form schema and base types schema. Namespace updated.
+		    2016-07-18 Dirk Grobler. Updated to reference latest form schema and base types schema. Namespace updated.
+		    2015-02-25 Dakalo Netshiya. Updated to reference the latest form schema.Namespace updated.
+			2014-12-15 Dirk Grobler. First draft. 2015-01-26 Dirk
+			Grobler. Updated RequestOperation to add "REQUEST_DECLARATION_SUMMARY".
+
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="RequestForeignTaxpayerInfoDeclarationRequest"
+		type="reqFrgnTPInfoDecl:RequestForeignTaxpayerInfoDeclarationRequestStructure" />
+	<xsd:complexType
+		name="RequestForeignTaxpayerInfoDeclarationRequestStructure">
+		<xsd:all>
+			<xsd:element name="RequestOperation" minOccurs="1"
+				maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="REQUEST_DECLARATION" />
+						<xsd:enumeration
+							value="REQUEST_DECLARATION_SUMMARY" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="TaxRefNo" type="bt:TaxRefNoType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="ReportingYear" type="bt:YearType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="GIIN" type="frgnTPInfoDecl:GIINNoType"
+				minOccurs="0" maxOccurs="1">
+			</xsd:element>
+			<xsd:element name="RegisteredName"
+				type="bt:OrganisationNameType" minOccurs="1" maxOccurs="1">
+			</xsd:element>
+			<xsd:element name="TradingName" type="bt:OrganisationNameType" minOccurs="0" maxOccurs="1"></xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:element name="RequestForeignTaxpayerInfoDeclarationResponse"
+		type="reqFrgnTPInfoDecl:RequestForeignTaxpayerInfoDeclarationResponseStructure" />
+	<xsd:complexType
+		name="RequestForeignTaxpayerInfoDeclarationResponseStructure">
+		<xsd:all>
+			<xsd:element
+				ref="frgnTPInfoDecl:ForeignTaxpayerInfoDeclaration" minOccurs="0"
+				maxOccurs="1" />
+
+		</xsd:all>
+	</xsd:complexType>
+</xsd:schema>

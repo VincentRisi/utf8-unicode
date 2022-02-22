@@ -1,0 +1,565 @@
+#  $Revision: 1.10 $
+#  $Date: 2005/09/02 11:35:39 $
+#
+$NOPARM
+SERVER   @DN35
+CONNECT  NSAD00/CONTROL
+
+ 
+TABLE Queue
+  ID	       		sequence
+  Name  		Char(32)
+  InputLinkName 	Char(32) NULL
+  Description		char(256) NULL
+  LegoType     		int (None=0 Branch=1 FindReplace=2 LegacyTCPIn=3 Create=4 Match=5 Repair=6 Clone=7 Queue=8 BusinessScript=9 CasmfSend=10 CasmReceive=11 CasmfResponse=12 LegacyTcpOut=13 Validator=14 SaffyTcpInReponse=16 SaffyTcpIn=17 SaffyTcpOut=18 Authorise=19, SaffyTCPReroute=20 Foreign=21 InputLink=22, SaffyTcpOutResp=23, XmlMisAdapterIn=24, XmlMisAdapterOut=25, Approve=26, GenMasAdapterIn=27, GenFileAdapterIn=28)
+  Priority     		tinyint
+  LogLevel     		tinyint
+  Status       		TinyInt  (Active=0 Inactive=1 MarkForDelete=2)
+  OwnerOrchestrationID 	int
+  OperationalStatus	int (Started=0 Running=1 Completed=2 Error=3 ShutDownRequested=4 Unknown=5 NotRunnable=6)
+  USId         		Char(16)
+  TmStamp      		TimeStamp
+
+KEY QueueKey PRIMARY  ID
+KEY QueueNameKey unique Name OwnerOrchestrationID
+//KEY QueueNameKey unique InputLinkName OwnerOrchestrationID Cannot have unique with null
+LINK Orchestration OwnerOrchestrationID DELETE CASCADE
+LINK LegoBlock LegoType DELETE CASCADE
+
+PROC Insert
+PROC Update
+PROC SelectOne
+PROC DeleteOne
+PROC Exists
+PROC SelectAll
+PROC Count
+
+#Used by G2Scheduler, SaffyController
+PROC GetOrcQueues
+INPUT
+  OrcID       int
+OUTPUT (Multiple)
+  QueueID    int
+  QueueName  Char(32)
+SQL CODE
+  SELECT
+     Q.ID,
+     Q.Name
+  FROM
+     Queue Q
+  Where
+     Q.OwnerOrchestrationID = :OrcID
+ENDCODE
+
+#Used by SaffyController
+PROC GetAllQueuesByOrcID
+INPUT
+  OrcID       int
+OUTPUT (Multiple)
+  ID    	=
+  Name  	=
+  Description	=
+  LegoType     	=
+  Priority     	=
+  LogLevel     	=
+  Status       	=
+  OwnerOrchestrationID 	=
+  USId         	=
+  TmStamp      	=
+  UsedExternally int
+SQL CODE
+  SELECT
+    ID
+   ,Name
+   ,Description
+   ,LegoType
+   ,Priority
+   ,LogLevel
+   ,Status
+   ,OwnerOrchestrationID
+   ,USId
+   ,TmStamp
+   , (Select count( * ) from queuelinks ql, queue qq where ql.childid = q.id and ql.parentid = qq.id and qq.ownerorchestrationid <> :OrcID)
+  FROM
+     Queue Q
+  Where
+     Q.OwnerOrchestrationID = :OrcID
+  and q.status = 0
+ UNION
+  SELECT
+    q.ID
+   ,q.Name
+   ,q.Description
+   ,q.LegoType
+   ,q.Priority
+   ,q.LogLevel
+   ,q.Status
+   ,q.OwnerOrchestrationID
+   ,q.USId
+   ,q.TmStamp
+   , 0
+  FROM
+     Queue q, OrchestrationDetail od
+  Where
+     od.OrchestrationID = :OrcID
+ and od.QueueID = q.ID
+ and q.OwnerOrchestrationID <> :OrcID
+  and q.status = 0
+
+ENDCODE
+
+# Used by saffycontroller
+PROC UpdateStatusByOrcID
+INPUT
+  OrcID       int
+  Status      int
+SQL CODE
+  update Queue
+   set   Status=:Status
+  where OwnerOrchestrationID = :OrcID
+ENDCODE
+
+# Used by saffycontroller
+PROC DeleteByStatus
+INPUT
+  Status      int
+SQL CODE
+  delete Queue
+  where status = :Status
+ENDCODE
+
+
+#used by saffycontroller
+PROC IDByOrcAndName
+INPUT
+  Name		=
+  OrcID		int
+OUTPUT(Single)
+  ID            int
+SQLCODE
+  select
+    ID
+   from queue
+  where Name = :Name
+    and OwnerOrchestrationID = :OrcID
+ENDCODE
+
+#used by saffycontroller
+PROC IDByOrcAndInputLinkName
+INPUT
+  InputLinkName	=
+  OrcName	char(32)
+OUTPUT(Single)
+  ID            int
+SQLCODE
+  select
+    ID
+   from queue
+  where InputLinkName = :InputLinkName
+    and OwnerOrchestrationID = (select ID from Orchestration where Name = :OrcName)
+ENDCODE
+
+
+
+#Used by Saffy Interfaces
+PROC GetDetail
+INPUT
+  Id          int
+OUTPUT (Single)
+  QueueName          Char(32)
+  OrchestrationName  Char(32)
+SQL CODE
+  SELECT
+    q.name, o.Name
+  FROM
+     Queue Q, Orchestration O
+  Where
+     q.id = :Id
+     and q.OwnerOrchestrationID = o.id
+ENDCODE
+
+PROC Get
+INPUT
+  Id          int
+OUTPUT (Single)
+  Description  Char(256)
+  LegoType     int (None=0 Branch=1 FindReplace=2 AdaptorVal=3 Create=4 Match=5 Repair=6 Clone=7 Queue=8 Python=9 CasmfSnd=10 CasmRcv=11 CasmRsp=12 )
+  Priority     tinyint
+  LogLevel     tinyint
+  Status       TinyInt  (Active=0 Inactive=1 MarkForDelete=2)
+SQL CODE
+  SELECT
+   Description
+  ,LegoType
+  ,Priority
+  ,LogLevel
+  ,Status
+  FROM
+     Queue
+  Where
+     id = :Id
+ENDCODE
+
+PROC Domain
+OUTPUT (Multiple)
+  Id        Char(24)
+  Descr     Char(256)
+  Driver    Char(16)
+  Priority  TinyInt
+  Status    TinyInt
+SQL CODE
+  SELECT
+        Id
+       , Descr
+       , Driver
+       , Priority
+       , Status
+  FROM Queue
+ENDCODE
+
+
+PROC GetAllQueueIDs
+OUTPUT (Multiple)
+  Id        int
+SQL CODE
+  SELECT
+        Id
+  FROM Queue
+  WHERE LegoType <> 0
+ENDCODE
+
+
+Proc GetQueueID
+INPUT
+  Name   Char(24)
+OUTPUT (Single)
+ QueueID int
+SQL CODE
+  SELECT
+        ID
+  FROM Queue
+  WHERE Name = :Name
+ENDCODE
+
+
+
+PROC GetLegoType
+INPUT
+  ID       int
+OUTPUT (single)
+  LegoType int
+SQL CODE
+  SELECT
+        LegoType
+  FROM Queue
+  WHERE ID = :ID
+ENDCODE
+
+# Used By G2DataLayer
+PROC GetExceptionQueue
+INPUT
+   InID          int
+OUTPUT(Single)
+   ExQueueID     int
+SQL CODE
+   SELECT
+	o.ExceptionQueueID
+   FROM
+      Orchestration o,Queue q
+   WHERE
+       q.OwnerOrchestrationID = o.id
+   and q.id = :InID
+ENDCODE
+
+
+# Used By mlistener
+PROC GetMaxQueueID
+OUTPUT (Single)
+  Id        int
+SQL CODE
+  SELECT
+        max(Id)
+  FROM Queue
+ENDCODE
+
+# Used By mlistener
+PROC GetMinQueueID
+OUTPUT (Single)
+  Id        int
+SQL CODE
+  SELECT
+        min(Id)
+  FROM Queue
+ENDCODE
+
+#Used By FE - Christopher
+PROC ByOrchestration
+INPUT
+  OrcID        int
+OUTPUT (Multiple)
+  ID                       =
+  Name                     =
+  Description              =
+  LegoType                 =
+  PositionX                int
+  PositionY                int
+  OwnerOrchestrationID     =
+  Priority                 =
+  LogLevel                 =
+  Status                   =
+SQL CODE
+  SELECT
+    Q.ID,
+    Q.Name,
+    Q.Description,
+    Q.LegoType,
+    O.PositionX,
+    O.PositionY,
+    Q.OwnerOrchestrationID,
+    Q.Priority,
+    Q.LogLevel,
+    Q.Status
+  FROM
+    Queue Q,
+    (SELECT QueueID, PositionX, PositionY FROM OrchestrationDetail WHERE OrchestrationID = :OrcID) O
+  WHERE
+    Q.ID = O.QueueID
+END CODE
+
+#Used by PythonScript - SWIFT_DECISION_FIELDS - Denise
+PROC GetOrchestrationByQueueID
+INPUT
+  QueueID 	   int
+OUTPUT(Single)
+  OrchestrationID  int
+SQLCODE
+SELECT OwnerOrchestrationID
+FROM   Queue
+WHERE  ID = :QueueID
+ENDCODE
+
+
+#Used By Scheduler
+PROC GetJobsToRun
+OUTPUT (Multiple)
+  QueueID    int
+SQL CODE
+  SELECT
+     Q.ID
+  FROM
+     Queue Q
+  Where
+     q.id >= 0
+ENDCODE
+
+
+#used by G2Datalayer
+PROC GetOrchestrationID
+INPUT
+    QueueID   int
+OUTPUT(single)
+    OrchestrationID int
+SQL CODE
+    select OwnerOrchestrationID
+    from Queue
+    where ID = :QueueID
+ENDCODE
+
+
+#used by G2Datalayer
+PROC GetQueueVersion
+INPUT
+    QueueID        int
+OUTPUT(single)
+    QueueName 	   char(32)
+    OrcVersionID   int
+    LegoType       int
+SQL CODE
+    select Q.Name , O.OrcVersionID, Q.LegoType
+    from Queue Q , Orchestration O
+    where Q.ID = :QueueID
+    and O.ID = Q.OwnerOrchestrationID
+ENDCODE
+
+
+#used by G2Datalayer, SaffyTcpOut
+PROC IsPromptable
+INPUT
+    QueueID        int
+OUTPUT(single)
+    Promptable     int
+SQL CODE
+    Select nvl(Count( * ) , 0)
+    from Queue Q , LegoBlock LB
+    where Q.ID = :QueueID
+    and Q.LegoType = LB.BlockType
+    and LB.ProcessName is not null
+ENDCODE
+
+PROC SysQueues
+OUTPUT (MULTIPLE)
+  ID	                  =
+  Name  		            =
+  Description		        =
+  OwnerOrchestrationID 	=
+SQL CODE
+  Select 
+    ID, 
+    Name, 
+    Description,
+    OwnerOrchestrationID 
+  from Queue
+ENDCODE
+
+
+#used by G2Datalayer
+PROC UpdateAllOperationalStatus
+INPUT
+    OperationalStatus   int
+SQL CODE
+    update Queue
+    set OperationalStatus = :OperationalStatus
+ENDCODE
+
+
+#used by G2Datalayer
+PROC UpdateQueueOperationalStatus
+INPUT
+    QueueID 		int	
+    OperationalStatus   int
+SQL CODE
+    update Queue
+    set OperationalStatus = :OperationalStatus
+    where ID = :QueueID
+ENDCODE
+
+
+#used by FrontEnd
+PROC GetQueuesByOrcID
+INPUT
+  OrcId			int
+OUTPUT (MULTIPLE)
+  ID			=
+  Name			=
+SQL CODE
+  Select 
+    Q.ID, 
+    Q.Name 
+  From 
+    Queue Q
+  Where
+    Q.OwnerOrchestrationID = :OrcId
+  Order By
+    Q.Name Asc
+ENDCODE
+
+#used by SaffyConroller
+PROC ByStatusAndSourceMessages
+INPUT
+  Status		int
+OUTPUT (MULTIPLE)
+  ID			int
+  LinkType		int
+SQL CODE
+  SELECT
+    q.ID
+   ,1
+  From  Queue q
+  WHERE q.Status = :Status
+    AND (SELECT count( * ) from Message m where m.SourceQueueID = q.ID) > 0
+ UNION
+  SELECT
+    q.ID
+   ,2
+  From  Queue q
+  WHERE q.Status = :Status
+    AND (SELECT count( * ) from Message m where m.ResponseQueueID = q.ID) > 0
+ENDCODE
+
+#used by SaffyConroller
+PROC UpdateLegoType
+INPUT
+  ID			int
+  LegoType		int
+  Status		int
+  USId         		=
+SQL CODE
+  update queue
+     set LegoType = :LegoType
+        ,Status = :Status
+        ,USId = :USId
+        ,TmStamp = sysdate
+  where ID = :ID
+ENDCODE
+
+
+
+# Used by g2scheduler
+PROC DeleteByStatusAndOrchID
+INPUT
+  Status                int
+  OwnerOrchestrationID 	int
+SQL CODE
+  delete Queue
+  where status = :Status
+  and  OwnerOrchestrationID = :OwnerOrchestrationID
+ENDCODE
+
+
+#used by saffycontroller
+proc ErrorQueues
+input
+  CountStatus		int
+output (multiple)
+  ID			int
+  Name  		Char(32)
+  Description		char(256) 
+  LegoType     		int
+  Priority     		tinyint
+  LogLevel     		tinyint
+  Status       		TinyInt
+  OwnerOrchestrationID 	int 	
+  MessageCount		int
+  OrcName		char(32)
+  OperationalStatus	int
+  OrcVersionID          int
+sqlcode
+  select
+    q.ID			
+   ,q.Name  		
+   ,q.Description	
+   ,q.LegoType     	
+   ,q.Priority     	
+   ,q.LogLevel     	
+   ,q.Status       		
+   ,q.OwnerOrchestrationID 	
+   ,(select count( * ) from message where queueid = q.ID 
+     and (
+	   (status in (0,1,2,3) and :CountStatus = -1 )
+        or (status = 0 and :CountStatus = 0 )
+        or (status = 1 and :CountStatus = 1 )
+        or (status = 2 and :CountStatus = 2 )
+        or (status = 3 and :CountStatus = 3 )
+        )
+    )
+   , O.Name
+   ,q.OperationalStatus
+   , O.ORCVERSIONID ORCVERID
+  from   queue q, (select ID, name, ORCVERSIONID from orchestration ) O
+  where q.OperationalStatus = 3
+    and O.id = q.OwnerOrchestrationID
+endcode
+
+
+
+data
+insert into OrcVersion values (-1, 'NULLOrch',0,0,0,null,'SCRIPT',sysdate);
+insert into Orchestration values (-1, 'NULLOrch','NULL Orchestration',-1,-1,'SCRIPT',sysdate);
+insert into QUEUE VALUES(-1, 'NULLQ',NULL, 'NULL Queue'           , 0, 0, 0, 0, -1, 5, 'SCRIPT', SYSDATE);
+insert into QUEUE VALUES(-2, 'SCHEDULER',NULL, 'NULL Queue'           , 0, 0, 0, 0, -1, 5, 'SCRIPT', SYSDATE);
+insert into QUEUE VALUES(-3, 'MLISTENER',NULL, 'NULL Queue'           , 0, 0, 0, 0, -1, 5, 'SCRIPT', SYSDATE);
+insert into QUEUE VALUES(-4, 'ALISTENER',NULL, 'NULL Queue'           , 0, 0, 0, 0, -1, 5, 'SCRIPT', SYSDATE);
+insert into QUEUE VALUES(-5, 'KEYFIELDS',NULL, 'NULL Queue'           , 9, 0, 0, 0, -1, 5, 'SCRIPT', SYSDATE);
+insert into QUEUE VALUES(-6, 'SAFFYCONTROLLER',NULL, 'NULL Queue'     , 0, 0, 0, 0, -1, 5, 'SCRIPT', SYSDATE);
+commit;
+enddata

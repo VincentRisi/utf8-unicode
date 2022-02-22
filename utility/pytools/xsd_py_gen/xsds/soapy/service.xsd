@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://microsoft.com/wsdl/types/" />
+      <xsd:element name="RealTimeConversion">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="DocumentID" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="Extension" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="ConvertSizelimitData" type="xsd:int" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="TaxPayerID" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="FullFilePath" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RealTimeConversionResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="RealTimeConversionResult" type="tnxsd:SConversion" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="SConversion">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="bFile" type="xsd:base64Binary" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sMessage" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="SuccessInd" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="ConvertSuccessInd" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="InsertSuccessInd" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="SelectSuccessInd" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ConvertMessage" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="InsertMessage" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="SelectMessage" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="ConversionTime" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="StartWS" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="EndWS" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="StartServiceCls" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="EndServiceCls" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="RealTimeConversionNoSave">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="Extension" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="ConvertSizelimitData" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="FullFilePath" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RealTimeConversionNoSaveResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="RealTimeConversionNoSaveResult" type="tnxsd:SConversion" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AdhocConversion">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="AdHocSubmissionDocGroupID" type="xsd:int" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="DocumentId" type="xsd:int" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="AdHocSubmissionID" type="xsd:int" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="FormGUID" type="s1:guid" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="DocFileType" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="FilePath" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AdhocConversionResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="AdhocConversionResult" type="tnxsd:SConversion" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ConvertDocToPDFByte">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="File" type="xsd:base64Binary" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="FileExtension" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ConvertDocToPDFByteResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="ConvertDocToPDFByteResult" type="tnxsd:SConversion" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RealTimeConversionDirect">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="FilePath" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="FileExtension" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="FileDest" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="FileName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RealTimeConversionDirectResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RealTimeConversionDirectResult" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetFiles">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="SourcePath" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="ArrayOfAnyType">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="GetFilesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetFilesResult" type="tnxsd:ArrayOfAnyType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+      <xsd:simpleType name="guid">
+        <xsd:restriction base="xsd:string">
+          <xsd:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:schema>

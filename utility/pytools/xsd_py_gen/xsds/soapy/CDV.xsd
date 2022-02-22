@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:complexType name="CDV">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" form="unqualified" name="branchCode" type="xsd:string"/>
+            <xsd:element minOccurs="0" maxOccurs="1" form="unqualified" name="accountNo" type="xsd:string"/>
+            <xsd:element minOccurs="1" maxOccurs="1" form="unqualified" name="accountType" type="xsd:int"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="CDVResponse">
+        <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" form="unqualified" name="CDVResult" type="xsd:int"/>
+            <xsd:element minOccurs="0" maxOccurs="1" form="unqualified" name="returnMessage" type="xsd:string"/>
+            <xsd:element minOccurs="0" maxOccurs="1" form="unqualified" name="branchName" type="xsd:string"/>
+            <xsd:element minOccurs="0" maxOccurs="1" form="unqualified" name="bankName" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

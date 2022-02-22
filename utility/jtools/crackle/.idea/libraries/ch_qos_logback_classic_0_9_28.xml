@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="ch.qos.logback.classic-0.9.28">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../jars/apache/ch.qos.logback.classic-0.9.28.jar!/" />
+      <root url="file://$PROJECT_DIR$/../jars/apache" />
+      <root url="jar://$PROJECT_DIR$/../jars/apache/reflections-0.9.10.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../jars/apache" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../jars/apache" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../jars/apache" recursive="false" type="SOURCES" />
+  </library>
+</component>

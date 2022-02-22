@@ -1,0 +1,2 @@
+echo accuityRoutingCode/Id $1:$2
+./DELETE.sh "accuityRoutingCode/Id?Id=694362" $1 $2

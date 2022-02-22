@@ -1,0 +1,16 @@
+{
+  "newRec": {
+    "Id": 694362, 
+    "LocationId": 98008550, 
+    "Department": "MAIN", 
+    "Rank": "1", 
+    "RoutingType": "ARRN", 
+    "RoutingCode": "017 0291", 
+    "RoutingCodeAlt": "0170291", 
+    "FederalDistrict": "", 
+    "SwiftPairingCode": "BFRPARBAXXX", 
+    "Status": 0, 
+    "USId": "accuityimport", 
+    "TmStamp": "20191029161234"
+  }
+}

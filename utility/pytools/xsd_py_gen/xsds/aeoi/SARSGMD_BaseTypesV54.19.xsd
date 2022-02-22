@@ -1,0 +1,1307 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<schema
+    targetNamespace="http://www.sars.gov.za/enterpriseMessagingModel/GMD/BaseTypes/xml/schemas/version/54.19"
+    elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:bt="http://www.sars.gov.za/enterpriseMessagingModel/GMD/BaseTypes/xml/schemas/version/54.19">
+    <annotation>
+        <documentation>
+            2014/12/11 Dakalo: Added FOREIGN INTEREST TAX to the TypeOfTax enumeration and namespace version updated.
+            2013/12/10 Qalo: Added ETI to TypeOfTax and versioned up the target name space.
+            2013/12/09 Ayanda:Added PostalCountryCodeType and versioned up the target name space.
+            2013/11/21 Ayanda:Increased the UnitStreetNo from 5 to 8 characters.
+            2013/11/21 Dirk:
+            Added the following enumerations to EntityTypeType: PUBLIC_BENEFIT_ORG, SUBSIDIARY_OF_STATUTORY_BODY and LEVY_BASED_ASSOC_OF_PERSONS for Exempt Institution Modernisation.
+
+        </documentation>
+        <documentation>
+            2013/11/13 Christina:
+            updated EntityTypeType enumerations to include "INDIVIDUAL_FOREIGN", "FOREIGN_TRUST", "FOREIGN_CO" and "FOREIGN_ECCOMERCE_CO"
+        </documentation>
+        <documentation>
+            2013-10-07 Dirk Grobler. Updated EntityTypeType to align to External BRS for Dividends Withholding and Third Party Data.
+            Corrected spelling mistake: UNICORPORATED_BODY_OF_PERSONS renamed to UNINCORPORATED_BODY_OF_PERSONS
+        </documentation>
+        <documentation>
+            2012/12/11 Wilson:
+            updated UnitStreetNoType from A(5)to free_Text 5.
+        </documentation>
+        <documentation>
+            2012/11/26 Wilson:
+            added additional entity types within the EntityTypeType
+        </documentation>
+        <documentation>
+            2012/11/15 Wilson:
+            added additional entity types within the EntityTypeType
+        </documentation>
+        <documentation>
+            2012/06/26 Wilson:
+            Changed FullNamesType to allow for up to A(100)
+            Changed BankAccountTypeType to be enumerations from 0 to 7 and added id's next to each enumeration as per
+            the IRP5/IT3A Functional specification.
+            Changed BankAccountNo to N(20)
+            Changed FinancialTotalAmtDecimalType From Decimal(19.2) to (17.2)
+            Changed FinancialAmtDecimalType From Decimal(17.2) to (15.2)
+        </documentation>
+        <documentation>
+            Changed on 2012/02/20 by Edwin, Changed Surname to
+            allow 120 Characters, and Period to allow only 6 Digits
+        </documentation>
+        <documentation>
+            Changed on 2012/02/19 by Nisch, Changed minimum
+            restrictions to 1 character
+        </documentation>
+        <documentation>
+            Changed on 2012/02/10 by Warren, Changed Case to Allow
+            up to 10 Characters
+        </documentation>
+        <documentation>
+            Changed on 2012/02/10 by Warren, Updated Base Type to
+            54.5
+        </documentation>
+        <documentation>
+            Changed on 2012/01/09 by Nisch, Added ChangedInd
+            element to Metadata
+        </documentation>
+        <documentation>
+            Changed on 2011/12/19 by Nisch Removed unnecessary and
+            duplicate types Changed restriction on passport number to 18
+            characters Added long financial decimal numbers, non decimal
+            percentage values and decimals with 6 fraction digits
+        </documentation>
+        <documentation>
+            Changed on 2011/10/20 by Nisch Changed restriction on
+            OrganisationRegNoType to be 15 characters Changed totaldigits on
+            percentage type to be 5 Changed restriction on FullNames to be
+            90
+            characters
+        </documentation>
+        <documentation>
+            Changed on 2011/09/19 by Eric: Changed WarehouseNoType
+            restrictions to between 0 and 11 characters
+        </documentation>
+        <documentation>
+            Changed on 2011/09/16 by Miguel: Changed ShortCodeType
+            restrictions to "[A-Z|0-9]{2}" Changed WarehouseNoType restrictions
+            to between 1 and 11 characters Changed UniqueIdentifierType
+            restrictions to "[A-F|a-f|0-9|\-]{0,64}"
+        </documentation>
+        <documentation>
+            2012-03-08 Dirk Grobler. Added "STC" as enumeration to
+            TypeOfTaxType
+        </documentation>
+        <documentation>
+            2012-04-26 Ayanda Makinza. Increased the
+            FinancialAmtType length to 15
+        </documentation>
+    </annotation>
+    <simpleType name="PartyIDType">
+        <annotation>
+            <documentation>
+                Represents a unique id allocated to a party on
+                registration with SARS as a legal entity
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="20" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="EntityTypeType">
+        <annotation>
+            <documentation>
+                Represents the type of legal entities that transact with
+                SARS
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="INDIVIDUAL" />
+            <enumeration value="INDIVIDUAL_FOREIGN"></enumeration>
+            <enumeration value="INDIVIDUAL_ESTATE"></enumeration>
+            <enumeration value="SOLE_PROPRIETOR" />
+            <enumeration value="FOREIGN_RESIDENT" />
+            <enumeration value="FOREIGN_CO"></enumeration>
+            <enumeration value="FOREIGN_ECOMMERCE_CO"></enumeration>
+            <enumeration value="FOREIGN_TRUST"></enumeration>
+            <enumeration value="SOUTH_AFRICAN_RESIDENT" />
+            <enumeration value="SOUTH_AFRICAN_NON_RESIDENT" />
+            <enumeration value="FOREIGNER_NON_RESIDENT" />
+            <enumeration value="REGISTERED_ENTITY_CO_CC_COOP" />
+            <enumeration value="PUBLIC_CO" />
+            <enumeration value="PRIVATE_CO" />
+            <enumeration value="CO_WITHOUT_MOTIVES_FOR_GAIN_SEC21" />
+            <enumeration value="CO_LIMITED_BY_GUARANTEE" />
+            <enumeration value="FOREIGN_CO_OUT_REPUBLIC" />
+            <enumeration value="FOREIGN_CO_IN_REPUBLIC" />
+            <enumeration value="EXTERNAL_CO_SEC21A" />
+            <enumeration value="CO_REG_TRANSVAAL_LAW" />
+            <enumeration value="PROFESSIONAL_CO" />
+            <enumeration value="UNLIMITED_CO" />
+            <enumeration value="CORP_ESTATE" />
+            <enumeration value="CLOSE_CORPORATION" />
+            <enumeration value="PRIMARY_COOPERATIVE" />
+            <enumeration value="SECONDARY_COOPERATIVE" />
+            <enumeration value="TERTIARY_COOPERATIVE" />
+            <enumeration value="INTERVIVOS_TRUST" />
+            <enumeration value="MORTIS_CAUSA_TRUST" />
+            <enumeration value="SPECIAL_A_TRUST" />
+            <enumeration value="SPECIAL_B_TRUST" />
+            <enumeration value="EXEMPT_TRUST" />
+            <enumeration value="NORMAL_TRUST" />
+            <enumeration value="PARTNERSHIP" />
+            <enumeration value="GOVERNMENT_ENTITY" />
+            <enumeration value="ASSOC_NOT_FOR_GAIN" />
+            <enumeration value="WELFARE_ORG" />
+            <enumeration value="CLUB" />
+            <enumeration value="UNINCORPORATED_BODY_OF_PERSONS" />
+            <enumeration value="SECTIONAL_TITLE_ENTITY" />
+            <enumeration value="FOREIGN_GOV_ORG" />
+            <enumeration value="RETIREMENT_FUND" />
+            <enumeration value="CONVEYANCER" />
+            <enumeration value="OTHER_CO" />
+            <enumeration value="OTHER_TRUST" />
+            <enumeration value="STATE_OWNED_CO" />
+            <enumeration value="INCORPORATED_CO" />
+            <enumeration value="EXTERNAL_CO" />
+            <enumeration value="EXTERNAL_NON_PROFIT_CO"></enumeration>
+            <enumeration value="NON_PROFIT_CO"></enumeration>
+            <enumeration value="STATUTORY_BODY"></enumeration>
+            <enumeration value="PERSONAL_LIABILITY_CO"></enumeration>
+            <enumeration value="STOKVEL" />
+            <enumeration value="SOCIETY"/>
+            <enumeration value="SUBSIDIARY_OF_STATUTORY_BODY">
+                <annotation>
+                    <documentation>Required by Exempt Institutions Modernisation</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="LEVY_BASED_ASSOC_OF_PERSONS">
+                <annotation>
+                    <documentation>Required by Exempt Institutions Modernisation</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="PUBLIC_BENEFIT_ORG">
+                <annotation>
+                    <documentation>Required by Exempt Institutions Modernisation</documentation>
+                </annotation>
+            </enumeration>
+
+        </restriction>
+    </simpleType>
+
+    <simpleType name="PostalCodeType">
+        <annotation>
+            <documentation>
+                Represents an international postal code
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="10" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="TelFaxCellNoType">
+        <annotation>
+            <documentation>
+                Represents an international telephone, fax or
+                cellphone number
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\d{1,15}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="TypeOfTaxType">
+        <annotation>
+            <documentation>
+                Represents the types of tax products for which a party
+                subscribes
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="INCOME_TAX" />
+            <enumeration value="PAYE" />
+            <enumeration value="VAT" />
+            <enumeration value="CUSTOMS" />
+            <enumeration value="EXCISE" />
+            <enumeration value="UIF" />
+            <enumeration value="SDL" />
+            <enumeration value="DIESEL" />
+            <enumeration value="PROVISIONAL_TAX" />
+            <enumeration value="DIVIDENDS_TAX" />
+            <enumeration value="APT" />
+            <enumeration value="ASSESSED_TAX" />
+            <enumeration value="ADMIN_PENALTY" />
+            <enumeration value="TRANSFER_DUTY" />
+            <enumeration value="CORPORATE_TAX" />
+            <enumeration value="ESTATE_TAX" />
+            <enumeration value="STC" />
+            <enumeration value="ETI" />
+            <enumeration value="FOREIGN_INTEREST_TAX"></enumeration>
+        </restriction>
+    </simpleType>
+    <simpleType name="FinancialYearEndType">
+        <annotation>
+            <documentation>
+                Represents a company's financial year end
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="01" />
+            <enumeration value="02" />
+            <enumeration value="03" />
+            <enumeration value="04" />
+            <enumeration value="05" />
+            <enumeration value="06" />
+            <enumeration value="07" />
+            <enumeration value="08" />
+            <enumeration value="09" />
+            <enumeration value="10" />
+            <enumeration value="11" />
+            <enumeration value="12" />
+        </restriction>
+    </simpleType>
+    <simpleType name="LanguageType">
+        <annotation>
+            <documentation>Represents official SA languages</documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="ENGLISH" />
+            <enumeration value="AFRIKAANS" />
+            <enumeration value="NDEBELE" />
+            <enumeration value="XHOSA" />
+            <enumeration value="ZULU" />
+            <enumeration value="SESOTHO_LEBOA" />
+            <enumeration value="SESOTHO" />
+            <enumeration value="SETSWANA" />
+            <enumeration value="SISWATI" />
+            <enumeration value="TSHIVENDA" />
+            <enumeration value="XITSONGA" />
+        </restriction>
+    </simpleType>
+    <simpleType name="IDNoType">
+        <annotation>
+            <documentation>Represents a south african ID No</documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\d{13}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="PassportNoType">
+        <annotation>
+            <documentation>
+                Represents a passport number used to identify non
+                south
+                africans
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="18" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="CountryType">
+        <annotation>
+            <documentation>
+                Represents a country code. Can be a 2 or 3 alpha code
+                or a 3 digit numeric code
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\w{1,3}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="EmailType">
+        <annotation>
+            <documentation>Represents an email address</documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="80" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="CapacityType">
+        <annotation>
+            <documentation>
+                Represents the capacity in which a particular party
+                transacts with SARS, usually as a representative of a taxpayer
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="AD" id="Administrator" />
+            <enumeration value="AO" id="Accounting_Officer" />
+            <enumeration value="CA" id="Chatered_Accountant" />
+            <enumeration value="GU" id="Guardian" />
+            <enumeration value="LR" id="Legal_Representative" />
+            <enumeration value="PA" id="Personal_Assistant" />
+            <enumeration value="PO" id="Public_Officer" />
+            <enumeration value="PR" id="Public_Representative" />
+            <enumeration value="SP" id="Sole_Proprietary" />
+            <enumeration value="TP" id="Tax_Practitioner" />
+            <enumeration value="TR" id="Trustee" />
+            <enumeration value="PT" id="Partner" />
+            <enumeration value="TS" id="Treasurer" />
+            <enumeration value="CU" id="Curator" />
+        </restriction>
+    </simpleType>
+    <simpleType name="TaxPractionerRegNoType">
+        <annotation>
+            <documentation>
+                Represents a registered tax practitioner number
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\w{9}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="FSPLicenseNoType">
+        <annotation>
+            <documentation>
+                Represents an authorised financial service provider
+                number type
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\d{1,14}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="ClientTypeType">
+        <annotation>
+            <documentation>
+                Represents customs client types for which a trader can
+                subscribe
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="IMP" id="Importer" />
+            <enumeration value="EXP" id="Exporter" />
+            <enumeration value="RE3" id="Rebate_User_Schedule3_4" />
+            <enumeration value="AGO" id="Manufacturer_AGOA" />
+            <enumeration value="WH1" id="Special_Manufacturing_Warehouse" />
+            <enumeration value="EC" id="Electronic_Users" />
+            <enumeration value="PR" id="Producer" />
+            <enumeration value="RE1" id="Rebate_User_Schedule5" />
+            <enumeration value="IDZ" id="Zone_Operator" />
+            <enumeration value="CCA" id="Customs_Control_Area" />
+            <enumeration value="WH2" id="Customs_Warehouse" />
+            <enumeration value="CA" id="Clearing_Agent" />
+            <enumeration value="RH" id="Road_Haulier" />
+            <enumeration value="WH3" id="Warehouse_CCA_Storage" />
+            <enumeration value="WH4" id="Warehouse_CCA_Manufacturing" />
+            <enumeration value="CDP" id="Depot_Container" />
+            <enumeration value="DDP" id="Depot_Degrouping" />
+            <enumeration value="SHP" id="Ship_Wreck" />
+            <enumeration value="COP" id="Container_Operator" />
+            <enumeration value="RE2" id="Rebate_User_Schedule6" />
+            <enumeration value="EE1" id="Excise_Exempted_Ad_Valorem" />
+            <enumeration value="BIM" id="Excise_Exempted_Bio_Diesel" />
+            <enumeration value="EE2" id="Electricity_Producer_3_5_Mw" />
+            <enumeration value="DEL" id="Diamond_Exporter" />
+            <enumeration value="APT" id="Air_Passenger_Tax" />
+            <enumeration value="APT1" id="Air_Passenger_Tax_1" />
+            <enumeration value="AKS" id="Aviation_Kerosene_Supplier" />
+            <enumeration value="WH5" id="Manufacturing_Warehouse" />
+            <enumeration value="WH6" id="Warehouse_Storage_Wine" />
+            <enumeration value="WH7" id="Special_Storage_Warehouse" />
+            <enumeration value="LDF" id="Licensed_Distributor_Fuel" />
+            <enumeration value="AGE" id="Agent_Representing_Foreigner" />
+        </restriction>
+    </simpleType>
+    <simpleType name="YearType">
+        <annotation>
+            <documentation>Represents a year in format CCYY</documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\d{4}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="DistrictType">
+        <annotation>
+            <documentation>Represents a sars district office</documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\d{1,4}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="FullNamesType">
+        <annotation>
+            <documentation>
+                Represents an individual party's full names
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="100" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="SurnameType">
+        <annotation>
+            <documentation>
+                Represents an individual party's surname
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="120" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="InitialsType">
+        <annotation>
+            <documentation>
+                Represents an individual party's initials
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="5" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="MaritalStatusType">
+        <annotation>
+            <documentation>
+                Represents an individual party's marital status
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="N" id="Not_Married" />
+            <enumeration value="I" id="Married_In_Community_Of_Property" />
+            <enumeration value="O"
+                id="Married_Outside_Community_Of_Property" />
+        </restriction>
+    </simpleType>
+    <simpleType name="UnitStreetNoType">
+        <annotation>
+            <documentation>
+                Represents a unit/street number as part of a structured
+                physical address
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <minLength value="1"></minLength>
+            <maxLength value="8"></maxLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="ComplexStreetNameType">
+        <annotation>
+            <documentation>
+                Represents the name of a complex/street as part of a
+                structured physical address
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="27" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="SuburbType">
+        <annotation>
+            <documentation>
+                Represents the name of a suburb as part of a
+                structured
+                physical address
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="36" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="CityType">
+        <annotation>
+            <documentation>
+                Represents the name of a city as part of a structured
+                physical address
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="36" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="AccountNoType">
+        <annotation>
+            <documentation>Represents a financial account number</documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\d{1,10}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="BankAccountNoType">
+        <annotation>
+            <documentation>Represents a bank account number</documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\d{1,20}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="BankBranchNoType">
+        <annotation>
+            <documentation>Represents a bank branch number</documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\d{1,6}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="BankAccountTypeType">
+        <annotation>
+            <documentation>Represents a bank/payment account type</documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="0" id ="Not_Paid_by_electronic_bank_transfer" />
+            <enumeration value="1" id="Cheque_Current_Account"/>
+            <enumeration value="2" id="Savings_Account"/>
+            <enumeration value="3" id="Transmission_Account"/>
+            <enumeration value="4" id="Bond_Account"/>
+            <enumeration value="5" id="Credit_Card_Account"/>
+            <enumeration value="6" id="Subscription_Share_Account"/>
+            <enumeration value="7" id="Foreign_Bank_Account"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="OrganisationNameType">
+        <annotation>
+            <documentation>
+                Represents the trading name of an organisation
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="120" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="OrganisationRegNoType">
+        <annotation>
+            <documentation>
+                Represents an organisation's registration number
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="15" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="ItemCodeType">
+        <annotation>
+            <documentation>
+                Represents a customs item code. Used for commodity and
+                additional info codes
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="12" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="UsernameType">
+        <annotation>
+            <documentation>
+                Represents a SARS user name. Includes admin user names
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="35" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="UnitNameType">
+        <annotation>
+            <documentation>
+                Represents the name of a unit as part of a structured
+                physical address
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="36" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="FinancialAmtType">
+        <annotation>
+            <documentation>
+                Represents a standard non-decimal financial amount
+            </documentation>
+        </annotation>
+        <restriction base="long">
+            <totalDigits value="15" />
+        </restriction>
+    </simpleType>
+    <simpleType name="FinancialAmtDecimalType">
+        <annotation>
+            <documentation>
+                Represents the standard SARS format of a financial
+                amount
+            </documentation>
+        </annotation>
+        <restriction base="decimal">
+            <totalDigits value="15" />
+            <fractionDigits value="2" />
+        </restriction>
+    </simpleType>
+    <simpleType name="FinancialTotalAmtDecimalType">
+        <annotation>
+            <documentation>
+                Represents the standard SARS format of a large sum of
+                totals amount
+            </documentation>
+        </annotation>
+        <restriction base="decimal">
+            <totalDigits value="17" />
+            <fractionDigits value="2" />
+        </restriction>
+    </simpleType>
+    <simpleType name="FinancialTotalAmtFractionDecimalType">
+        <annotation>
+            <documentation>
+                Represents the SARS format of a large sum of totals
+                amount with 7 fraction digits
+            </documentation>
+        </annotation>
+        <restriction base="decimal">
+            <totalDigits value="24" />
+            <fractionDigits value="7" />
+        </restriction>
+    </simpleType>
+    <simpleType name="PeriodType">
+        <annotation>
+            <documentation>
+                Represents a tax period in format CCYYMM or MM
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\d{6}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="FinancialAmtFractionDecimalType">
+        <annotation>
+            <documentation>
+                Represents a very detailed financial amount with 7
+                fraction digits
+            </documentation>
+        </annotation>
+        <restriction base="decimal">
+            <totalDigits value="22" />
+            <fractionDigits value="7" />
+        </restriction>
+    </simpleType>
+    <simpleType name="SourceCodeType">
+        <annotation>
+            <documentation>
+                Represents a source code against which tax is
+                calculated
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\d{4}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="RegionType">
+        <annotation>
+            <documentation>Represents a SARS main region</documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\w{1,3}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="PercentageDecimalType">
+        <annotation>
+            <documentation>Represents a decimal percentage value</documentation>
+        </annotation>
+        <restriction base="decimal">
+            <totalDigits value="5" />
+            <fractionDigits value="2" />
+        </restriction>
+    </simpleType>
+    <simpleType name="PercentageDecimalFractionType">
+        <annotation>
+            <documentation>
+                Represents a decimal percentage value with 7 fraction
+                digits
+            </documentation>
+        </annotation>
+        <restriction base="decimal">
+            <totalDigits value="10" />
+            <fractionDigits value="7" />
+        </restriction>
+    </simpleType>
+    <simpleType name="CaseNoType">
+        <annotation>
+            <documentation>
+                Represents a sars generated case number
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\d{1,10}"></pattern>
+        </restriction>
+    </simpleType>
+    <simpleType name="TransactionNoType">
+        <annotation>
+            <documentation>
+                Represents a transaction number for
+                transactional-based
+                taxes
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="35" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="ProductStatusType">
+        <annotation>
+            <documentation>
+                Represents the status of party's subscription with
+                SARS
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="ACTIVE" />
+            <enumeration value="INACTIVE" />
+            <enumeration value="CANCELLED" />
+            <enumeration value="SUSPENDED" />
+            <enumeration value="NOT_FOUND" />
+        </restriction>
+    </simpleType>
+    <simpleType name="ApplicationTypeType">
+        <annotation>
+            <documentation>
+                Represents the type of registration application being
+                requested
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="REGISTRATION" />
+            <enumeration value="LICENSING" />
+            <enumeration value="ACCREDITATION" />
+            <enumeration value="CANCELLED" />
+        </restriction>
+    </simpleType>
+    <simpleType name="ChannelIDType">
+        <annotation>
+            <documentation>
+                Represents a unique identifier to identify and route
+                to
+                the correct sars application/system
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="10" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="BusinessPartnerNoType">
+        <annotation>
+            <documentation>
+                Represents a business partner allocated to the party for
+                financial registration and transacting purposes
+            </documentation>
+        </annotation>
+        <restriction base="integer">
+            <minInclusive value="0" />
+            <maxInclusive value="9999999999" />
+        </restriction>
+    </simpleType>
+    <simpleType name="CertNoType">
+        <annotation>
+            <documentation>
+                Represents a sars allocated tax certificate number
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\w{1,30}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="TransportNoType">
+        <annotation>
+            <documentation>
+                Represents a transportation number including vehicle
+                registration numbers, flight numbers and shipment
+                numbers
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="17" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="CurrencyTypeType">
+        <annotation>
+            <documentation>Represents a currency code</documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\w{1,3}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="FollowUpNoType">
+        <annotation>
+            <documentation>
+                Represents a follow up number assigned by a SARS core
+                tax systems
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\w{10}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="VersionNoType">
+        <annotation>
+            <documentation>
+                Represents a version number associated with a return /
+                service
+            </documentation>
+        </annotation>
+        <restriction base="int">
+            <minInclusive value="0" />
+            <maxInclusive value="99999" />
+        </restriction>
+    </simpleType>
+    <simpleType name="DocumentFormatType">
+        <annotation>
+            <documentation>Represents the extension/document type</documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\w{1,3}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="UniqueIdentifierType">
+        <annotation>
+            <documentation>
+                Represents a universal unique identifier
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <length value="36"></length>
+        </restriction>
+    </simpleType>
+    <simpleType name="ExternalReferenceIDType">
+        <annotation>
+            <documentation>
+                Represents an externally allocated reference number
+                that
+                can be used to identify the party transacting with SARS
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="64" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="ExternalReferenceIDTypeType">
+        <annotation>
+            <documentation>
+                Represents the types of externally allocated reference
+                numbers that can be used to identify the party transacting with SARS
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="TAX_NO" />
+            <enumeration value="ID_NO" />
+            <enumeration value="PASSPORT_NO" />
+            <enumeration value="COMPANY_REGISTRATION_NO" />
+            <enumeration value="PARTY_ID" />
+            <enumeration value="TIN_NO" />
+        </restriction>
+    </simpleType>
+    <simpleType name="NotificationTypeType">
+        <annotation>
+            <documentation>Represents the means of notification</documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="SMS" />
+            <enumeration value="EMAIL" />
+        </restriction>
+    </simpleType>
+    <simpleType name="VDPApplicationNoType">
+        <annotation>
+            <documentation>
+                Represents a voluntary disclosure application number
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\w{1,10}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="ContactType">
+        <annotation>
+            <documentation>
+                Represents the means through which a party must be
+                contacted
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="EMAIL" />
+            <enumeration value="SMS" />
+            <enumeration value="POST" />
+            <enumeration value="FAX" />
+            <enumeration value="REPRESENTATIVE" />
+        </restriction>
+    </simpleType>
+    <simpleType name="OwnershipCapacityType">
+        <annotation>
+            <documentation>
+                Represents a party's type of capacity as an owner in
+                an organisation
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="PARTNER" />
+            <enumeration value="SHAREHOLDER" />
+            <enumeration value="MEMBER" />
+            <enumeration value="BENEFICIARY" />
+            <enumeration value="MAIN_PARTNER" />
+            <enumeration value="DIRECTOR" />
+            <enumeration value="TRUSTEE" />
+        </restriction>
+    </simpleType>
+    <simpleType name="YesNoIndType">
+        <annotation>
+            <documentation>Represents a yes or no indicator value</documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="Y" />
+            <enumeration value="N" />
+        </restriction>
+    </simpleType>
+    <simpleType name="PRNType">
+        <annotation>
+            <documentation>
+                Represents a financial payment reference number
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\w{1,19}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="PaymentAllocationStatusType">
+        <annotation>
+            <documentation>
+                Represents the extent to which a payment is allocated
+                to outstanding debits
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="ALLOCATED" />
+            <enumeration value="PARTIALLY_ALLOCATED" />
+            <enumeration value="UNALLOCATED" />
+        </restriction>
+    </simpleType>
+    <simpleType name="ReceiptNoType">
+        <annotation>
+            <documentation>
+                Represents a SARS allocated receipt number
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\d{1,10}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="PriorityDetailedType">
+        <annotation>
+            <documentation>Represents a detailed priority value</documentation>
+        </annotation>
+        <restriction base="int">
+            <minInclusive value="0" />
+            <maxInclusive value="100" />
+        </restriction>
+    </simpleType>
+    <complexType name="PeriodStructure">
+        <annotation>
+            <documentation>
+                Structure representing from and to periods in format
+                CCYYMM or MM
+            </documentation>
+        </annotation>
+        <all>
+            <element name="FromPeriod" type="bt:PeriodType" minOccurs="1"
+                maxOccurs="1" />
+            <element name="ToPeriod" type="bt:PeriodType" minOccurs="1"
+                maxOccurs="1" />
+        </all>
+    </complexType>
+    <complexType name="TaxRefStructure">
+        <annotation>
+            <documentation>
+                Structure representing the tax reference number and
+                tax type
+            </documentation>
+        </annotation>
+        <all>
+            <element name="TypeOfTax" type="bt:TypeOfTaxType" minOccurs="1"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>Represents the type of tax product</documentation>
+                </annotation>
+            </element>
+            <element name="TaxRefNo" type="bt:TaxRefNoType" minOccurs="1"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the reference number associated with the
+                        type of tax product
+                    </documentation>
+                </annotation>
+            </element>
+        </all>
+    </complexType>
+    <complexType name="MetadataStructure">
+        <annotation>
+            <documentation>
+                Structure representing sets of application metadata
+                together with username and timestamp for auditing purposes
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="ApplicationMetadata" type="bt:ApplicationMetadataStructure"
+                minOccurs="0" maxOccurs="999">
+                <annotation>
+                    <documentation>
+                        Represents the application specific metadata
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="ChangedInd" maxOccurs="1" minOccurs="0">
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="NEW"></enumeration>
+                        <enumeration value="UPDATED"></enumeration>
+                        <enumeration value="DELETED"></enumeration>
+                        <enumeration value="NO_CHANGE"></enumeration>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="Username" type="bt:UsernameType" minOccurs="0"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the username of the SARS
+                        employee/application that changed the data
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="TimeStamp" type="dateTime" minOccurs="0"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the date and time when the data was last
+                        updated
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="DataStructure">
+        <annotation>
+            <documentation>
+                Structure representing a name value pair
+            </documentation>
+        </annotation>
+        <all>
+            <element name="Name" minOccurs="1" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the name of the data element being
+                        described
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <maxLength value="500" />
+                        <minLength value="1"></minLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="Value" minOccurs="1" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the value associated with the data
+                        element being described
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <maxLength value="500" />
+                        <minLength value="1"></minLength>
+                    </restriction>
+                </simpleType>
+            </element>
+        </all>
+        <attribute name="GUID" type="bt:UniqueIdentifierType" use="optional" />
+        <attribute name="LockedInd" type="bt:YesNoIndType" use="optional" />
+    </complexType>
+    <complexType name="ApplicationMetadataStructure">
+        <annotation>
+            <documentation>
+                Structure used to represent application specific
+                metadata. Should only be used in instances where application needs
+                to store identification keys and relate data to keys or when the
+                data itself is unstructured
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="Data" type="bt:DataStructure" minOccurs="0"
+                maxOccurs="999">
+                <annotation>
+                    <documentation>Represents the metadata</documentation>
+                </annotation>
+            </element>
+        </sequence>
+        <attribute name="GUID" type="bt:UniqueIdentifierType" use="optional" />
+    </complexType>
+    <simpleType name="ShortCodeType">
+        <annotation>
+            <documentation>
+                Represents a dynamic coded value up to 2 characters
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\w{1,2}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="WarehouseNoType">
+        <annotation>
+            <documentation>Represents a warehouse number</documentation>
+        </annotation>
+        <restriction base="string">
+            <minLength value="1" />
+            <maxLength value="11" />
+        </restriction>
+    </simpleType>
+    <simpleType name="TaxRefNoType">
+        <annotation>
+            <documentation>
+                Represents a sars allocated tax/customs number
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\w{8}|\w{10}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="IndicatorType">
+        <annotation>
+            <documentation>
+                Represents an indicator code. Used for dynamic codes
+                that are limited to 1 character in length
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <length value="1"></length>
+        </restriction>
+    </simpleType>
+    <simpleType name="SIDType">
+        <annotation>
+            <documentation>
+                Represents a SARS employee/contractor number
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\w{8}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="AccHolderRelationshipType">
+        <annotation>
+            <documentation>
+                Represents a party's relationship to a financial
+                account
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="OWN" />
+            <enumeration value="JOINT" />
+            <enumeration value="3RD_PARTY" />
+        </restriction>
+    </simpleType>
+    <simpleType name="ReturnSubmissionTypeType">
+        <annotation>
+            <documentation>
+                Represents the context in which a return is submitted
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="INITIAL" />
+            <enumeration value="SIMULATION" />
+            <enumeration value="TAXPAYER_REVISED" />
+            <enumeration value="INTERNAL_REVISED" />
+        </restriction>
+    </simpleType>
+    <simpleType name="AddressLineType">
+        <annotation>
+            <documentation>
+                Represents an unstructured address line typically used
+                in postal addresses
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="100" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="NoBankAccountReasonType">
+        <annotation>
+            <documentation>
+                Represents reasons for not having an active south
+                african bank account
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="NON_RESIDENTS" />
+            <enumeration value="FICA" />
+            <enumeration value="NAME_CHANGES" />
+            <enumeration value="BLACKLISTED" />
+            <enumeration value="INSOLVENCY_LIQUIDATION" />
+            <enumeration value="COMPANY_DEREGISTRATION" />
+            <enumeration value="ESTATE" />
+            <enumeration value="DORMANCY" />
+            <enumeration value="BANKRUPTCY" />
+            <enumeration value="OTHER" />
+        </restriction>
+    </simpleType>
+    <simpleType name="RiskIDType">
+        <annotation>
+            <documentation>
+                Represents a risk id communicating the type of risk
+                identified
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\w{1,5}" />
+        </restriction>
+    </simpleType>
+    <simpleType name="StopperCodeType">
+        <annotation>
+            <documentation>
+                Represents a stopper code placed by a core tax system
+                to
+                prevent a refund payout until a taxpayer's compliance is
+                met
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="4" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+    <simpleType name="PercentageType">
+        <annotation>
+            <documentation>
+                Represents a non decimal percentage value
+            </documentation>
+        </annotation>
+        <restriction base="int">
+            <minInclusive value="0" />
+            <maxInclusive value="100" />
+        </restriction>
+    </simpleType>
+    <simpleType name="PriorityType">
+        <annotation>
+            <documentation>Represents a priority type</documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="CRITICAL" />
+            <enumeration value="HIGH" />
+            <enumeration value="MEDIUM" />
+            <enumeration value="LOW" />
+        </restriction>
+    </simpleType>
+
+
+    <simpleType name="PostalCountryCodeType">
+        <restriction base="string">
+            <pattern value="[A-Z]{2}"></pattern>
+        </restriction>
+    </simpleType>
+</schema>

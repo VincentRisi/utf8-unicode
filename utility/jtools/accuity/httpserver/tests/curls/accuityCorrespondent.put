@@ -1,0 +1,32 @@
+{
+  "newRec": {
+    "Id": 8862,
+    "LocationId": 96785103,
+    "ClearingSystem": "COM",
+    "CurrencyCode": "USD",
+    "OwnerSwift": "ALPEAT22XXX",
+    "OwnerSwiftWOPadding": "ALPEAT22",
+    "OwnerSSIAccountNo": "",
+    "ClearingAccuityId": "26542590",
+    "ClearingSwift": "RZBAATWWXXX",
+    "ClearingSwiftWOPadding": "RZBAATWW",
+    "HolderAccuityId": "",
+    "HolderSwift": "",
+    "HolderSwiftWOPadding": "",
+    "HolderSSIAccountNo": "",
+    "PreferredSSIInd": "N",
+    "FurtherAccuityId": "",
+    "FurtherSwift": "",
+    "FurtherSwiftWOPadding": "",
+    "Further2AccuityId": "",
+    "Further2Swift": "",
+    "Further2SwiftWOPadding": "",
+    "CorrespondentEffectiveDate": "",
+    "CorrespondentDeactivationDate": "",
+    "CorrespondentUpdateDate": "2019/10/01",
+    "SSINotes": "",
+    "Status": 0,
+    "USId": "accuityimport",
+    "TmStamp": "20191029162316"
+  }
+}

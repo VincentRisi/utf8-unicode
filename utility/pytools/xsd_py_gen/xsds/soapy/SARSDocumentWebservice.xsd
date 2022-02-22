@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xxsd:schema xmlnxsd:ns="http://webservice.sars.gov.za/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://webservice.sars.gov.za/xsd">
+      <xxsd:element name="getServiceProviderResponse">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="return" nillable="true" type="xxsd:string"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="getVersionResponse">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="return" nillable="true" type="xxsd:string"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="getDocument">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="request" type="nxsd:GetDocumentRequest"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="GetDocumentRequest" type="nxsd:GetDocumentRequest"/>
+      <xxsd:complexType name="GetDocumentRequest">
+        <xxsd:sequence>
+          <xxsd:element name="documentId" type="xxsd:string"/>
+          <xxsd:element name="mimeType" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="requestorIdentifier" type="xxsd:string"/>
+          <xxsd:element name="enableSwA" nillable="true" type="xxsd:boolean"/>
+        </xxsd:sequence>
+      </xxsd:complexType>
+      <xxsd:element name="getDocumentResponse">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="return" type="nxsd:GetDocumentResponse"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="GetDocumentResponse" type="nxsd:GetDocumentResponse"/>
+      <xxsd:complexType name="GetDocumentResponse">
+        <xxsd:complexContent>
+          <xxsd:extension base="nxsd:Response">
+            <xxsd:sequence>
+              <xxsd:element name="attachmentId" nillable="true" type="xxsd:string"/>
+              <xxsd:element name="binaryData" nillable="true" type="xxsd:base64Binary"/>
+              <xxsd:element name="document" type="nxsd:SARSDocument"/>
+              <xxsd:element name="mimeType" type="xxsd:string"/>
+            </xxsd:sequence>
+          </xxsd:extension>
+        </xxsd:complexContent>
+      </xxsd:complexType>
+      <xxsd:element name="SARSDocument" type="nxsd:SARSDocument"/>
+      <xxsd:complexType name="SARSDocument">
+        <xxsd:sequence>
+			<xxsd:element name="bankAccountNumber" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="batchId" nillable="true" type="xxsd:string"/>
+            <xxsd:element name="boxNumber" nillable="true" type="xxsd:string"/>
+          	<xxsd:element name="branchNumber" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="caseNumber" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="classificationMethod" nillable="true" type="nxsd:ClassificationMethod"/>
+          <xxsd:element name="dataExtractMethod" nillable="true" type="nxsd:DataExtractMethod"/>
+          <xxsd:element name="dataValidator1Id" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="dataValidator2Id" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="dateOfBirth" nillable="true" type="xxsd:dateTime"/>
+          <xxsd:element name="documentClassification" nillable="true" type="nxsd:DocumentClassification"/>
+ 			<xxsd:element name="faxFilename" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="hasUnknownDocuments" nillable="true" type="xxsd:boolean"/>
+          <xxsd:element name="idNumber" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="identifier" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="identifierType" nillable="true" type="nxsd:IdentifierType"/>
+          <xxsd:element name="imageCaptureDate" nillable="true" type="xxsd:dateTime"/>
+          <xxsd:element name="imageQuality" type="nxsd:ImageQuality"/>
+          <xxsd:element name="initials" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="missingMandatoryFields" nillable="true" type="xxsd:boolean"/>
+          <xxsd:element name="missingPages" nillable="true" type="xxsd:boolean"/>
+          <xxsd:element name="missingSignature" nillable="true" type="xxsd:boolean"/>
+          <xxsd:element name="documentId" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="objectName" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="pageList" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="passportNumber" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="processStatus" nillable="true" type="nxsd:ProcessStatus"/>
+          <xxsd:element name="qaOperatorId" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="scanOperatorId" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="scannerWorkstationId" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="source" nillable="true" type="nxsd:Source"/>
+          <xxsd:element name="surname" nillable="true" type="xxsd:string"/>
+	      <xxsd:element name="teamLeaderId" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="timestamps" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="totalPagesExpected" nillable="true" type="xxsd:int"/>
+                    <xxsd:element name="companyName" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="yearOfAssessment" nillable="true" type="xxsd:int"/>
+        </xxsd:sequence>
+      </xxsd:complexType>
+      <xxsd:element name="ClassificationMethod" type="nxsd:ClassificationMethod"/>
+      <xxsd:simpleType name="ClassificationMethod">
+        <xxsd:restriction base="xxsd:string">
+          <xxsd:enumeration value="Barcode"/>
+          <xxsd:enumeration value="Manual"/>
+          <xxsd:enumeration value="Template"/>
+                    <xxsd:enumeration value="Unknown"/>
+                </xxsd:restriction>
+            </xxsd:simpleType>
+            <xxsd:element name="DataExtractMethod" type="nxsd:DataExtractMethod"/>
+            <xxsd:simpleType name="DataExtractMethod">
+                <xxsd:restriction base="xxsd:string">
+                    <xxsd:enumeration value="Barcode"/>
+          <xxsd:enumeration value="Manual"/>
+                    <xxsd:enumeration value="OCR"/>
+                    <xxsd:enumeration value="Unknown"/>
+        		</xxsd:restriction>
+    		</xxsd:simpleType>
+      <xxsd:element name="DocumentClassification" type="nxsd:DocumentClassification"/>
+      <xxsd:simpleType name="DocumentClassification">
+        <xxsd:restriction base="xxsd:string">
+          <xxsd:enumeration value="IRP511"/>
+          <xxsd:enumeration value="IT12C"/>
+          <xxsd:enumeration value="IT12S"/>
+          <xxsd:enumeration value="Unknown"/>
+          <xxsd:enumeration value="Unresolved"/>
+          <xxsd:enumeration value="Correspondence"/>
+          <xxsd:enumeration value="IT12C-1"/>
+          <xxsd:enumeration value="IT12C-2"/>
+          <xxsd:enumeration value="IT12C-3"/>
+          <xxsd:enumeration value="IT12C-4"/>
+          <xxsd:enumeration value="IT12EI"/>
+          <xxsd:enumeration value="IT12TR"/>
+          <xxsd:enumeration value="IT12TR-I"/>
+          <xxsd:enumeration value="IT14"/>
+          <xxsd:enumeration value="RFC"/>
+          <xxsd:enumeration value="NOO"/>
+          <xxsd:enumeration value="Revised Return"/>
+          <xxsd:enumeration value="Supporting"/>
+          <xxsd:enumeration value="IRP5IT3"/>
+          <xxsd:enumeration value="EMP501"/>
+          <xxsd:enumeration value="EMP601"/>
+          <xxsd:enumeration value="ITRR"/>
+          <xxsd:enumeration value="ITR12"/>
+          <xxsd:enumeration value="EMP701"/>
+        </xxsd:restriction>
+      </xxsd:simpleType>
+      <xxsd:element name="IdentifierType" type="nxsd:IdentifierType"/>
+      <xxsd:simpleType name="IdentifierType">
+         <xxsd:restriction base="xxsd:string">
+          <xxsd:enumeration value="Customs ID"/>
+          <xxsd:enumeration value="Not Available"/>
+          <xxsd:enumeration value="PAYE Number"/>
+          <xxsd:enumeration value="SDL Number"/>
+  			<xxsd:enumeration value="Tax Reference Number"/>
+          <xxsd:enumeration value="UIF Number"/>
+          <xxsd:enumeration value="VAT Registration Number"/>
+        </xxsd:restriction>
+      </xxsd:simpleType>
+      <xxsd:element name="ProcessStatus" type="nxsd:ProcessStatus"/>
+      <xxsd:simpleType name="ProcessStatus">
+        <xxsd:restriction base="xxsd:string">
+          <xxsd:enumeration value="ATP Ready"/>
+          <xxsd:enumeration value="ATP Received"/>
+          <xxsd:enumeration value="Manual Exception"/>
+          <xxsd:enumeration value="Busy"/>
+          <xxsd:enumeration value="Completed"/>
+          <xxsd:enumeration value="ATP Image Ready"/>
+          <xxsd:enumeration value="ATP Image Received"/>
+          <xxsd:enumeration value="Not Applicable"/>
+          <xxsd:enumeration value="ATP Rejected"/>
+        </xxsd:restriction>
+      </xxsd:simpleType>
+		<xxsd:element name="Source" type="nxsd:Source"/>
+      	<xxsd:simpleType name="Source">
+        <xxsd:restriction base="xxsd:string">
+          <xxsd:enumeration value="Fax"/>
+          <xxsd:enumeration value="Scan"/>
+          <xxsd:enumeration value="ATP"/>
+          <xxsd:enumeration value="Unknown"/>
+          <xxsd:enumeration value="Email"/>
+          <xxsd:enumeration value="eFile"/>
+        </xxsd:restriction>
+      </xxsd:simpleType>
+      <xxsd:element name="putDocument">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="request" nillable="true" type="nxsd:PutDocumentRequest"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="PutDocumentRequest" type="nxsd:PutDocumentRequest"/>
+      <xxsd:complexType name="PutDocumentRequest">
+        <xxsd:sequence>
+          <xxsd:element name="attachmentId" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="binaryData" nillable="true" type="xxsd:base64Binary"/>
+          <xxsd:element name="document" type="nxsd:SARSDocument"/>
+          <xxsd:element name="linkDocumentId" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="mimeType" type="xxsd:string"/>
+          <xxsd:element name="objectType" type="nxsd:ObjectType"/>
+          <xxsd:element name="requestorIdentifier" type="xxsd:string"/>
+        </xxsd:sequence>
+      </xxsd:complexType>
+      <xxsd:element name="ObjectType" type="nxsd:ObjectType"/>
+      <xxsd:simpleType name="ObjectType">
+        <xxsd:restriction base="xxsd:string">
+          <xxsd:enumeration value="sars_tax_form"/>
+          <xxsd:enumeration value="sars_tax_other"/>
+          <xxsd:enumeration value="Unknown"/>
+        </xxsd:restriction>
+      </xxsd:simpleType>
+      <xxsd:element name="putDocumentResponse">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="return" nillable="true" type="nxsd:PutDocumentResponse"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="PutDocumentResponse" type="nxsd:PutDocumentResponse"/>
+      <xxsd:complexType name="PutDocumentResponse">
+        <xxsd:complexContent>
+          <xxsd:extension base="nxsd:Response">
+            <xxsd:sequence>
+              <xxsd:element name="documentId" type="xxsd:string"/>
+            </xxsd:sequence>
+          </xxsd:extension>
+        </xxsd:complexContent>
+      </xxsd:complexType>
+      <xxsd:element name="updateCaseNumberMetadata">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="request" nillable="true" type="nxsd:UpdateCaseNumberMetadataRequest"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="UpdateCaseNumberMetadataRequest" type="nxsd:UpdateCaseNumberMetadataRequest"/>
+      <xxsd:complexType name="UpdateCaseNumberMetadataRequest">
+        <xxsd:sequence>
+          <xxsd:element name="caseNumber" type="xxsd:string"/>
+          <xxsd:element name="documentId" type="xxsd:string"/>
+          <xxsd:element name="requestorIdentifier" type="xxsd:string"/>
+        </xxsd:sequence>
+      </xxsd:complexType>
+      <xxsd:element name="updateCaseNumberMetadataResponse">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="return" nillable="true" type="nxsd:Response"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="updateVerificationStatus">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="request" nillable="true" type="nxsd:UpdateVerificationStatusRequest"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="UpdateVerificaionStatusRequest" type="nxsd:UpdateVerificationStatusRequest"/>
+      <xxsd:complexType name="UpdateVerificationStatusRequest">
+        <xxsd:sequence>
+          <xxsd:element name="documentId" type="xxsd:string"/>
+          <xxsd:element name="requestorIdentifier" type="xxsd:string"/>
+          <xxsd:element name="verificationStatus" type="xxsd:string"/>
+          <xxsd:element name="verificationDate" type="xxsd:dateTime"/>
+          <xxsd:element name="verifierId" type="xxsd:string"/>
+        </xxsd:sequence>
+      </xxsd:complexType>
+      <xxsd:element name="updateVerificationStatusResponse">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="return" nillable="true" type="nxsd:Response"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="Response" type="nxsd:Response"/>
+      <xxsd:complexType name="Response">
+        <xxsd:sequence>
+          <xxsd:element name="result" type="xxsd:int"/>
+          <xxsd:element name="resultMsg" type="xxsd:string"/>
+        </xxsd:sequence>
+      </xxsd:complexType>
+      <xxsd:element name="bulkSearch">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="request" nillable="true" type="nxsd:BulkSearchRequest"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="BulkSearchRequest" type="nxsd:BulkSearchRequest"/>
+      <xxsd:complexType name="BulkSearchRequest">
+        <xxsd:sequence>
+          <xxsd:element name="dateFrom" nillable="true" type="xxsd:dateTime"/>
+          <xxsd:element name="dateTo" nillable="true" type="xxsd:dateTime"/>
+          <xxsd:element name="documentClassfication" type="nxsd:DocumentClassification"/>
+          <xxsd:element name="maxResultCount" type="xxsd:int"/>
+          <xxsd:element name="objectType" nillable="true" type="nxsd:ObjectType"/>
+          <xxsd:element name="processStatus" type="nxsd:ProcessStatus"/>
+          <xxsd:element name="requestorIdentifer" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="scan" nillable="true" type="nxsd:Scan"/>
+          <xxsd:element name="yearOfAssessment" type="xxsd:int"/>
+        </xxsd:sequence>
+      </xxsd:complexType>
+      <xxsd:element name="Scan" type="nxsd:Scan"/>
+      <xxsd:complexType name="Scan">
+        <xxsd:sequence>
+          <xxsd:element maxOccurs="3" name="scanErrors" nillable="true" type="nxsd:ScanError"/>
+          <xxsd:element name="scanResult" type="nxsd:ScanResult"/>
+        </xxsd:sequence>
+      </xxsd:complexType>
+      <xxsd:element name="ScanError" type="nxsd:ScanError"/>
+      <xxsd:simpleType name="ScanError">
+        <xxsd:restriction base="xxsd:string">
+          <xxsd:enumeration value="missing fields"/>
+          <xxsd:enumeration value="missing pages"/>
+          <xxsd:enumeration value="missing signature"/>
+        </xxsd:restriction>
+      </xxsd:simpleType>
+      <xxsd:element name="ScanResult" type="nxsd:ScanResult"/>
+      <xxsd:simpleType name="ScanResult">
+        <xxsd:restriction base="xxsd:string">
+          <xxsd:enumeration value="Scan Complete"/>
+          <xxsd:enumeration value="Scan Incomplete"/>
+        </xxsd:restriction>
+      </xxsd:simpleType>
+      <xxsd:element name="ImageQuality" type="nxsd:ImageQuality"/>
+      <xxsd:simpleType name="ImageQuality">
+        <xxsd:restriction base="xxsd:string">
+          <xxsd:enumeration value="Good"/>
+          <xxsd:enumeration value="Bad"/>
+        </xxsd:restriction>
+      </xxsd:simpleType>
+      <xxsd:element name="bulkSearchResponse">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="return" nillable="true" type="nxsd:SearchResponse"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="SearchResponse" type="nxsd:SearchResponse"/>
+      <xxsd:complexType name="SearchResponse">
+        <xxsd:complexContent>
+          <xxsd:extension base="nxsd:Response">
+            <xxsd:sequence>
+              <xxsd:element maxOccurs="unbounded" name="searchItems" nillable="true" type="nxsd:SearchItem"/>
+            </xxsd:sequence>
+          </xxsd:extension>
+        </xxsd:complexContent>
+      </xxsd:complexType>
+      <xxsd:element name="SearchItem" type="nxsd:SearchItem"/>
+      <xxsd:complexType name="SearchItem">
+        <xxsd:sequence>
+          <xxsd:element name="documentClassification" nillable="true" type="nxsd:DocumentClassification"/>
+          <xxsd:element name="identifier" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="documentId" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="objectType" nillable="true" type="nxsd:ObjectType"/>
+          <xxsd:element name="scan" nillable="true" type="nxsd:Scan"/>
+          <xxsd:element name="yearOfAssessment" type="xxsd:int"/>
+        </xxsd:sequence>
+      </xxsd:complexType>
+      <xxsd:element name="specificSearch">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="request" nillable="true" type="nxsd:SpecificSearchRequest"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="SpecificSearchRequest" type="nxsd:SpecificSearchRequest"/>
+      <xxsd:complexType name="SpecificSearchRequest">
+        <xxsd:sequence>
+          <xxsd:element name="caseNumber" nillable="true" type="xxsd:string"/>
+          <xxsd:element name="dateFrom" type="xxsd:dateTime"/>
+          <xxsd:element name="dateTo" type="xxsd:dateTime"/>
+          <xxsd:element name="identifier" type="xxsd:string"/>
+          <xxsd:element name="identifierType" type="nxsd:IdentifierType"/>
+          <xxsd:element name="processStatus" nillable="true" type="nxsd:ProcessStatus"/>
+          <xxsd:element name="requestorIdentifer" type="xxsd:string"/>
+        </xxsd:sequence>
+      </xxsd:complexType>
+      <xxsd:element name="specificSearchResponse">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="return" nillable="true" type="nxsd:SearchResponse"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="updateStateMetadata">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="request" nillable="true" type="nxsd:UpdateStateMetadataRequest"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="UpdateStateMetadataRequest" type="nxsd:UpdateStateMetadataRequest"/>
+      <xxsd:complexType name="UpdateStateMetadataRequest">
+        <xxsd:sequence>
+          <xxsd:element name="documentId" type="xxsd:string"/>
+          <xxsd:element name="requestorIdentifier" type="xxsd:string"/>
+          <xxsd:element name="status" type="nxsd:ProcessStatus"/>
+          <xxsd:element name="rejectCode" nillable="true" type="nxsd:RejectCode"/>
+          <xxsd:element name="rejectReason" nillable="true" type="xxsd:string"/>
+        </xxsd:sequence>
+      </xxsd:complexType>
+      <xxsd:element name="RejectCode" type="nxsd:RejectCode"/>
+      <xxsd:simpleType name="RejectCode">
+        <xxsd:restriction base="xxsd:string">
+          <xxsd:enumeration value="ERR-01"/>
+          <xxsd:enumeration value="ERR-02"/>
+          <xxsd:enumeration value="ERR-99"/>
+        </xxsd:restriction>
+      </xxsd:simpleType>
+      <xxsd:element name="updateStateMetadataResponse">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="return" nillable="true" type="nxsd:UpdateMetadataResponse"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="updateMetadataResponse">
+        <xxsd:complexType>
+          <xxsd:sequence>
+            <xxsd:element name="return" nillable="true" type="nxsd:UpdateMetadataResponse"/>
+          </xxsd:sequence>
+        </xxsd:complexType>
+      </xxsd:element>
+      <xxsd:element name="UpdateMetadataResponse" type="nxsd:UpdateMetadataResponse"/>
+      <xxsd:complexType name="UpdateMetadataResponse">
+        <xxsd:complexContent>
+          <xxsd:extension base="nxsd:Response">
+            <xxsd:sequence/>
+          </xxsd:extension>
+        </xxsd:complexContent>
+      </xxsd:complexType>
+    </xxsd:schema>

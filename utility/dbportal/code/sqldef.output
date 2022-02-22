@@ -1,0 +1,6721 @@
+Terminals unused in grammar
+
+   sqldefFAST
+   sqldefFROM
+   switchIDLUBI
+
+
+State 346 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: SqlDef $end
+
+    1 SqlDef: Switches ServerName Flags ConnectName SetModDefaults OptTableMods TableDef OptExtras ProcDef
+
+    2 SetModDefaults: /* empty */
+
+    3 Switches: /* empty */
+    4         | Switches Switch
+
+    5 Switch: switchBINDIR sqldefSTRING
+    6       | switchBINEXT sqldefSTRING
+    7       | switchCDIR sqldefSTRING
+    8       | switchCEXT sqldefSTRING
+    9       | switchBLANKPADDED SwitchNumber
+   10       | switchCHARZ SwitchNumber
+   11       | switchCONNREQD SwitchNumber
+   12       | switchCONTROLDB sqldefSTRING
+   13       | switchEIGHTBYTE SwitchNumber
+   14       | switchEXITREQD SwitchNumber
+   15       | switchEXTENDEDC SwitchNumber
+   16       | switchEXTENDEDPAS SwitchNumber
+   17       | switchEXTENDEDVB SwitchNumber
+   18       | switchHEADERDIR sqldefSTRING
+   19       | switchHEADEREXT sqldefSTRING
+   20       | switchIDLDIR sqldefSTRING
+   21       | switchIDLEXT sqldefSTRING
+   22       | switchIDLMODULE sqldefSTRING
+   23       | switchINTERNAL SwitchNumber
+   24       | switchVERSION2BIN SwitchNumber
+   25       | switchLOGDIR sqldefSTRING
+   26       | switchLOGEXT sqldefSTRING
+   27       | switchNODOMAIN SwitchNumber
+   28       | switchONESQLSCRIPT SwitchNumber
+   29       | switchARCHIVEDIR sqldefSTRING
+   30       | switchARCHIVEEXT sqldefSTRING
+   31       | switchPARMSDESCR sqldefSTRING
+   32       | switchPARMSDIR sqldefSTRING
+   33       | switchPARMSEXT sqldefSTRING
+   34       | switchPARMSLOOKUP sqldefSTRING
+   35       | switchPASDIR sqldefSTRING
+   36       | switchPASEXT sqldefSTRING
+   37       | switchPYTHONDIR sqldefSTRING
+   38       | switchPYTHONEXT sqldefSTRING
+   39       | switchSHOW sqldefSTRING
+   40       | switchSODIR sqldefSTRING
+   41       | switchSOEXT sqldefSTRING
+   42       | switchSQLAUDITEXT sqldefSTRING
+   43       | switchSQLCONEXT sqldefSTRING
+   44       | switchSQLDIR sqldefSTRING
+   45       | switchSQLEXT sqldefSTRING
+   46       | switchSQLGRANTEXT sqldefSTRING
+   47       | switchSQLIDXEXT sqldefSTRING
+   48       | switchSQLPROCEXT sqldefSTRING
+   49       | switchSQLSNAPEXT sqldefSTRING
+   50       | switchSQLTABLEEXT sqldefSTRING
+   51       | switchSQLVIEWSEXT sqldefSTRING
+   52       | switchTARGETC SwitchNumber
+   53       | switchTARGETIDL SwitchNumber
+   54       | switchTARGETARCHIVE SwitchNumber
+   55       | switchTARGETPARMS SwitchNumber
+   56       | switchTARGETPAS SwitchNumber
+   57       | switchTARGETPYTHON SwitchNumber
+   58       | switchTARGETVB SwitchNumber
+   59       | switchTARGETVB5 SwitchNumber
+   60       | switchTARGETVBCODE3 SwitchNumber
+   61       | switchTARGETVBNET7 SwitchNumber
+   62       | switchTARGETCSNET7 SwitchNumber
+   63       | switchTARGETCSIDL2 SwitchNumber
+   64       | switchLITTLETCSIDL2 SwitchNumber
+   65       | switchTARGETCSADONET SwitchNumber
+   66       | switchTARGETCSRW SwitchNumber
+   67       | switchTARGETVBFORIDL SwitchNumber
+   68       | switchTARGETVBFORADOR SwitchNumber
+   69       | switchPREFIXVBCLASSES SwitchNumber
+   70       | switchUCONNECT sqldefSTRING
+   71       | switchUNDERSCORE SwitchNumber
+   72       | switchVB5DIR sqldefSTRING
+   73       | switchVB5EXT sqldefSTRING
+   74       | switchVBCODE3DIR sqldefSTRING
+   75       | switchVBCODE3EXT sqldefSTRING
+   76       | switchVBNET7DIR sqldefSTRING
+   77       | switchVBNET7EXT sqldefSTRING
+   78       | switchCSNET7DIR sqldefSTRING
+   79       | switchCSADONETDIR sqldefSTRING
+   80       | switchCSRWDIR sqldefSTRING
+   81       | switchCSNET7EXT sqldefSTRING
+   82       | switchCSADONETEXT sqldefSTRING
+   83       | switchCSRWEXT sqldefSTRING
+   84       | switchCSIDL2DIR sqldefSTRING
+   85       | switchCSIDL2EXT sqldefSTRING
+   86       | switchVBFORIDLDIR sqldefSTRING
+   87       | switchVBDIR sqldefSTRING
+   88       | switchVBEXT sqldefSTRING
+   89       | switchVIEWONLY SwitchNumber
+   90       | switchLITTLETRUE SwitchNumber
+   91       | switchCPPHEADER SwitchNumber
+   92       | switchINVALID
+
+   93 SwitchNumber: /* empty */
+   94             | Number
+
+   95 ServerName: sqldefSERVER FullServerIdent
+
+   96 FullServerIdent: sqldefIDENT
+   97                | sqldefEXTENDED
+
+   98 Flags: /* empty */
+   99      | Flags Flag
+
+  100 Flag: '(' AnIdent ')'
+
+  101 AnIdent: sqldefIDENT
+
+  102 ConnectName: sqldefSCHEMA AnIdent
+  103            | sqldefCONNECT AnIdent '/' AnIdent
+
+  104 OptTableMods: /* empty */
+  105             | OptTableMods TableMod
+
+  106 TableMod: sqldefINITIAL ANumber NumberSize
+  107         | sqldefINITRANS ANumber
+  108         | sqldefFREELIST sqldefGROUPS ANumber
+  109         | sqldefFREELISTS ANumber
+  110         | sqldefMINEXTENTS ANumber
+  111         | sqldefMAXTRANS ANumber
+  112         | sqldefMAXEXTENTS ANumber
+  113         | sqldefNEXT ANumber NumberSize
+  114         | sqldefOPTIMAL ANumber NumberSize
+  115         | sqldefPCTFREE ANumber
+  116         | sqldefPCTUSED ANumber
+  117         | sqldefPCTINCREASE ANumber
+  118         | sqldefTABLESPACE AnIdent
+
+  119 ANumber: sqldefNUMBER
+
+  120 NumberSize: /* empty */
+  121           | sqldefK
+  122           | sqldefM
+
+  123 TableDef: TableName SetStateTable FieldDef
+
+  124 SetStateTable: /* empty */
+
+  125 TableName: sqldefTABLE AnIdent OptTableAlias OptTableCheck
+
+  126 AnIdentNull: sqldefNULL
+  127            | AnIdent
+
+  128 OptTableAlias: /* empty */
+  129              | OptTableAlias '[' AnIdentNull ']'
+  130              | OptTableAlias '(' AnIdentNull ')'
+
+  131 OptTableCheck: /* empty */
+  132              | sqldefCHECK sqldefSTRING
+
+  133 FieldDef: /* empty */
+  134         | FieldDef Field
+
+  135 $@1: /* empty */
+
+  136 Field: AnIdent SetField $@1 OptAlias FieldType OptNullUppers
+
+  137 SetField: /* empty */
+
+  138 OptAlias: /* empty */
+  139         | '(' AnIdent ')'
+
+  140 FieldType: sqldefCHAR OptNumber OptConstIdents
+  141          | sqldefNCHAR OptNumber
+  142          | sqldefBINARY OptNumber
+  143          | sqldefBOOLEAN
+  144          | sqldefTINYINT OptConsts
+  145          | sqldefSMALLINT OptConsts
+  146          | sqldefINT OptConsts
+  147          | '=' OptRefs
+  148          | sqldefLONG OptConsts
+  149          | sqldefDATE
+  150          | sqldefTIMESTAMP Opt0Number
+  151          | sqldefUSERSTAMP Opt0Number
+  152          | sqldefSEQUENCE
+  153          | sqldefNSEQUENCE OptNumber
+  154          | sqldefFLOAT OptPrecision
+  155          | sqldefMONEY Precision
+  156          | sqldefBLOB Number
+  157          | sqldefCLOB Number
+  158          | sqldefZLOB Number
+  159          | sqldefHUGECHAR Opt0Number
+  160          | sqldefIMAGE OptNumber
+  161          | sqldefXMLTYPE Number
+  162          | sqldefDATETIME
+  163          | sqldefVARNUM OptPrecision
+
+  164 OptRefs: /* empty */
+  165        | '(' AnIdent ')'
+
+  166 OptPrecision: /* empty */
+  167             | Precision
+
+  168 Precision: '(' Number ',' Number ')'
+
+  169 OptNumber: /* empty */
+  170          | Number
+
+  171 Opt0Number: /* empty */
+  172           | Number
+
+  173 Number: ANumber
+  174       | '[' ANumber ']'
+  175       | '(' ANumber ')'
+
+  176 OptNullUppers: /* empty */
+  177              | OptNullUppers OptNullUpper
+
+  178 OptNullUpper: sqldefNULL
+  179             | sqldefNOT sqldefNULL
+  180             | sqldefUPPER
+  181             | sqldefCHECK sqldefSTRING
+
+  182 OptConstIdents: /* empty */
+  183               | '{' ConstIdents '}'
+
+  184 ConstIdents: ConstIdent
+  185            | ConstIdents OptComma ConstIdent
+
+  186 ConstIdent: AnIdent
+
+  187 OptConsts: /* empty */
+  188          | '[' Consts ']'
+  189          | '(' Consts ')'
+  190          | '{' Consts '}'
+
+  191 Consts: Const
+  192       | Consts OptComma Const
+
+  193 OptComma: /* empty */
+  194         | ','
+
+  195 Const: AnIdent '=' Number
+  196      | AnIdent '=' sqldefCHARCONST
+  197      | AnIdent '=' sqldefSTRING
+
+  198 OptExtras: /* empty */
+  199          | OptExtras Extra
+
+  200 Extra: GrantDef
+  201      | KeyDef
+  202      | Link
+  203      | Audit
+  204      | ViewDef
+
+  205 GrantDef: sqldefGRANT SetGrant Permissions sqldefTO Users
+
+  206 SetGrant: /* empty */
+
+  207 Permissions: Permission
+  208            | Permissions Permission
+
+  209 Permission: sqldefALL
+  210           | sqldefDELETE
+  211           | sqldefINSERT
+  212           | sqldefSELECT
+  213           | sqldefUPDATE
+  214           | sqldefEXECUTE
+
+  215 Users: User
+  216      | Users User
+
+  217 User: AnIdent
+
+  218 KeyDef: sqldefKEY KeyName Modifiers Columns
+
+  219 KeyName: AnIdent
+
+  220 Modifiers: /* empty */
+  221          | Modifiers Modifier
+
+  222 Modifier: sqldefUNIQUE
+  223         | sqldefPRIMARY
+  224         | sqldefTABLESPACE AnIdent
+  225         | sqldefINITIAL ANumber NumberSize
+  226         | sqldefINITRANS ANumber
+  227         | sqldefFREELIST sqldefGROUPS ANumber
+  228         | sqldefFREELISTS ANumber
+  229         | sqldefMINEXTENTS ANumber
+  230         | sqldefMAXTRANS ANumber
+  231         | sqldefMAXEXTENTS ANumber
+  232         | sqldefNEXT ANumber NumberSize
+  233         | sqldefOPTIMAL ANumber NumberSize
+  234         | sqldefPCTFREE ANumber
+  235         | sqldefPCTINCREASE ANumber
+
+  236 Columns: Column
+  237        | Columns OptComma Column
+
+  238 Column: AnIdent
+
+  239 Link: sqldefLINK NewLink MasterName Columns OptDeleteCascade
+
+  240 OptDeleteCascade: /* empty */
+  241                 | sqldefDELETE sqldefCASCADE
+
+  242 NewLink: /* empty */
+
+  243 MasterName: QualifiedIdent
+  244           | error
+
+  245 QualifiedIdent: sqldefIDENT
+  246               | QualifiedIdent "." sqldefIDENT
+
+  247 Audit: sqldefAUDIT AuditFull
+
+  248 AuditFull: /* empty */
+  249          | sqldefFULL
+
+  250 ProcDef: /* empty */
+  251        | ProcDef Proc
+
+  252 Proc: sqldefPROC SetExt StdProc ToUsers UsedBy
+  253     | sqldefPROC SetExt SetProcGrant SetProjectState UserProc
+  254     | sqldefWITH WithProc
+  255     | Data
+
+  256 SetExt: /* empty */
+
+  257 SetProcGrant: /* empty */
+
+  258 SetProjectState: /* empty */
+
+  259 StdProc: sqldefCOUNT NoExt
+  260        | sqldefDELETEALL NoExt
+  261        | sqldefDELETEONE NoExt
+  262        | sqldefEXISTS NoExt
+  263        | sqldefBULKINSERT NoExt
+  264        | sqldefINSERT NoExt
+  265        | sqldefSELECTALL NoExt
+  266        | sqldefSELECTONE NoExt
+  267        | sqldefSELECTALLUPD NoExt
+  268        | sqldefSELECTONEUPD NoExt
+  269        | sqldefSELECTPLUS OptPlusNumber NoExt
+  270        | sqldefBULKUPDATE NoExt
+  271        | sqldefUPDATE NoExt
+
+  272 OptPlusNumber: /* empty */
+  273              | Number
+
+  274 ViewDef: sqldefVIEW ViewName SetViewGrant ToUsers ViewCode
+
+  275 SetViewGrant: /* empty */
+
+  276 ViewName: sqldefIDENT
+
+  277 ViewCode: sqldefCODE SetView Lines sqldefENDCODE
+
+  278 SetView: /* empty */
+
+  279 WithProc: WithName WithCode
+
+  280 WithName: sqldefIDENT
+
+  281 WithCode: sqldefCODE SetWith Lines sqldefENDCODE
+  282         | sqldefSQL sqldefCODE SetWith Lines sqldefENDCODE
+  283         | sqldefSQLCODE SetWith Lines sqldefENDCODE
+
+  284 SetWith: /* empty */
+
+  285 UserProc: ProcName NoExt ToUsers UsedBy Input InOut Output WithList Declares Code
+
+  286 NoExt: '(' NoNos ')'
+  287      | ProcSwitches
+
+  288 NoNos: NoNo
+  289      | NoNos NoNo
+
+  290 NoNo: sqldefNOC
+  291     | sqldefNOPAS
+  292     | sqldefNOVB
+  293     | sqldefNOEXT
+  294     | sqldefNOIDL
+
+  295 ProcSwitches: /* empty */
+  296             | ProcSwitches ProcSwitch
+
+  297 ProcSwitch: switchEXTENDEDC SwitchNumber
+  298           | switchEXTENDEDPAS SwitchNumber
+  299           | switchEXTENDEDVB SwitchNumber
+  300           | switchTARGETC SwitchNumber
+  301           | switchTARGETIDL SwitchNumber
+  302           | switchTARGETPAS SwitchNumber
+  303           | switchTARGETPYTHON SwitchNumber
+  304           | switchTARGETVB SwitchNumber
+  305           | switchTARGETVB5 SwitchNumber
+  306           | switchTARGETVBCODE3 SwitchNumber
+  307           | switchTARGETVBNET7 SwitchNumber
+  308           | switchTARGETCSNET7 SwitchNumber
+  309           | switchTARGETCSADONET SwitchNumber
+  310           | switchTARGETCSRW SwitchNumber
+  311           | switchTARGETCSIDL2 SwitchNumber
+  312           | switchTARGETVBFORIDL SwitchNumber
+  313           | switchTARGETVBFORADOR SwitchNumber
+  314           | switchINVALID
+
+  315 UsedBy: /* empty */
+  316       | sqldefUSEDBY Projects
+
+  317 Projects: Project
+  318         | Projects Project
+
+  319 Project: AnIdent
+
+  320 ProcName: sqldefIDENT
+
+  321 ToUsers: /* empty */
+  322        | sqldefGRANT sqldefTO Users
+
+  323 Input: /* empty */
+  324      | sqldefINPUT SetStateInput FieldDef
+
+  325 SetStateInput: /* empty */
+
+  326 InOut: /* empty */
+  327      | sqldefINOUT SetStateInOut FieldDef
+
+  328 SetStateInOut: /* empty */
+
+  329 Output: /* empty */
+  330       | sqldefOUTPUT SetStateOutput OptMultiSingle ReUse
+
+  331 ReUse: '*'
+  332      | FieldDef
+
+  333 OptMultiSingle: /* empty */
+  334               | '(' sqldefMULTIPLE ')'
+  335               | '(' sqldefSINGLE ')'
+
+  336 SetStateOutput: /* empty */
+
+  337 WithList: /* empty */
+  338         | sqldefWITH Withs
+
+  339 Withs: With
+  340      | Withs With
+
+  341 With: AnIdent
+
+  342 Declares: /* empty */
+  343         | Declares Declare
+
+  344 Declare: sqldefDECLARE SetStateDeclare DeclareFieldDef
+  345        | sqldefCURSOR SetCursor Lines sqldefENDCURSOR
+
+  346 DeclareFieldDef: /* empty */
+  347                | DeclareFieldDef DeclareField
+
+  348 DeclareField: Field
+  349             | AnIdent SetField sqldefEXCEPTION
+
+  350 SetCursor: /* empty */
+
+  351 SetStateDeclare: /* empty */
+
+  352 Code: sqldefSQL SetSql sqldefCODE SetCode Lines sqldefENDCODE
+  353     | sqldefSQLCODE SetSql SetCode Lines sqldefENDCODE
+  354     | sqldefCODE SetCode Lines sqldefENDCODE
+
+  355 SetCode: /* empty */
+
+  356 SetSql: /* empty */
+
+  357 Lines: Line
+  358      | Lines Line
+
+  359 Line: sqldefLINE
+
+  360 Data: sqldefDATA SetData Lines sqldefENDDATA
+
+  361 SetData: /* empty */
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 100 130 139 165 168 175 189 286 334 335
+')' (41) 100 130 139 165 168 175 189 286 334 335
+'*' (42) 331
+',' (44) 168 194
+'/' (47) 103
+'=' (61) 147 195 196 197
+'[' (91) 129 174 188
+']' (93) 129 174 188
+'{' (123) 183 190
+'}' (125) 183 190
+error (256) 244
+sqldefALL (258) 209
+sqldefAUDIT (259) 247
+sqldefBINARY (260) 142
+sqldefBLOB (261) 156
+sqldefBOOLEAN (262) 143
+sqldefBULKINSERT (263) 263
+sqldefBULKUPDATE (264) 270
+sqldefCASCADE (265) 241
+sqldefCHAR (266) 140
+sqldefCHARCONST (267) 196
+sqldefCHECK (268) 132 181
+sqldefCLOB (269) 157
+sqldefCODE (270) 277 281 282 352 354
+sqldefCONNECT (271) 103
+sqldefCOUNT (272) 259
+sqldefCURSOR (273) 345
+sqldefDATETIME (274) 162
+sqldefDATA (275) 360
+sqldefDATE (276) 149
+sqldefDECLARE (277) 344
+sqldefDELETE (278) 210 241
+sqldefDELETEALL (279) 260
+sqldefDELETEONE (280) 261
+sqldefENDCODE (281) 277 281 282 283 352 353 354
+sqldefENDCURSOR (282) 345
+sqldefENDDATA (283) 360
+sqldefEXCEPTION (284) 349
+sqldefEXECUTE (285) 214
+sqldefEXISTS (286) 262
+sqldefEXTENDED (287) 97
+sqldefFAST (288)
+sqldefFLOAT (289) 154
+sqldefFREELIST (290) 108 227
+sqldefFREELISTS (291) 109 228
+sqldefFROM (292)
+sqldefFULL (293) 249
+sqldefGRANT (294) 205 322
+sqldefGROUPS (295) 108 227
+sqldefHUGECHAR (296) 159
+sqldefIDENT (297) 96 101 245 246 276 280 320
+sqldefINITIAL (298) 106 225
+sqldefIMAGE (299) 160
+sqldefINITRANS (300) 107 226
+sqldefINOUT (301) 327
+sqldefINPUT (302) 324
+sqldefINSERT (303) 211 264
+sqldefINT (304) 146
+sqldefK (305) 121
+sqldefKEY (306) 218
+sqldefLINE (307) 359
+sqldefLINK (308) 239
+sqldefLONG (309) 148
+sqldefM (310) 122
+sqldefMAXEXTENTS (311) 112 231
+sqldefMAXTRANS (312) 111 230
+sqldefMINEXTENTS (313) 110 229
+sqldefMONEY (314) 155
+sqldefMULTIPLE (315) 334
+sqldefNCHAR (316) 141
+sqldefNEXT (317) 113 232
+sqldefNOC (318) 290
+sqldefNOEXT (319) 293
+sqldefNOIDL (320) 294
+sqldefNOPAS (321) 291
+sqldefNOT (322) 179
+sqldefNOVB (323) 292
+sqldefNSEQUENCE (324) 153
+sqldefNULL (325) 126 178 179
+sqldefNUMBER (326) 119
+sqldefOPTIMAL (327) 114 233
+sqldefOUTPUT (328) 330
+sqldefPCTFREE (329) 115 234
+sqldefPCTINCREASE (330) 117 235
+sqldefPCTUSED (331) 116
+sqldefPRIMARY (332) 223
+sqldefPROC (333) 252 253
+sqldefSCHEMA (334) 102
+sqldefSELECT (335) 212
+sqldefSELECTALL (336) 265
+sqldefSELECTALLUPD (337) 267
+sqldefSELECTONE (338) 266
+sqldefSELECTONEUPD (339) 268
+sqldefSELECTPLUS (340) 269
+sqldefSEQUENCE (341) 152
+sqldefSERVER (342) 95
+sqldefSINGLE (343) 335
+sqldefSMALLINT (344) 145
+sqldefSQL (345) 282 352
+sqldefSQLCODE (346) 283 353
+sqldefSTRING (347) 5 6 7 8 12 18 19 20 21 22 25 26 29 30 31 32 33 34
+    35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 70 72 73 74
+    75 76 77 78 79 80 81 82 83 84 85 86 87 88 132 181 197
+sqldefTABLE (348) 125
+sqldefTABLESPACE (349) 118 224
+sqldefTIMESTAMP (350) 150
+sqldefTINYINT (351) 144
+sqldefTO (352) 205 322
+sqldefUNIQUE (353) 222
+sqldefUPDATE (354) 213 271
+sqldefUPPER (355) 180
+sqldefUSEDBY (356) 316
+sqldefUSERSTAMP (357) 151
+sqldefVARNUM (358) 163
+sqldefVIEW (359) 274
+sqldefWITH (360) 254 338
+sqldefXMLTYPE (361) 161
+sqldefZLOB (362) 158
+switchBINDIR (363) 5
+switchBINEXT (364) 6
+switchBLANKPADDED (365) 9
+switchCDIR (366) 7
+switchCEXT (367) 8
+switchCHARZ (368) 10
+switchCONNREQD (369) 11
+switchCONTROLDB (370) 12
+switchCPPHEADER (371) 91
+switchEXITREQD (372) 14
+switchEIGHTBYTE (373) 13
+switchEXTENDEDC (374) 15 297
+switchEXTENDEDPAS (375) 16 298
+switchEXTENDEDVB (376) 17 299
+switchHEADERDIR (377) 18
+switchHEADEREXT (378) 19
+switchIDLDIR (379) 20
+switchIDLEXT (380) 21
+switchIDLMODULE (381) 22
+switchIDLUBI (382)
+switchINTERNAL (383) 23
+switchVERSION2BIN (384) 24
+switchLITTLETRUE (385) 90
+switchLOGDIR (386) 25
+switchLOGEXT (387) 26
+switchNODOMAIN (388) 27
+switchONESQLSCRIPT (389) 28
+switchPASDIR (390) 35
+switchPASEXT (391) 36
+switchPYTHONDIR (392) 37
+switchPYTHONEXT (393) 38
+switchSHOW (394) 39
+switchSODIR (395) 40
+switchSOEXT (396) 41
+switchSQLAUDITEXT (397) 42
+switchSQLCONEXT (398) 43
+switchSQLDIR (399) 44
+switchSQLEXT (400) 45
+switchSQLGRANTEXT (401) 46
+switchSQLIDXEXT (402) 47
+switchSQLPROCEXT (403) 48
+switchSQLSNAPEXT (404) 49
+switchSQLTABLEEXT (405) 50
+switchSQLVIEWSEXT (406) 51
+switchTARGETC (407) 52 300
+switchTARGETIDL (408) 53 301
+switchTARGETPAS (409) 56 302
+switchARCHIVEDIR (410) 29
+switchARCHIVEEXT (411) 30
+switchPARMSDIR (412) 32
+switchPARMSDESCR (413) 31
+switchPARMSEXT (414) 33
+switchPARMSLOOKUP (415) 34
+switchTARGETARCHIVE (416) 54
+switchTARGETPARMS (417) 55
+switchTARGETPYTHON (418) 57 303
+switchTARGETVB (419) 58 304
+switchTARGETVB5 (420) 59 305
+switchUCONNECT (421) 70
+switchUNDERSCORE (422) 71
+switchVB5DIR (423) 72
+switchVB5EXT (424) 73
+switchVBDIR (425) 87
+switchVBEXT (426) 88
+switchVBFORIDLDIR (427) 86
+switchINVALID (428) 92 314
+switchPREFIXVBCLASSES (429) 69
+switchTARGETVBCODE3 (430) 60 306
+switchTARGETVBNET7 (431) 61 307
+switchTARGETCSNET7 (432) 62 308
+switchTARGETCSIDL2 (433) 63 311
+switchTARGETCSADONET (434) 65 309
+switchTARGETCSRW (435) 66 310
+switchVBCODE3DIR (436) 74
+switchVBCODE3EXT (437) 75
+switchVBNET7DIR (438) 76
+switchVBNET7EXT (439) 77
+switchCSNET7DIR (440) 78
+switchCSADONETDIR (441) 79
+switchCSRWDIR (442) 80
+switchCSIDL2DIR (443) 84
+switchCSNET7EXT (444) 81
+switchCSADONETEXT (445) 82
+switchCSRWEXT (446) 83
+switchCSIDL2EXT (447) 85
+switchVIEWONLY (448) 89
+switchTARGETVBFORIDL (449) 67 312
+switchTARGETVBFORADOR (450) 68 313
+switchLITTLETCSIDL2 (451) 64
+"." (452) 246
+
+
+Nonterminals, with rules where they appear
+
+$accept (208)
+    on left: 0
+SqlDef (209)
+    on left: 1, on right: 0
+SetModDefaults (210)
+    on left: 2, on right: 1
+Switches (211)
+    on left: 3 4, on right: 1 4
+Switch (212)
+    on left: 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+    25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45
+    46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66
+    67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87
+    88 89 90 91 92, on right: 4
+SwitchNumber (213)
+    on left: 93 94, on right: 9 10 11 13 14 15 16 17 23 24 27 28 52
+    53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 71 89 90 91
+    297 298 299 300 301 302 303 304 305 306 307 308 309 310 311 312
+    313
+ServerName (214)
+    on left: 95, on right: 1
+FullServerIdent (215)
+    on left: 96 97, on right: 95
+Flags (216)
+    on left: 98 99, on right: 1 99
+Flag (217)
+    on left: 100, on right: 99
+AnIdent (218)
+    on left: 101, on right: 100 102 103 118 125 127 136 139 165 186
+    195 196 197 217 219 224 238 319 341 349
+ConnectName (219)
+    on left: 102 103, on right: 1
+OptTableMods (220)
+    on left: 104 105, on right: 1 105
+TableMod (221)
+    on left: 106 107 108 109 110 111 112 113 114 115 116 117 118, on right:
+    105
+ANumber (222)
+    on left: 119, on right: 106 107 108 109 110 111 112 113 114 115
+    116 117 173 174 175 225 226 227 228 229 230 231 232 233 234 235
+NumberSize (223)
+    on left: 120 121 122, on right: 106 113 114 225 232 233
+TableDef (224)
+    on left: 123, on right: 1
+SetStateTable (225)
+    on left: 124, on right: 123
+TableName (226)
+    on left: 125, on right: 123
+AnIdentNull (227)
+    on left: 126 127, on right: 129 130
+OptTableAlias (228)
+    on left: 128 129 130, on right: 125 129 130
+OptTableCheck (229)
+    on left: 131 132, on right: 125
+FieldDef (230)
+    on left: 133 134, on right: 123 134 324 327 332
+Field (231)
+    on left: 136, on right: 134 348
+$@1 (232)
+    on left: 135, on right: 136
+SetField (233)
+    on left: 137, on right: 136 349
+OptAlias (234)
+    on left: 138 139, on right: 136
+FieldType (235)
+    on left: 140 141 142 143 144 145 146 147 148 149 150 151 152 153
+    154 155 156 157 158 159 160 161 162 163, on right: 136
+OptRefs (236)
+    on left: 164 165, on right: 147
+OptPrecision (237)
+    on left: 166 167, on right: 154 163
+Precision (238)
+    on left: 168, on right: 155 167
+OptNumber (239)
+    on left: 169 170, on right: 140 141 142 153 160
+Opt0Number (240)
+    on left: 171 172, on right: 150 151 159
+Number (241)
+    on left: 173 174 175, on right: 94 156 157 158 161 168 170 172
+    195 273
+OptNullUppers (242)
+    on left: 176 177, on right: 136 177
+OptNullUpper (243)
+    on left: 178 179 180 181, on right: 177
+OptConstIdents (244)
+    on left: 182 183, on right: 140
+ConstIdents (245)
+    on left: 184 185, on right: 183 185
+ConstIdent (246)
+    on left: 186, on right: 184 185
+OptConsts (247)
+    on left: 187 188 189 190, on right: 144 145 146 148
+Consts (248)
+    on left: 191 192, on right: 188 189 190 192
+OptComma (249)
+    on left: 193 194, on right: 185 192 237
+Const (250)
+    on left: 195 196 197, on right: 191 192
+OptExtras (251)
+    on left: 198 199, on right: 1 199
+Extra (252)
+    on left: 200 201 202 203 204, on right: 199
+GrantDef (253)
+    on left: 205, on right: 200
+SetGrant (254)
+    on left: 206, on right: 205
+Permissions (255)
+    on left: 207 208, on right: 205 208
+Permission (256)
+    on left: 209 210 211 212 213 214, on right: 207 208
+Users (257)
+    on left: 215 216, on right: 205 216 322
+User (258)
+    on left: 217, on right: 215 216
+KeyDef (259)
+    on left: 218, on right: 201
+KeyName (260)
+    on left: 219, on right: 218
+Modifiers (261)
+    on left: 220 221, on right: 218 221
+Modifier (262)
+    on left: 222 223 224 225 226 227 228 229 230 231 232 233 234 235,
+    on right: 221
+Columns (263)
+    on left: 236 237, on right: 218 237 239
+Column (264)
+    on left: 238, on right: 236 237
+Link (265)
+    on left: 239, on right: 202
+OptDeleteCascade (266)
+    on left: 240 241, on right: 239
+NewLink (267)
+    on left: 242, on right: 239
+MasterName (268)
+    on left: 243 244, on right: 239
+QualifiedIdent (269)
+    on left: 245 246, on right: 243 246
+Audit (270)
+    on left: 247, on right: 203
+AuditFull (271)
+    on left: 248 249, on right: 247
+ProcDef (272)
+    on left: 250 251, on right: 1 251
+Proc (273)
+    on left: 252 253 254 255, on right: 251
+SetExt (274)
+    on left: 256, on right: 252 253
+SetProcGrant (275)
+    on left: 257, on right: 253
+SetProjectState (276)
+    on left: 258, on right: 253
+StdProc (277)
+    on left: 259 260 261 262 263 264 265 266 267 268 269 270 271, on right:
+    252
+OptPlusNumber (278)
+    on left: 272 273, on right: 269
+ViewDef (279)
+    on left: 274, on right: 204
+SetViewGrant (280)
+    on left: 275, on right: 274
+ViewName (281)
+    on left: 276, on right: 274
+ViewCode (282)
+    on left: 277, on right: 274
+SetView (283)
+    on left: 278, on right: 277
+WithProc (284)
+    on left: 279, on right: 254
+WithName (285)
+    on left: 280, on right: 279
+WithCode (286)
+    on left: 281 282 283, on right: 279
+SetWith (287)
+    on left: 284, on right: 281 282 283
+UserProc (288)
+    on left: 285, on right: 253
+NoExt (289)
+    on left: 286 287, on right: 259 260 261 262 263 264 265 266 267
+    268 269 270 271 285
+NoNos (290)
+    on left: 288 289, on right: 286 289
+NoNo (291)
+    on left: 290 291 292 293 294, on right: 288 289
+ProcSwitches (292)
+    on left: 295 296, on right: 287 296
+ProcSwitch (293)
+    on left: 297 298 299 300 301 302 303 304 305 306 307 308 309 310
+    311 312 313 314, on right: 296
+UsedBy (294)
+    on left: 315 316, on right: 252 285
+Projects (295)
+    on left: 317 318, on right: 316 318
+Project (296)
+    on left: 319, on right: 317 318
+ProcName (297)
+    on left: 320, on right: 285
+ToUsers (298)
+    on left: 321 322, on right: 252 274 285
+Input (299)
+    on left: 323 324, on right: 285
+SetStateInput (300)
+    on left: 325, on right: 324
+InOut (301)
+    on left: 326 327, on right: 285
+SetStateInOut (302)
+    on left: 328, on right: 327
+Output (303)
+    on left: 329 330, on right: 285
+ReUse (304)
+    on left: 331 332, on right: 330
+OptMultiSingle (305)
+    on left: 333 334 335, on right: 330
+SetStateOutput (306)
+    on left: 336, on right: 330
+WithList (307)
+    on left: 337 338, on right: 285
+Withs (308)
+    on left: 339 340, on right: 338 340
+With (309)
+    on left: 341, on right: 339 340
+Declares (310)
+    on left: 342 343, on right: 285 343
+Declare (311)
+    on left: 344 345, on right: 343
+DeclareFieldDef (312)
+    on left: 346 347, on right: 344 347
+DeclareField (313)
+    on left: 348 349, on right: 347
+SetCursor (314)
+    on left: 350, on right: 345
+SetStateDeclare (315)
+    on left: 351, on right: 344
+Code (316)
+    on left: 352 353 354, on right: 285
+SetCode (317)
+    on left: 355, on right: 352 353 354
+SetSql (318)
+    on left: 356, on right: 352 353
+Lines (319)
+    on left: 357 358, on right: 277 281 282 283 345 352 353 354 358
+    360
+Line (320)
+    on left: 359, on right: 357 358
+Data (321)
+    on left: 360, on right: 255
+SetData (322)
+    on left: 361, on right: 360
+
+
+state 0
+
+    0 $accept: . SqlDef $end
+
+    $default  reduce using rule 3 (Switches)
+
+    SqlDef    go to state 1
+    Switches  go to state 2
+
+
+state 1
+
+    0 $accept: SqlDef . $end
+
+    $end  shift, and go to state 3
+
+
+state 2
+
+    1 SqlDef: Switches . ServerName Flags ConnectName SetModDefaults OptTableMods TableDef OptExtras ProcDef
+    4 Switches: Switches . Switch
+
+    sqldefSERVER           shift, and go to state 4
+    switchBINDIR           shift, and go to state 5
+    switchBINEXT           shift, and go to state 6
+    switchBLANKPADDED      shift, and go to state 7
+    switchCDIR             shift, and go to state 8
+    switchCEXT             shift, and go to state 9
+    switchCHARZ            shift, and go to state 10
+    switchCONNREQD         shift, and go to state 11
+    switchCONTROLDB        shift, and go to state 12
+    switchCPPHEADER        shift, and go to state 13
+    switchEXITREQD         shift, and go to state 14
+    switchEIGHTBYTE        shift, and go to state 15
+    switchEXTENDEDC        shift, and go to state 16
+    switchEXTENDEDPAS      shift, and go to state 17
+    switchEXTENDEDVB       shift, and go to state 18
+    switchHEADERDIR        shift, and go to state 19
+    switchHEADEREXT        shift, and go to state 20
+    switchIDLDIR           shift, and go to state 21
+    switchIDLEXT           shift, and go to state 22
+    switchIDLMODULE        shift, and go to state 23
+    switchINTERNAL         shift, and go to state 24
+    switchVERSION2BIN      shift, and go to state 25
+    switchLITTLETRUE       shift, and go to state 26
+    switchLOGDIR           shift, and go to state 27
+    switchLOGEXT           shift, and go to state 28
+    switchNODOMAIN         shift, and go to state 29
+    switchONESQLSCRIPT     shift, and go to state 30
+    switchPASDIR           shift, and go to state 31
+    switchPASEXT           shift, and go to state 32
+    switchPYTHONDIR        shift, and go to state 33
+    switchPYTHONEXT        shift, and go to state 34
+    switchSHOW             shift, and go to state 35
+    switchSODIR            shift, and go to state 36
+    switchSOEXT            shift, and go to state 37
+    switchSQLAUDITEXT      shift, and go to state 38
+    switchSQLCONEXT        shift, and go to state 39
+    switchSQLDIR           shift, and go to state 40
+    switchSQLEXT           shift, and go to state 41
+    switchSQLGRANTEXT      shift, and go to state 42
+    switchSQLIDXEXT        shift, and go to state 43
+    switchSQLPROCEXT       shift, and go to state 44
+    switchSQLSNAPEXT       shift, and go to state 45
+    switchSQLTABLEEXT      shift, and go to state 46
+    switchSQLVIEWSEXT      shift, and go to state 47
+    switchTARGETC          shift, and go to state 48
+    switchTARGETIDL        shift, and go to state 49
+    switchTARGETPAS        shift, and go to state 50
+    switchARCHIVEDIR       shift, and go to state 51
+    switchARCHIVEEXT       shift, and go to state 52
+    switchPARMSDIR         shift, and go to state 53
+    switchPARMSDESCR       shift, and go to state 54
+    switchPARMSEXT         shift, and go to state 55
+    switchPARMSLOOKUP      shift, and go to state 56
+    switchTARGETARCHIVE    shift, and go to state 57
+    switchTARGETPARMS      shift, and go to state 58
+    switchTARGETPYTHON     shift, and go to state 59
+    switchTARGETVB         shift, and go to state 60
+    switchTARGETVB5        shift, and go to state 61
+    switchUCONNECT         shift, and go to state 62
+    switchUNDERSCORE       shift, and go to state 63
+    switchVB5DIR           shift, and go to state 64
+    switchVB5EXT           shift, and go to state 65
+    switchVBDIR            shift, and go to state 66
+    switchVBEXT            shift, and go to state 67
+    switchVBFORIDLDIR      shift, and go to state 68
+    switchINVALID          shift, and go to state 69
+    switchPREFIXVBCLASSES  shift, and go to state 70
+    switchTARGETVBCODE3    shift, and go to state 71
+    switchTARGETVBNET7     shift, and go to state 72
+    switchTARGETCSNET7     shift, and go to state 73
+    switchTARGETCSIDL2     shift, and go to state 74
+    switchTARGETCSADONET   shift, and go to state 75
+    switchTARGETCSRW       shift, and go to state 76
+    switchVBCODE3DIR       shift, and go to state 77
+    switchVBCODE3EXT       shift, and go to state 78
+    switchVBNET7DIR        shift, and go to state 79
+    switchVBNET7EXT        shift, and go to state 80
+    switchCSNET7DIR        shift, and go to state 81
+    switchCSADONETDIR      shift, and go to state 82
+    switchCSRWDIR          shift, and go to state 83
+    switchCSIDL2DIR        shift, and go to state 84
+    switchCSNET7EXT        shift, and go to state 85
+    switchCSADONETEXT      shift, and go to state 86
+    switchCSRWEXT          shift, and go to state 87
+    switchCSIDL2EXT        shift, and go to state 88
+    switchVIEWONLY         shift, and go to state 89
+    switchTARGETVBFORIDL   shift, and go to state 90
+    switchTARGETVBFORADOR  shift, and go to state 91
+    switchLITTLETCSIDL2    shift, and go to state 92
+
+    Switch      go to state 93
+    ServerName  go to state 94
+
+
+state 3
+
+    0 $accept: SqlDef $end .
+
+    $default  accept
+
+
+state 4
+
+   95 ServerName: sqldefSERVER . FullServerIdent
+
+    sqldefEXTENDED  shift, and go to state 95
+    sqldefIDENT     shift, and go to state 96
+
+    FullServerIdent  go to state 97
+
+
+state 5
+
+    5 Switch: switchBINDIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 98
+
+
+state 6
+
+    6 Switch: switchBINEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 99
+
+
+state 7
+
+    9 Switch: switchBLANKPADDED . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 103
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 8
+
+    7 Switch: switchCDIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 106
+
+
+state 9
+
+    8 Switch: switchCEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 107
+
+
+state 10
+
+   10 Switch: switchCHARZ . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 108
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 11
+
+   11 Switch: switchCONNREQD . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 109
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 12
+
+   12 Switch: switchCONTROLDB . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 110
+
+
+state 13
+
+   91 Switch: switchCPPHEADER . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 111
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 14
+
+   14 Switch: switchEXITREQD . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 112
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 15
+
+   13 Switch: switchEIGHTBYTE . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 113
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 16
+
+   15 Switch: switchEXTENDEDC . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 114
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 17
+
+   16 Switch: switchEXTENDEDPAS . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 115
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 18
+
+   17 Switch: switchEXTENDEDVB . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 116
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 19
+
+   18 Switch: switchHEADERDIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 117
+
+
+state 20
+
+   19 Switch: switchHEADEREXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 118
+
+
+state 21
+
+   20 Switch: switchIDLDIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 119
+
+
+state 22
+
+   21 Switch: switchIDLEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 120
+
+
+state 23
+
+   22 Switch: switchIDLMODULE . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 121
+
+
+state 24
+
+   23 Switch: switchINTERNAL . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 122
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 25
+
+   24 Switch: switchVERSION2BIN . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 123
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 26
+
+   90 Switch: switchLITTLETRUE . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 124
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 27
+
+   25 Switch: switchLOGDIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 125
+
+
+state 28
+
+   26 Switch: switchLOGEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 126
+
+
+state 29
+
+   27 Switch: switchNODOMAIN . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 127
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 30
+
+   28 Switch: switchONESQLSCRIPT . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 128
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 31
+
+   35 Switch: switchPASDIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 129
+
+
+state 32
+
+   36 Switch: switchPASEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 130
+
+
+state 33
+
+   37 Switch: switchPYTHONDIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 131
+
+
+state 34
+
+   38 Switch: switchPYTHONEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 132
+
+
+state 35
+
+   39 Switch: switchSHOW . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 133
+
+
+state 36
+
+   40 Switch: switchSODIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 134
+
+
+state 37
+
+   41 Switch: switchSOEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 135
+
+
+state 38
+
+   42 Switch: switchSQLAUDITEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 136
+
+
+state 39
+
+   43 Switch: switchSQLCONEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 137
+
+
+state 40
+
+   44 Switch: switchSQLDIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 138
+
+
+state 41
+
+   45 Switch: switchSQLEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 139
+
+
+state 42
+
+   46 Switch: switchSQLGRANTEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 140
+
+
+state 43
+
+   47 Switch: switchSQLIDXEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 141
+
+
+state 44
+
+   48 Switch: switchSQLPROCEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 142
+
+
+state 45
+
+   49 Switch: switchSQLSNAPEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 143
+
+
+state 46
+
+   50 Switch: switchSQLTABLEEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 144
+
+
+state 47
+
+   51 Switch: switchSQLVIEWSEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 145
+
+
+state 48
+
+   52 Switch: switchTARGETC . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 146
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 49
+
+   53 Switch: switchTARGETIDL . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 147
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 50
+
+   56 Switch: switchTARGETPAS . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 148
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 51
+
+   29 Switch: switchARCHIVEDIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 149
+
+
+state 52
+
+   30 Switch: switchARCHIVEEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 150
+
+
+state 53
+
+   32 Switch: switchPARMSDIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 151
+
+
+state 54
+
+   31 Switch: switchPARMSDESCR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 152
+
+
+state 55
+
+   33 Switch: switchPARMSEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 153
+
+
+state 56
+
+   34 Switch: switchPARMSLOOKUP . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 154
+
+
+state 57
+
+   54 Switch: switchTARGETARCHIVE . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 155
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 58
+
+   55 Switch: switchTARGETPARMS . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 156
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 59
+
+   57 Switch: switchTARGETPYTHON . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 157
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 60
+
+   58 Switch: switchTARGETVB . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 158
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 61
+
+   59 Switch: switchTARGETVB5 . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 159
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 62
+
+   70 Switch: switchUCONNECT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 160
+
+
+state 63
+
+   71 Switch: switchUNDERSCORE . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 161
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 64
+
+   72 Switch: switchVB5DIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 162
+
+
+state 65
+
+   73 Switch: switchVB5EXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 163
+
+
+state 66
+
+   87 Switch: switchVBDIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 164
+
+
+state 67
+
+   88 Switch: switchVBEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 165
+
+
+state 68
+
+   86 Switch: switchVBFORIDLDIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 166
+
+
+state 69
+
+   92 Switch: switchINVALID .
+
+    $default  reduce using rule 92 (Switch)
+
+
+state 70
+
+   69 Switch: switchPREFIXVBCLASSES . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 167
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 71
+
+   60 Switch: switchTARGETVBCODE3 . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 168
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 72
+
+   61 Switch: switchTARGETVBNET7 . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 169
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 73
+
+   62 Switch: switchTARGETCSNET7 . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 170
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 74
+
+   63 Switch: switchTARGETCSIDL2 . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 171
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 75
+
+   65 Switch: switchTARGETCSADONET . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 172
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 76
+
+   66 Switch: switchTARGETCSRW . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 173
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 77
+
+   74 Switch: switchVBCODE3DIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 174
+
+
+state 78
+
+   75 Switch: switchVBCODE3EXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 175
+
+
+state 79
+
+   76 Switch: switchVBNET7DIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 176
+
+
+state 80
+
+   77 Switch: switchVBNET7EXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 177
+
+
+state 81
+
+   78 Switch: switchCSNET7DIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 178
+
+
+state 82
+
+   79 Switch: switchCSADONETDIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 179
+
+
+state 83
+
+   80 Switch: switchCSRWDIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 180
+
+
+state 84
+
+   84 Switch: switchCSIDL2DIR . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 181
+
+
+state 85
+
+   81 Switch: switchCSNET7EXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 182
+
+
+state 86
+
+   82 Switch: switchCSADONETEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 183
+
+
+state 87
+
+   83 Switch: switchCSRWEXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 184
+
+
+state 88
+
+   85 Switch: switchCSIDL2EXT . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 185
+
+
+state 89
+
+   89 Switch: switchVIEWONLY . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 186
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 90
+
+   67 Switch: switchTARGETVBFORIDL . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 187
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 91
+
+   68 Switch: switchTARGETVBFORADOR . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 188
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 92
+
+   64 Switch: switchLITTLETCSIDL2 . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 189
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 93
+
+    4 Switches: Switches Switch .
+
+    $default  reduce using rule 4 (Switches)
+
+
+state 94
+
+    1 SqlDef: Switches ServerName . Flags ConnectName SetModDefaults OptTableMods TableDef OptExtras ProcDef
+
+    $default  reduce using rule 98 (Flags)
+
+    Flags  go to state 190
+
+
+state 95
+
+   97 FullServerIdent: sqldefEXTENDED .
+
+    $default  reduce using rule 97 (FullServerIdent)
+
+
+state 96
+
+   96 FullServerIdent: sqldefIDENT .
+
+    $default  reduce using rule 96 (FullServerIdent)
+
+
+state 97
+
+   95 ServerName: sqldefSERVER FullServerIdent .
+
+    $default  reduce using rule 95 (ServerName)
+
+
+state 98
+
+    5 Switch: switchBINDIR sqldefSTRING .
+
+    $default  reduce using rule 5 (Switch)
+
+
+state 99
+
+    6 Switch: switchBINEXT sqldefSTRING .
+
+    $default  reduce using rule 6 (Switch)
+
+
+state 100
+
+  119 ANumber: sqldefNUMBER .
+
+    $default  reduce using rule 119 (ANumber)
+
+
+state 101
+
+  175 Number: '(' . ANumber ')'
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 191
+
+
+state 102
+
+  174 Number: '[' . ANumber ']'
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 192
+
+
+state 103
+
+    9 Switch: switchBLANKPADDED SwitchNumber .
+
+    $default  reduce using rule 9 (Switch)
+
+
+state 104
+
+  173 Number: ANumber .
+
+    $default  reduce using rule 173 (Number)
+
+
+state 105
+
+   94 SwitchNumber: Number .
+
+    $default  reduce using rule 94 (SwitchNumber)
+
+
+state 106
+
+    7 Switch: switchCDIR sqldefSTRING .
+
+    $default  reduce using rule 7 (Switch)
+
+
+state 107
+
+    8 Switch: switchCEXT sqldefSTRING .
+
+    $default  reduce using rule 8 (Switch)
+
+
+state 108
+
+   10 Switch: switchCHARZ SwitchNumber .
+
+    $default  reduce using rule 10 (Switch)
+
+
+state 109
+
+   11 Switch: switchCONNREQD SwitchNumber .
+
+    $default  reduce using rule 11 (Switch)
+
+
+state 110
+
+   12 Switch: switchCONTROLDB sqldefSTRING .
+
+    $default  reduce using rule 12 (Switch)
+
+
+state 111
+
+   91 Switch: switchCPPHEADER SwitchNumber .
+
+    $default  reduce using rule 91 (Switch)
+
+
+state 112
+
+   14 Switch: switchEXITREQD SwitchNumber .
+
+    $default  reduce using rule 14 (Switch)
+
+
+state 113
+
+   13 Switch: switchEIGHTBYTE SwitchNumber .
+
+    $default  reduce using rule 13 (Switch)
+
+
+state 114
+
+   15 Switch: switchEXTENDEDC SwitchNumber .
+
+    $default  reduce using rule 15 (Switch)
+
+
+state 115
+
+   16 Switch: switchEXTENDEDPAS SwitchNumber .
+
+    $default  reduce using rule 16 (Switch)
+
+
+state 116
+
+   17 Switch: switchEXTENDEDVB SwitchNumber .
+
+    $default  reduce using rule 17 (Switch)
+
+
+state 117
+
+   18 Switch: switchHEADERDIR sqldefSTRING .
+
+    $default  reduce using rule 18 (Switch)
+
+
+state 118
+
+   19 Switch: switchHEADEREXT sqldefSTRING .
+
+    $default  reduce using rule 19 (Switch)
+
+
+state 119
+
+   20 Switch: switchIDLDIR sqldefSTRING .
+
+    $default  reduce using rule 20 (Switch)
+
+
+state 120
+
+   21 Switch: switchIDLEXT sqldefSTRING .
+
+    $default  reduce using rule 21 (Switch)
+
+
+state 121
+
+   22 Switch: switchIDLMODULE sqldefSTRING .
+
+    $default  reduce using rule 22 (Switch)
+
+
+state 122
+
+   23 Switch: switchINTERNAL SwitchNumber .
+
+    $default  reduce using rule 23 (Switch)
+
+
+state 123
+
+   24 Switch: switchVERSION2BIN SwitchNumber .
+
+    $default  reduce using rule 24 (Switch)
+
+
+state 124
+
+   90 Switch: switchLITTLETRUE SwitchNumber .
+
+    $default  reduce using rule 90 (Switch)
+
+
+state 125
+
+   25 Switch: switchLOGDIR sqldefSTRING .
+
+    $default  reduce using rule 25 (Switch)
+
+
+state 126
+
+   26 Switch: switchLOGEXT sqldefSTRING .
+
+    $default  reduce using rule 26 (Switch)
+
+
+state 127
+
+   27 Switch: switchNODOMAIN SwitchNumber .
+
+    $default  reduce using rule 27 (Switch)
+
+
+state 128
+
+   28 Switch: switchONESQLSCRIPT SwitchNumber .
+
+    $default  reduce using rule 28 (Switch)
+
+
+state 129
+
+   35 Switch: switchPASDIR sqldefSTRING .
+
+    $default  reduce using rule 35 (Switch)
+
+
+state 130
+
+   36 Switch: switchPASEXT sqldefSTRING .
+
+    $default  reduce using rule 36 (Switch)
+
+
+state 131
+
+   37 Switch: switchPYTHONDIR sqldefSTRING .
+
+    $default  reduce using rule 37 (Switch)
+
+
+state 132
+
+   38 Switch: switchPYTHONEXT sqldefSTRING .
+
+    $default  reduce using rule 38 (Switch)
+
+
+state 133
+
+   39 Switch: switchSHOW sqldefSTRING .
+
+    $default  reduce using rule 39 (Switch)
+
+
+state 134
+
+   40 Switch: switchSODIR sqldefSTRING .
+
+    $default  reduce using rule 40 (Switch)
+
+
+state 135
+
+   41 Switch: switchSOEXT sqldefSTRING .
+
+    $default  reduce using rule 41 (Switch)
+
+
+state 136
+
+   42 Switch: switchSQLAUDITEXT sqldefSTRING .
+
+    $default  reduce using rule 42 (Switch)
+
+
+state 137
+
+   43 Switch: switchSQLCONEXT sqldefSTRING .
+
+    $default  reduce using rule 43 (Switch)
+
+
+state 138
+
+   44 Switch: switchSQLDIR sqldefSTRING .
+
+    $default  reduce using rule 44 (Switch)
+
+
+state 139
+
+   45 Switch: switchSQLEXT sqldefSTRING .
+
+    $default  reduce using rule 45 (Switch)
+
+
+state 140
+
+   46 Switch: switchSQLGRANTEXT sqldefSTRING .
+
+    $default  reduce using rule 46 (Switch)
+
+
+state 141
+
+   47 Switch: switchSQLIDXEXT sqldefSTRING .
+
+    $default  reduce using rule 47 (Switch)
+
+
+state 142
+
+   48 Switch: switchSQLPROCEXT sqldefSTRING .
+
+    $default  reduce using rule 48 (Switch)
+
+
+state 143
+
+   49 Switch: switchSQLSNAPEXT sqldefSTRING .
+
+    $default  reduce using rule 49 (Switch)
+
+
+state 144
+
+   50 Switch: switchSQLTABLEEXT sqldefSTRING .
+
+    $default  reduce using rule 50 (Switch)
+
+
+state 145
+
+   51 Switch: switchSQLVIEWSEXT sqldefSTRING .
+
+    $default  reduce using rule 51 (Switch)
+
+
+state 146
+
+   52 Switch: switchTARGETC SwitchNumber .
+
+    $default  reduce using rule 52 (Switch)
+
+
+state 147
+
+   53 Switch: switchTARGETIDL SwitchNumber .
+
+    $default  reduce using rule 53 (Switch)
+
+
+state 148
+
+   56 Switch: switchTARGETPAS SwitchNumber .
+
+    $default  reduce using rule 56 (Switch)
+
+
+state 149
+
+   29 Switch: switchARCHIVEDIR sqldefSTRING .
+
+    $default  reduce using rule 29 (Switch)
+
+
+state 150
+
+   30 Switch: switchARCHIVEEXT sqldefSTRING .
+
+    $default  reduce using rule 30 (Switch)
+
+
+state 151
+
+   32 Switch: switchPARMSDIR sqldefSTRING .
+
+    $default  reduce using rule 32 (Switch)
+
+
+state 152
+
+   31 Switch: switchPARMSDESCR sqldefSTRING .
+
+    $default  reduce using rule 31 (Switch)
+
+
+state 153
+
+   33 Switch: switchPARMSEXT sqldefSTRING .
+
+    $default  reduce using rule 33 (Switch)
+
+
+state 154
+
+   34 Switch: switchPARMSLOOKUP sqldefSTRING .
+
+    $default  reduce using rule 34 (Switch)
+
+
+state 155
+
+   54 Switch: switchTARGETARCHIVE SwitchNumber .
+
+    $default  reduce using rule 54 (Switch)
+
+
+state 156
+
+   55 Switch: switchTARGETPARMS SwitchNumber .
+
+    $default  reduce using rule 55 (Switch)
+
+
+state 157
+
+   57 Switch: switchTARGETPYTHON SwitchNumber .
+
+    $default  reduce using rule 57 (Switch)
+
+
+state 158
+
+   58 Switch: switchTARGETVB SwitchNumber .
+
+    $default  reduce using rule 58 (Switch)
+
+
+state 159
+
+   59 Switch: switchTARGETVB5 SwitchNumber .
+
+    $default  reduce using rule 59 (Switch)
+
+
+state 160
+
+   70 Switch: switchUCONNECT sqldefSTRING .
+
+    $default  reduce using rule 70 (Switch)
+
+
+state 161
+
+   71 Switch: switchUNDERSCORE SwitchNumber .
+
+    $default  reduce using rule 71 (Switch)
+
+
+state 162
+
+   72 Switch: switchVB5DIR sqldefSTRING .
+
+    $default  reduce using rule 72 (Switch)
+
+
+state 163
+
+   73 Switch: switchVB5EXT sqldefSTRING .
+
+    $default  reduce using rule 73 (Switch)
+
+
+state 164
+
+   87 Switch: switchVBDIR sqldefSTRING .
+
+    $default  reduce using rule 87 (Switch)
+
+
+state 165
+
+   88 Switch: switchVBEXT sqldefSTRING .
+
+    $default  reduce using rule 88 (Switch)
+
+
+state 166
+
+   86 Switch: switchVBFORIDLDIR sqldefSTRING .
+
+    $default  reduce using rule 86 (Switch)
+
+
+state 167
+
+   69 Switch: switchPREFIXVBCLASSES SwitchNumber .
+
+    $default  reduce using rule 69 (Switch)
+
+
+state 168
+
+   60 Switch: switchTARGETVBCODE3 SwitchNumber .
+
+    $default  reduce using rule 60 (Switch)
+
+
+state 169
+
+   61 Switch: switchTARGETVBNET7 SwitchNumber .
+
+    $default  reduce using rule 61 (Switch)
+
+
+state 170
+
+   62 Switch: switchTARGETCSNET7 SwitchNumber .
+
+    $default  reduce using rule 62 (Switch)
+
+
+state 171
+
+   63 Switch: switchTARGETCSIDL2 SwitchNumber .
+
+    $default  reduce using rule 63 (Switch)
+
+
+state 172
+
+   65 Switch: switchTARGETCSADONET SwitchNumber .
+
+    $default  reduce using rule 65 (Switch)
+
+
+state 173
+
+   66 Switch: switchTARGETCSRW SwitchNumber .
+
+    $default  reduce using rule 66 (Switch)
+
+
+state 174
+
+   74 Switch: switchVBCODE3DIR sqldefSTRING .
+
+    $default  reduce using rule 74 (Switch)
+
+
+state 175
+
+   75 Switch: switchVBCODE3EXT sqldefSTRING .
+
+    $default  reduce using rule 75 (Switch)
+
+
+state 176
+
+   76 Switch: switchVBNET7DIR sqldefSTRING .
+
+    $default  reduce using rule 76 (Switch)
+
+
+state 177
+
+   77 Switch: switchVBNET7EXT sqldefSTRING .
+
+    $default  reduce using rule 77 (Switch)
+
+
+state 178
+
+   78 Switch: switchCSNET7DIR sqldefSTRING .
+
+    $default  reduce using rule 78 (Switch)
+
+
+state 179
+
+   79 Switch: switchCSADONETDIR sqldefSTRING .
+
+    $default  reduce using rule 79 (Switch)
+
+
+state 180
+
+   80 Switch: switchCSRWDIR sqldefSTRING .
+
+    $default  reduce using rule 80 (Switch)
+
+
+state 181
+
+   84 Switch: switchCSIDL2DIR sqldefSTRING .
+
+    $default  reduce using rule 84 (Switch)
+
+
+state 182
+
+   81 Switch: switchCSNET7EXT sqldefSTRING .
+
+    $default  reduce using rule 81 (Switch)
+
+
+state 183
+
+   82 Switch: switchCSADONETEXT sqldefSTRING .
+
+    $default  reduce using rule 82 (Switch)
+
+
+state 184
+
+   83 Switch: switchCSRWEXT sqldefSTRING .
+
+    $default  reduce using rule 83 (Switch)
+
+
+state 185
+
+   85 Switch: switchCSIDL2EXT sqldefSTRING .
+
+    $default  reduce using rule 85 (Switch)
+
+
+state 186
+
+   89 Switch: switchVIEWONLY SwitchNumber .
+
+    $default  reduce using rule 89 (Switch)
+
+
+state 187
+
+   67 Switch: switchTARGETVBFORIDL SwitchNumber .
+
+    $default  reduce using rule 67 (Switch)
+
+
+state 188
+
+   68 Switch: switchTARGETVBFORADOR SwitchNumber .
+
+    $default  reduce using rule 68 (Switch)
+
+
+state 189
+
+   64 Switch: switchLITTLETCSIDL2 SwitchNumber .
+
+    $default  reduce using rule 64 (Switch)
+
+
+state 190
+
+    1 SqlDef: Switches ServerName Flags . ConnectName SetModDefaults OptTableMods TableDef OptExtras ProcDef
+   99 Flags: Flags . Flag
+
+    sqldefCONNECT  shift, and go to state 193
+    sqldefSCHEMA   shift, and go to state 194
+    '('            shift, and go to state 195
+
+    Flag         go to state 196
+    ConnectName  go to state 197
+
+
+state 191
+
+  175 Number: '(' ANumber . ')'
+
+    ')'  shift, and go to state 198
+
+
+state 192
+
+  174 Number: '[' ANumber . ']'
+
+    ']'  shift, and go to state 199
+
+
+state 193
+
+  103 ConnectName: sqldefCONNECT . AnIdent '/' AnIdent
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 201
+
+
+state 194
+
+  102 ConnectName: sqldefSCHEMA . AnIdent
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 202
+
+
+state 195
+
+  100 Flag: '(' . AnIdent ')'
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 203
+
+
+state 196
+
+   99 Flags: Flags Flag .
+
+    $default  reduce using rule 99 (Flags)
+
+
+state 197
+
+    1 SqlDef: Switches ServerName Flags ConnectName . SetModDefaults OptTableMods TableDef OptExtras ProcDef
+
+    $default  reduce using rule 2 (SetModDefaults)
+
+    SetModDefaults  go to state 204
+
+
+state 198
+
+  175 Number: '(' ANumber ')' .
+
+    $default  reduce using rule 175 (Number)
+
+
+state 199
+
+  174 Number: '[' ANumber ']' .
+
+    $default  reduce using rule 174 (Number)
+
+
+state 200
+
+  101 AnIdent: sqldefIDENT .
+
+    $default  reduce using rule 101 (AnIdent)
+
+
+state 201
+
+  103 ConnectName: sqldefCONNECT AnIdent . '/' AnIdent
+
+    '/'  shift, and go to state 205
+
+
+state 202
+
+  102 ConnectName: sqldefSCHEMA AnIdent .
+
+    $default  reduce using rule 102 (ConnectName)
+
+
+state 203
+
+  100 Flag: '(' AnIdent . ')'
+
+    ')'  shift, and go to state 206
+
+
+state 204
+
+    1 SqlDef: Switches ServerName Flags ConnectName SetModDefaults . OptTableMods TableDef OptExtras ProcDef
+
+    $default  reduce using rule 104 (OptTableMods)
+
+    OptTableMods  go to state 207
+
+
+state 205
+
+  103 ConnectName: sqldefCONNECT AnIdent '/' . AnIdent
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 208
+
+
+state 206
+
+  100 Flag: '(' AnIdent ')' .
+
+    $default  reduce using rule 100 (Flag)
+
+
+state 207
+
+    1 SqlDef: Switches ServerName Flags ConnectName SetModDefaults OptTableMods . TableDef OptExtras ProcDef
+  105 OptTableMods: OptTableMods . TableMod
+
+    sqldefFREELIST     shift, and go to state 209
+    sqldefFREELISTS    shift, and go to state 210
+    sqldefINITIAL      shift, and go to state 211
+    sqldefINITRANS     shift, and go to state 212
+    sqldefMAXEXTENTS   shift, and go to state 213
+    sqldefMAXTRANS     shift, and go to state 214
+    sqldefMINEXTENTS   shift, and go to state 215
+    sqldefNEXT         shift, and go to state 216
+    sqldefOPTIMAL      shift, and go to state 217
+    sqldefPCTFREE      shift, and go to state 218
+    sqldefPCTINCREASE  shift, and go to state 219
+    sqldefPCTUSED      shift, and go to state 220
+    sqldefTABLE        shift, and go to state 221
+    sqldefTABLESPACE   shift, and go to state 222
+
+    TableMod   go to state 223
+    TableDef   go to state 224
+    TableName  go to state 225
+
+
+state 208
+
+  103 ConnectName: sqldefCONNECT AnIdent '/' AnIdent .
+
+    $default  reduce using rule 103 (ConnectName)
+
+
+state 209
+
+  108 TableMod: sqldefFREELIST . sqldefGROUPS ANumber
+
+    sqldefGROUPS  shift, and go to state 226
+
+
+state 210
+
+  109 TableMod: sqldefFREELISTS . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 227
+
+
+state 211
+
+  106 TableMod: sqldefINITIAL . ANumber NumberSize
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 228
+
+
+state 212
+
+  107 TableMod: sqldefINITRANS . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 229
+
+
+state 213
+
+  112 TableMod: sqldefMAXEXTENTS . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 230
+
+
+state 214
+
+  111 TableMod: sqldefMAXTRANS . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 231
+
+
+state 215
+
+  110 TableMod: sqldefMINEXTENTS . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 232
+
+
+state 216
+
+  113 TableMod: sqldefNEXT . ANumber NumberSize
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 233
+
+
+state 217
+
+  114 TableMod: sqldefOPTIMAL . ANumber NumberSize
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 234
+
+
+state 218
+
+  115 TableMod: sqldefPCTFREE . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 235
+
+
+state 219
+
+  117 TableMod: sqldefPCTINCREASE . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 236
+
+
+state 220
+
+  116 TableMod: sqldefPCTUSED . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 237
+
+
+state 221
+
+  125 TableName: sqldefTABLE . AnIdent OptTableAlias OptTableCheck
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 238
+
+
+state 222
+
+  118 TableMod: sqldefTABLESPACE . AnIdent
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 239
+
+
+state 223
+
+  105 OptTableMods: OptTableMods TableMod .
+
+    $default  reduce using rule 105 (OptTableMods)
+
+
+state 224
+
+    1 SqlDef: Switches ServerName Flags ConnectName SetModDefaults OptTableMods TableDef . OptExtras ProcDef
+
+    $default  reduce using rule 198 (OptExtras)
+
+    OptExtras  go to state 240
+
+
+state 225
+
+  123 TableDef: TableName . SetStateTable FieldDef
+
+    $default  reduce using rule 124 (SetStateTable)
+
+    SetStateTable  go to state 241
+
+
+state 226
+
+  108 TableMod: sqldefFREELIST sqldefGROUPS . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 242
+
+
+state 227
+
+  109 TableMod: sqldefFREELISTS ANumber .
+
+    $default  reduce using rule 109 (TableMod)
+
+
+state 228
+
+  106 TableMod: sqldefINITIAL ANumber . NumberSize
+
+    sqldefK  shift, and go to state 243
+    sqldefM  shift, and go to state 244
+
+    $default  reduce using rule 120 (NumberSize)
+
+    NumberSize  go to state 245
+
+
+state 229
+
+  107 TableMod: sqldefINITRANS ANumber .
+
+    $default  reduce using rule 107 (TableMod)
+
+
+state 230
+
+  112 TableMod: sqldefMAXEXTENTS ANumber .
+
+    $default  reduce using rule 112 (TableMod)
+
+
+state 231
+
+  111 TableMod: sqldefMAXTRANS ANumber .
+
+    $default  reduce using rule 111 (TableMod)
+
+
+state 232
+
+  110 TableMod: sqldefMINEXTENTS ANumber .
+
+    $default  reduce using rule 110 (TableMod)
+
+
+state 233
+
+  113 TableMod: sqldefNEXT ANumber . NumberSize
+
+    sqldefK  shift, and go to state 243
+    sqldefM  shift, and go to state 244
+
+    $default  reduce using rule 120 (NumberSize)
+
+    NumberSize  go to state 246
+
+
+state 234
+
+  114 TableMod: sqldefOPTIMAL ANumber . NumberSize
+
+    sqldefK  shift, and go to state 243
+    sqldefM  shift, and go to state 244
+
+    $default  reduce using rule 120 (NumberSize)
+
+    NumberSize  go to state 247
+
+
+state 235
+
+  115 TableMod: sqldefPCTFREE ANumber .
+
+    $default  reduce using rule 115 (TableMod)
+
+
+state 236
+
+  117 TableMod: sqldefPCTINCREASE ANumber .
+
+    $default  reduce using rule 117 (TableMod)
+
+
+state 237
+
+  116 TableMod: sqldefPCTUSED ANumber .
+
+    $default  reduce using rule 116 (TableMod)
+
+
+state 238
+
+  125 TableName: sqldefTABLE AnIdent . OptTableAlias OptTableCheck
+
+    $default  reduce using rule 128 (OptTableAlias)
+
+    OptTableAlias  go to state 248
+
+
+state 239
+
+  118 TableMod: sqldefTABLESPACE AnIdent .
+
+    $default  reduce using rule 118 (TableMod)
+
+
+state 240
+
+    1 SqlDef: Switches ServerName Flags ConnectName SetModDefaults OptTableMods TableDef OptExtras . ProcDef
+  199 OptExtras: OptExtras . Extra
+
+    sqldefAUDIT  shift, and go to state 249
+    sqldefGRANT  shift, and go to state 250
+    sqldefKEY    shift, and go to state 251
+    sqldefLINK   shift, and go to state 252
+    sqldefVIEW   shift, and go to state 253
+
+    $default  reduce using rule 250 (ProcDef)
+
+    Extra     go to state 254
+    GrantDef  go to state 255
+    KeyDef    go to state 256
+    Link      go to state 257
+    Audit     go to state 258
+    ProcDef   go to state 259
+    ViewDef   go to state 260
+
+
+state 241
+
+  123 TableDef: TableName SetStateTable . FieldDef
+
+    $default  reduce using rule 133 (FieldDef)
+
+    FieldDef  go to state 261
+
+
+state 242
+
+  108 TableMod: sqldefFREELIST sqldefGROUPS ANumber .
+
+    $default  reduce using rule 108 (TableMod)
+
+
+state 243
+
+  121 NumberSize: sqldefK .
+
+    $default  reduce using rule 121 (NumberSize)
+
+
+state 244
+
+  122 NumberSize: sqldefM .
+
+    $default  reduce using rule 122 (NumberSize)
+
+
+state 245
+
+  106 TableMod: sqldefINITIAL ANumber NumberSize .
+
+    $default  reduce using rule 106 (TableMod)
+
+
+state 246
+
+  113 TableMod: sqldefNEXT ANumber NumberSize .
+
+    $default  reduce using rule 113 (TableMod)
+
+
+state 247
+
+  114 TableMod: sqldefOPTIMAL ANumber NumberSize .
+
+    $default  reduce using rule 114 (TableMod)
+
+
+state 248
+
+  125 TableName: sqldefTABLE AnIdent OptTableAlias . OptTableCheck
+  129 OptTableAlias: OptTableAlias . '[' AnIdentNull ']'
+  130              | OptTableAlias . '(' AnIdentNull ')'
+
+    sqldefCHECK  shift, and go to state 262
+    '('          shift, and go to state 263
+    '['          shift, and go to state 264
+
+    $default  reduce using rule 131 (OptTableCheck)
+
+    OptTableCheck  go to state 265
+
+
+state 249
+
+  247 Audit: sqldefAUDIT . AuditFull
+
+    sqldefFULL  shift, and go to state 266
+
+    $default  reduce using rule 248 (AuditFull)
+
+    AuditFull  go to state 267
+
+
+state 250
+
+  205 GrantDef: sqldefGRANT . SetGrant Permissions sqldefTO Users
+
+    $default  reduce using rule 206 (SetGrant)
+
+    SetGrant  go to state 268
+
+
+state 251
+
+  218 KeyDef: sqldefKEY . KeyName Modifiers Columns
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 269
+    KeyName  go to state 270
+
+
+state 252
+
+  239 Link: sqldefLINK . NewLink MasterName Columns OptDeleteCascade
+
+    $default  reduce using rule 242 (NewLink)
+
+    NewLink  go to state 271
+
+
+state 253
+
+  274 ViewDef: sqldefVIEW . ViewName SetViewGrant ToUsers ViewCode
+
+    sqldefIDENT  shift, and go to state 272
+
+    ViewName  go to state 273
+
+
+state 254
+
+  199 OptExtras: OptExtras Extra .
+
+    $default  reduce using rule 199 (OptExtras)
+
+
+state 255
+
+  200 Extra: GrantDef .
+
+    $default  reduce using rule 200 (Extra)
+
+
+state 256
+
+  201 Extra: KeyDef .
+
+    $default  reduce using rule 201 (Extra)
+
+
+state 257
+
+  202 Extra: Link .
+
+    $default  reduce using rule 202 (Extra)
+
+
+state 258
+
+  203 Extra: Audit .
+
+    $default  reduce using rule 203 (Extra)
+
+
+state 259
+
+    1 SqlDef: Switches ServerName Flags ConnectName SetModDefaults OptTableMods TableDef OptExtras ProcDef .
+  251 ProcDef: ProcDef . Proc
+
+    sqldefDATA  shift, and go to state 274
+    sqldefPROC  shift, and go to state 275
+    sqldefWITH  shift, and go to state 276
+
+    $default  reduce using rule 1 (SqlDef)
+
+    Proc  go to state 277
+    Data  go to state 278
+
+
+state 260
+
+  204 Extra: ViewDef .
+
+    $default  reduce using rule 204 (Extra)
+
+
+state 261
+
+  123 TableDef: TableName SetStateTable FieldDef .
+  134 FieldDef: FieldDef . Field
+
+    sqldefIDENT  shift, and go to state 200
+
+    $default  reduce using rule 123 (TableDef)
+
+    AnIdent  go to state 279
+    Field    go to state 280
+
+
+state 262
+
+  132 OptTableCheck: sqldefCHECK . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 281
+
+
+state 263
+
+  130 OptTableAlias: OptTableAlias '(' . AnIdentNull ')'
+
+    sqldefIDENT  shift, and go to state 200
+    sqldefNULL   shift, and go to state 282
+
+    AnIdent      go to state 283
+    AnIdentNull  go to state 284
+
+
+state 264
+
+  129 OptTableAlias: OptTableAlias '[' . AnIdentNull ']'
+
+    sqldefIDENT  shift, and go to state 200
+    sqldefNULL   shift, and go to state 282
+
+    AnIdent      go to state 283
+    AnIdentNull  go to state 285
+
+
+state 265
+
+  125 TableName: sqldefTABLE AnIdent OptTableAlias OptTableCheck .
+
+    $default  reduce using rule 125 (TableName)
+
+
+state 266
+
+  249 AuditFull: sqldefFULL .
+
+    $default  reduce using rule 249 (AuditFull)
+
+
+state 267
+
+  247 Audit: sqldefAUDIT AuditFull .
+
+    $default  reduce using rule 247 (Audit)
+
+
+state 268
+
+  205 GrantDef: sqldefGRANT SetGrant . Permissions sqldefTO Users
+
+    sqldefALL      shift, and go to state 286
+    sqldefDELETE   shift, and go to state 287
+    sqldefEXECUTE  shift, and go to state 288
+    sqldefINSERT   shift, and go to state 289
+    sqldefSELECT   shift, and go to state 290
+    sqldefUPDATE   shift, and go to state 291
+
+    Permissions  go to state 292
+    Permission   go to state 293
+
+
+state 269
+
+  219 KeyName: AnIdent .
+
+    $default  reduce using rule 219 (KeyName)
+
+
+state 270
+
+  218 KeyDef: sqldefKEY KeyName . Modifiers Columns
+
+    $default  reduce using rule 220 (Modifiers)
+
+    Modifiers  go to state 294
+
+
+state 271
+
+  239 Link: sqldefLINK NewLink . MasterName Columns OptDeleteCascade
+
+    error        shift, and go to state 295
+    sqldefIDENT  shift, and go to state 296
+
+    MasterName      go to state 297
+    QualifiedIdent  go to state 298
+
+
+state 272
+
+  276 ViewName: sqldefIDENT .
+
+    $default  reduce using rule 276 (ViewName)
+
+
+state 273
+
+  274 ViewDef: sqldefVIEW ViewName . SetViewGrant ToUsers ViewCode
+
+    $default  reduce using rule 275 (SetViewGrant)
+
+    SetViewGrant  go to state 299
+
+
+state 274
+
+  360 Data: sqldefDATA . SetData Lines sqldefENDDATA
+
+    $default  reduce using rule 361 (SetData)
+
+    SetData  go to state 300
+
+
+state 275
+
+  252 Proc: sqldefPROC . SetExt StdProc ToUsers UsedBy
+  253     | sqldefPROC . SetExt SetProcGrant SetProjectState UserProc
+
+    $default  reduce using rule 256 (SetExt)
+
+    SetExt  go to state 301
+
+
+state 276
+
+  254 Proc: sqldefWITH . WithProc
+
+    sqldefIDENT  shift, and go to state 302
+
+    WithProc  go to state 303
+    WithName  go to state 304
+
+
+state 277
+
+  251 ProcDef: ProcDef Proc .
+
+    $default  reduce using rule 251 (ProcDef)
+
+
+state 278
+
+  255 Proc: Data .
+
+    $default  reduce using rule 255 (Proc)
+
+
+state 279
+
+  136 Field: AnIdent . SetField $@1 OptAlias FieldType OptNullUppers
+
+    $default  reduce using rule 137 (SetField)
+
+    SetField  go to state 305
+
+
+state 280
+
+  134 FieldDef: FieldDef Field .
+
+    $default  reduce using rule 134 (FieldDef)
+
+
+state 281
+
+  132 OptTableCheck: sqldefCHECK sqldefSTRING .
+
+    $default  reduce using rule 132 (OptTableCheck)
+
+
+state 282
+
+  126 AnIdentNull: sqldefNULL .
+
+    $default  reduce using rule 126 (AnIdentNull)
+
+
+state 283
+
+  127 AnIdentNull: AnIdent .
+
+    $default  reduce using rule 127 (AnIdentNull)
+
+
+state 284
+
+  130 OptTableAlias: OptTableAlias '(' AnIdentNull . ')'
+
+    ')'  shift, and go to state 306
+
+
+state 285
+
+  129 OptTableAlias: OptTableAlias '[' AnIdentNull . ']'
+
+    ']'  shift, and go to state 307
+
+
+state 286
+
+  209 Permission: sqldefALL .
+
+    $default  reduce using rule 209 (Permission)
+
+
+state 287
+
+  210 Permission: sqldefDELETE .
+
+    $default  reduce using rule 210 (Permission)
+
+
+state 288
+
+  214 Permission: sqldefEXECUTE .
+
+    $default  reduce using rule 214 (Permission)
+
+
+state 289
+
+  211 Permission: sqldefINSERT .
+
+    $default  reduce using rule 211 (Permission)
+
+
+state 290
+
+  212 Permission: sqldefSELECT .
+
+    $default  reduce using rule 212 (Permission)
+
+
+state 291
+
+  213 Permission: sqldefUPDATE .
+
+    $default  reduce using rule 213 (Permission)
+
+
+state 292
+
+  205 GrantDef: sqldefGRANT SetGrant Permissions . sqldefTO Users
+  208 Permissions: Permissions . Permission
+
+    sqldefALL      shift, and go to state 286
+    sqldefDELETE   shift, and go to state 287
+    sqldefEXECUTE  shift, and go to state 288
+    sqldefINSERT   shift, and go to state 289
+    sqldefSELECT   shift, and go to state 290
+    sqldefTO       shift, and go to state 308
+    sqldefUPDATE   shift, and go to state 291
+
+    Permission  go to state 309
+
+
+state 293
+
+  207 Permissions: Permission .
+
+    $default  reduce using rule 207 (Permissions)
+
+
+state 294
+
+  218 KeyDef: sqldefKEY KeyName Modifiers . Columns
+  221 Modifiers: Modifiers . Modifier
+
+    sqldefFREELIST     shift, and go to state 310
+    sqldefFREELISTS    shift, and go to state 311
+    sqldefIDENT        shift, and go to state 200
+    sqldefINITIAL      shift, and go to state 312
+    sqldefINITRANS     shift, and go to state 313
+    sqldefMAXEXTENTS   shift, and go to state 314
+    sqldefMAXTRANS     shift, and go to state 315
+    sqldefMINEXTENTS   shift, and go to state 316
+    sqldefNEXT         shift, and go to state 317
+    sqldefOPTIMAL      shift, and go to state 318
+    sqldefPCTFREE      shift, and go to state 319
+    sqldefPCTINCREASE  shift, and go to state 320
+    sqldefPRIMARY      shift, and go to state 321
+    sqldefTABLESPACE   shift, and go to state 322
+    sqldefUNIQUE       shift, and go to state 323
+
+    AnIdent   go to state 324
+    Modifier  go to state 325
+    Columns   go to state 326
+    Column    go to state 327
+
+
+state 295
+
+  244 MasterName: error .
+
+    $default  reduce using rule 244 (MasterName)
+
+
+state 296
+
+  245 QualifiedIdent: sqldefIDENT .
+
+    $default  reduce using rule 245 (QualifiedIdent)
+
+
+state 297
+
+  239 Link: sqldefLINK NewLink MasterName . Columns OptDeleteCascade
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 324
+    Columns  go to state 328
+    Column   go to state 327
+
+
+state 298
+
+  243 MasterName: QualifiedIdent .
+  246 QualifiedIdent: QualifiedIdent . "." sqldefIDENT
+
+    "."  shift, and go to state 329
+
+    $default  reduce using rule 243 (MasterName)
+
+
+state 299
+
+  274 ViewDef: sqldefVIEW ViewName SetViewGrant . ToUsers ViewCode
+
+    sqldefGRANT  shift, and go to state 330
+
+    $default  reduce using rule 321 (ToUsers)
+
+    ToUsers  go to state 331
+
+
+state 300
+
+  360 Data: sqldefDATA SetData . Lines sqldefENDDATA
+
+    sqldefLINE  shift, and go to state 332
+
+    Lines  go to state 333
+    Line   go to state 334
+
+
+state 301
+
+  252 Proc: sqldefPROC SetExt . StdProc ToUsers UsedBy
+  253     | sqldefPROC SetExt . SetProcGrant SetProjectState UserProc
+
+    sqldefBULKINSERT    shift, and go to state 335
+    sqldefBULKUPDATE    shift, and go to state 336
+    sqldefCOUNT         shift, and go to state 337
+    sqldefDELETEALL     shift, and go to state 338
+    sqldefDELETEONE     shift, and go to state 339
+    sqldefEXISTS        shift, and go to state 340
+    sqldefINSERT        shift, and go to state 341
+    sqldefSELECTALL     shift, and go to state 342
+    sqldefSELECTALLUPD  shift, and go to state 343
+    sqldefSELECTONE     shift, and go to state 344
+    sqldefSELECTONEUPD  shift, and go to state 345
+    sqldefSELECTPLUS    shift, and go to state 346
+    sqldefUPDATE        shift, and go to state 347
+
+    $default  reduce using rule 257 (SetProcGrant)
+
+    SetProcGrant  go to state 348
+    StdProc       go to state 349
+
+
+state 302
+
+  280 WithName: sqldefIDENT .
+
+    $default  reduce using rule 280 (WithName)
+
+
+state 303
+
+  254 Proc: sqldefWITH WithProc .
+
+    $default  reduce using rule 254 (Proc)
+
+
+state 304
+
+  279 WithProc: WithName . WithCode
+
+    sqldefCODE     shift, and go to state 350
+    sqldefSQL      shift, and go to state 351
+    sqldefSQLCODE  shift, and go to state 352
+
+    WithCode  go to state 353
+
+
+state 305
+
+  136 Field: AnIdent SetField . $@1 OptAlias FieldType OptNullUppers
+
+    $default  reduce using rule 135 ($@1)
+
+    $@1  go to state 354
+
+
+state 306
+
+  130 OptTableAlias: OptTableAlias '(' AnIdentNull ')' .
+
+    $default  reduce using rule 130 (OptTableAlias)
+
+
+state 307
+
+  129 OptTableAlias: OptTableAlias '[' AnIdentNull ']' .
+
+    $default  reduce using rule 129 (OptTableAlias)
+
+
+state 308
+
+  205 GrantDef: sqldefGRANT SetGrant Permissions sqldefTO . Users
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 355
+    Users    go to state 356
+    User     go to state 357
+
+
+state 309
+
+  208 Permissions: Permissions Permission .
+
+    $default  reduce using rule 208 (Permissions)
+
+
+state 310
+
+  227 Modifier: sqldefFREELIST . sqldefGROUPS ANumber
+
+    sqldefGROUPS  shift, and go to state 358
+
+
+state 311
+
+  228 Modifier: sqldefFREELISTS . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 359
+
+
+state 312
+
+  225 Modifier: sqldefINITIAL . ANumber NumberSize
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 360
+
+
+state 313
+
+  226 Modifier: sqldefINITRANS . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 361
+
+
+state 314
+
+  231 Modifier: sqldefMAXEXTENTS . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 362
+
+
+state 315
+
+  230 Modifier: sqldefMAXTRANS . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 363
+
+
+state 316
+
+  229 Modifier: sqldefMINEXTENTS . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 364
+
+
+state 317
+
+  232 Modifier: sqldefNEXT . ANumber NumberSize
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 365
+
+
+state 318
+
+  233 Modifier: sqldefOPTIMAL . ANumber NumberSize
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 366
+
+
+state 319
+
+  234 Modifier: sqldefPCTFREE . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 367
+
+
+state 320
+
+  235 Modifier: sqldefPCTINCREASE . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 368
+
+
+state 321
+
+  223 Modifier: sqldefPRIMARY .
+
+    $default  reduce using rule 223 (Modifier)
+
+
+state 322
+
+  224 Modifier: sqldefTABLESPACE . AnIdent
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 369
+
+
+state 323
+
+  222 Modifier: sqldefUNIQUE .
+
+    $default  reduce using rule 222 (Modifier)
+
+
+state 324
+
+  238 Column: AnIdent .
+
+    $default  reduce using rule 238 (Column)
+
+
+state 325
+
+  221 Modifiers: Modifiers Modifier .
+
+    $default  reduce using rule 221 (Modifiers)
+
+
+state 326
+
+  218 KeyDef: sqldefKEY KeyName Modifiers Columns .
+  237 Columns: Columns . OptComma Column
+
+    ','  shift, and go to state 370
+
+    sqldefIDENT  reduce using rule 193 (OptComma)
+    $default     reduce using rule 218 (KeyDef)
+
+    OptComma  go to state 371
+
+
+state 327
+
+  236 Columns: Column .
+
+    $default  reduce using rule 236 (Columns)
+
+
+state 328
+
+  237 Columns: Columns . OptComma Column
+  239 Link: sqldefLINK NewLink MasterName Columns . OptDeleteCascade
+
+    sqldefDELETE  shift, and go to state 372
+    ','           shift, and go to state 370
+
+    sqldefIDENT  reduce using rule 193 (OptComma)
+    $default     reduce using rule 240 (OptDeleteCascade)
+
+    OptComma          go to state 371
+    OptDeleteCascade  go to state 373
+
+
+state 329
+
+  246 QualifiedIdent: QualifiedIdent "." . sqldefIDENT
+
+    sqldefIDENT  shift, and go to state 374
+
+
+state 330
+
+  322 ToUsers: sqldefGRANT . sqldefTO Users
+
+    sqldefTO  shift, and go to state 375
+
+
+state 331
+
+  274 ViewDef: sqldefVIEW ViewName SetViewGrant ToUsers . ViewCode
+
+    sqldefCODE  shift, and go to state 376
+
+    ViewCode  go to state 377
+
+
+state 332
+
+  359 Line: sqldefLINE .
+
+    $default  reduce using rule 359 (Line)
+
+
+state 333
+
+  358 Lines: Lines . Line
+  360 Data: sqldefDATA SetData Lines . sqldefENDDATA
+
+    sqldefENDDATA  shift, and go to state 378
+    sqldefLINE     shift, and go to state 332
+
+    Line  go to state 379
+
+
+state 334
+
+  357 Lines: Line .
+
+    $default  reduce using rule 357 (Lines)
+
+
+state 335
+
+  263 StdProc: sqldefBULKINSERT . NoExt
+
+    '('  shift, and go to state 380
+
+    $default  reduce using rule 295 (ProcSwitches)
+
+    NoExt         go to state 381
+    ProcSwitches  go to state 382
+
+
+state 336
+
+  270 StdProc: sqldefBULKUPDATE . NoExt
+
+    '('  shift, and go to state 380
+
+    $default  reduce using rule 295 (ProcSwitches)
+
+    NoExt         go to state 383
+    ProcSwitches  go to state 382
+
+
+state 337
+
+  259 StdProc: sqldefCOUNT . NoExt
+
+    '('  shift, and go to state 380
+
+    $default  reduce using rule 295 (ProcSwitches)
+
+    NoExt         go to state 384
+    ProcSwitches  go to state 382
+
+
+state 338
+
+  260 StdProc: sqldefDELETEALL . NoExt
+
+    '('  shift, and go to state 380
+
+    $default  reduce using rule 295 (ProcSwitches)
+
+    NoExt         go to state 385
+    ProcSwitches  go to state 382
+
+
+state 339
+
+  261 StdProc: sqldefDELETEONE . NoExt
+
+    '('  shift, and go to state 380
+
+    $default  reduce using rule 295 (ProcSwitches)
+
+    NoExt         go to state 386
+    ProcSwitches  go to state 382
+
+
+state 340
+
+  262 StdProc: sqldefEXISTS . NoExt
+
+    '('  shift, and go to state 380
+
+    $default  reduce using rule 295 (ProcSwitches)
+
+    NoExt         go to state 387
+    ProcSwitches  go to state 382
+
+
+state 341
+
+  264 StdProc: sqldefINSERT . NoExt
+
+    '('  shift, and go to state 380
+
+    $default  reduce using rule 295 (ProcSwitches)
+
+    NoExt         go to state 388
+    ProcSwitches  go to state 382
+
+
+state 342
+
+  265 StdProc: sqldefSELECTALL . NoExt
+
+    '('  shift, and go to state 380
+
+    $default  reduce using rule 295 (ProcSwitches)
+
+    NoExt         go to state 389
+    ProcSwitches  go to state 382
+
+
+state 343
+
+  267 StdProc: sqldefSELECTALLUPD . NoExt
+
+    '('  shift, and go to state 380
+
+    $default  reduce using rule 295 (ProcSwitches)
+
+    NoExt         go to state 390
+    ProcSwitches  go to state 382
+
+
+state 344
+
+  266 StdProc: sqldefSELECTONE . NoExt
+
+    '('  shift, and go to state 380
+
+    $default  reduce using rule 295 (ProcSwitches)
+
+    NoExt         go to state 391
+    ProcSwitches  go to state 382
+
+
+state 345
+
+  268 StdProc: sqldefSELECTONEUPD . NoExt
+
+    '('  shift, and go to state 380
+
+    $default  reduce using rule 295 (ProcSwitches)
+
+    NoExt         go to state 392
+    ProcSwitches  go to state 382
+
+
+state 346
+
+  269 StdProc: sqldefSELECTPLUS . OptPlusNumber NoExt
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    '('       [reduce using rule 272 (OptPlusNumber)]
+    $default  reduce using rule 272 (OptPlusNumber)
+
+    ANumber        go to state 104
+    Number         go to state 393
+    OptPlusNumber  go to state 394
+
+
+state 347
+
+  271 StdProc: sqldefUPDATE . NoExt
+
+    '('  shift, and go to state 380
+
+    $default  reduce using rule 295 (ProcSwitches)
+
+    NoExt         go to state 395
+    ProcSwitches  go to state 382
+
+
+state 348
+
+  253 Proc: sqldefPROC SetExt SetProcGrant . SetProjectState UserProc
+
+    $default  reduce using rule 258 (SetProjectState)
+
+    SetProjectState  go to state 396
+
+
+state 349
+
+  252 Proc: sqldefPROC SetExt StdProc . ToUsers UsedBy
+
+    sqldefGRANT  shift, and go to state 330
+
+    $default  reduce using rule 321 (ToUsers)
+
+    ToUsers  go to state 397
+
+
+state 350
+
+  281 WithCode: sqldefCODE . SetWith Lines sqldefENDCODE
+
+    $default  reduce using rule 284 (SetWith)
+
+    SetWith  go to state 398
+
+
+state 351
+
+  282 WithCode: sqldefSQL . sqldefCODE SetWith Lines sqldefENDCODE
+
+    sqldefCODE  shift, and go to state 399
+
+
+state 352
+
+  283 WithCode: sqldefSQLCODE . SetWith Lines sqldefENDCODE
+
+    $default  reduce using rule 284 (SetWith)
+
+    SetWith  go to state 400
+
+
+state 353
+
+  279 WithProc: WithName WithCode .
+
+    $default  reduce using rule 279 (WithProc)
+
+
+state 354
+
+  136 Field: AnIdent SetField $@1 . OptAlias FieldType OptNullUppers
+
+    '('  shift, and go to state 401
+
+    $default  reduce using rule 138 (OptAlias)
+
+    OptAlias  go to state 402
+
+
+state 355
+
+  217 User: AnIdent .
+
+    $default  reduce using rule 217 (User)
+
+
+state 356
+
+  205 GrantDef: sqldefGRANT SetGrant Permissions sqldefTO Users .
+  216 Users: Users . User
+
+    sqldefIDENT  shift, and go to state 200
+
+    $default  reduce using rule 205 (GrantDef)
+
+    AnIdent  go to state 355
+    User     go to state 403
+
+
+state 357
+
+  215 Users: User .
+
+    $default  reduce using rule 215 (Users)
+
+
+state 358
+
+  227 Modifier: sqldefFREELIST sqldefGROUPS . ANumber
+
+    sqldefNUMBER  shift, and go to state 100
+
+    ANumber  go to state 404
+
+
+state 359
+
+  228 Modifier: sqldefFREELISTS ANumber .
+
+    $default  reduce using rule 228 (Modifier)
+
+
+state 360
+
+  225 Modifier: sqldefINITIAL ANumber . NumberSize
+
+    sqldefK  shift, and go to state 243
+    sqldefM  shift, and go to state 244
+
+    $default  reduce using rule 120 (NumberSize)
+
+    NumberSize  go to state 405
+
+
+state 361
+
+  226 Modifier: sqldefINITRANS ANumber .
+
+    $default  reduce using rule 226 (Modifier)
+
+
+state 362
+
+  231 Modifier: sqldefMAXEXTENTS ANumber .
+
+    $default  reduce using rule 231 (Modifier)
+
+
+state 363
+
+  230 Modifier: sqldefMAXTRANS ANumber .
+
+    $default  reduce using rule 230 (Modifier)
+
+
+state 364
+
+  229 Modifier: sqldefMINEXTENTS ANumber .
+
+    $default  reduce using rule 229 (Modifier)
+
+
+state 365
+
+  232 Modifier: sqldefNEXT ANumber . NumberSize
+
+    sqldefK  shift, and go to state 243
+    sqldefM  shift, and go to state 244
+
+    $default  reduce using rule 120 (NumberSize)
+
+    NumberSize  go to state 406
+
+
+state 366
+
+  233 Modifier: sqldefOPTIMAL ANumber . NumberSize
+
+    sqldefK  shift, and go to state 243
+    sqldefM  shift, and go to state 244
+
+    $default  reduce using rule 120 (NumberSize)
+
+    NumberSize  go to state 407
+
+
+state 367
+
+  234 Modifier: sqldefPCTFREE ANumber .
+
+    $default  reduce using rule 234 (Modifier)
+
+
+state 368
+
+  235 Modifier: sqldefPCTINCREASE ANumber .
+
+    $default  reduce using rule 235 (Modifier)
+
+
+state 369
+
+  224 Modifier: sqldefTABLESPACE AnIdent .
+
+    $default  reduce using rule 224 (Modifier)
+
+
+state 370
+
+  194 OptComma: ',' .
+
+    $default  reduce using rule 194 (OptComma)
+
+
+state 371
+
+  237 Columns: Columns OptComma . Column
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 324
+    Column   go to state 408
+
+
+state 372
+
+  241 OptDeleteCascade: sqldefDELETE . sqldefCASCADE
+
+    sqldefCASCADE  shift, and go to state 409
+
+
+state 373
+
+  239 Link: sqldefLINK NewLink MasterName Columns OptDeleteCascade .
+
+    $default  reduce using rule 239 (Link)
+
+
+state 374
+
+  246 QualifiedIdent: QualifiedIdent "." sqldefIDENT .
+
+    $default  reduce using rule 246 (QualifiedIdent)
+
+
+state 375
+
+  322 ToUsers: sqldefGRANT sqldefTO . Users
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 355
+    Users    go to state 410
+    User     go to state 357
+
+
+state 376
+
+  277 ViewCode: sqldefCODE . SetView Lines sqldefENDCODE
+
+    $default  reduce using rule 278 (SetView)
+
+    SetView  go to state 411
+
+
+state 377
+
+  274 ViewDef: sqldefVIEW ViewName SetViewGrant ToUsers ViewCode .
+
+    $default  reduce using rule 274 (ViewDef)
+
+
+state 378
+
+  360 Data: sqldefDATA SetData Lines sqldefENDDATA .
+
+    $default  reduce using rule 360 (Data)
+
+
+state 379
+
+  358 Lines: Lines Line .
+
+    $default  reduce using rule 358 (Lines)
+
+
+state 380
+
+  286 NoExt: '(' . NoNos ')'
+
+    sqldefNOC    shift, and go to state 412
+    sqldefNOEXT  shift, and go to state 413
+    sqldefNOIDL  shift, and go to state 414
+    sqldefNOPAS  shift, and go to state 415
+    sqldefNOVB   shift, and go to state 416
+
+    NoNos  go to state 417
+    NoNo   go to state 418
+
+
+state 381
+
+  263 StdProc: sqldefBULKINSERT NoExt .
+
+    $default  reduce using rule 263 (StdProc)
+
+
+state 382
+
+  287 NoExt: ProcSwitches .
+  296 ProcSwitches: ProcSwitches . ProcSwitch
+
+    switchEXTENDEDC        shift, and go to state 419
+    switchEXTENDEDPAS      shift, and go to state 420
+    switchEXTENDEDVB       shift, and go to state 421
+    switchTARGETC          shift, and go to state 422
+    switchTARGETIDL        shift, and go to state 423
+    switchTARGETPAS        shift, and go to state 424
+    switchTARGETPYTHON     shift, and go to state 425
+    switchTARGETVB         shift, and go to state 426
+    switchTARGETVB5        shift, and go to state 427
+    switchINVALID          shift, and go to state 428
+    switchTARGETVBCODE3    shift, and go to state 429
+    switchTARGETVBNET7     shift, and go to state 430
+    switchTARGETCSNET7     shift, and go to state 431
+    switchTARGETCSIDL2     shift, and go to state 432
+    switchTARGETCSADONET   shift, and go to state 433
+    switchTARGETCSRW       shift, and go to state 434
+    switchTARGETVBFORIDL   shift, and go to state 435
+    switchTARGETVBFORADOR  shift, and go to state 436
+
+    $default  reduce using rule 287 (NoExt)
+
+    ProcSwitch  go to state 437
+
+
+state 383
+
+  270 StdProc: sqldefBULKUPDATE NoExt .
+
+    $default  reduce using rule 270 (StdProc)
+
+
+state 384
+
+  259 StdProc: sqldefCOUNT NoExt .
+
+    $default  reduce using rule 259 (StdProc)
+
+
+state 385
+
+  260 StdProc: sqldefDELETEALL NoExt .
+
+    $default  reduce using rule 260 (StdProc)
+
+
+state 386
+
+  261 StdProc: sqldefDELETEONE NoExt .
+
+    $default  reduce using rule 261 (StdProc)
+
+
+state 387
+
+  262 StdProc: sqldefEXISTS NoExt .
+
+    $default  reduce using rule 262 (StdProc)
+
+
+state 388
+
+  264 StdProc: sqldefINSERT NoExt .
+
+    $default  reduce using rule 264 (StdProc)
+
+
+state 389
+
+  265 StdProc: sqldefSELECTALL NoExt .
+
+    $default  reduce using rule 265 (StdProc)
+
+
+state 390
+
+  267 StdProc: sqldefSELECTALLUPD NoExt .
+
+    $default  reduce using rule 267 (StdProc)
+
+
+state 391
+
+  266 StdProc: sqldefSELECTONE NoExt .
+
+    $default  reduce using rule 266 (StdProc)
+
+
+state 392
+
+  268 StdProc: sqldefSELECTONEUPD NoExt .
+
+    $default  reduce using rule 268 (StdProc)
+
+
+state 393
+
+  273 OptPlusNumber: Number .
+
+    $default  reduce using rule 273 (OptPlusNumber)
+
+
+state 394
+
+  269 StdProc: sqldefSELECTPLUS OptPlusNumber . NoExt
+
+    '('  shift, and go to state 380
+
+    $default  reduce using rule 295 (ProcSwitches)
+
+    NoExt         go to state 438
+    ProcSwitches  go to state 382
+
+
+state 395
+
+  271 StdProc: sqldefUPDATE NoExt .
+
+    $default  reduce using rule 271 (StdProc)
+
+
+state 396
+
+  253 Proc: sqldefPROC SetExt SetProcGrant SetProjectState . UserProc
+
+    sqldefIDENT  shift, and go to state 439
+
+    UserProc  go to state 440
+    ProcName  go to state 441
+
+
+state 397
+
+  252 Proc: sqldefPROC SetExt StdProc ToUsers . UsedBy
+
+    sqldefUSEDBY  shift, and go to state 442
+
+    $default  reduce using rule 315 (UsedBy)
+
+    UsedBy  go to state 443
+
+
+state 398
+
+  281 WithCode: sqldefCODE SetWith . Lines sqldefENDCODE
+
+    sqldefLINE  shift, and go to state 332
+
+    Lines  go to state 444
+    Line   go to state 334
+
+
+state 399
+
+  282 WithCode: sqldefSQL sqldefCODE . SetWith Lines sqldefENDCODE
+
+    $default  reduce using rule 284 (SetWith)
+
+    SetWith  go to state 445
+
+
+state 400
+
+  283 WithCode: sqldefSQLCODE SetWith . Lines sqldefENDCODE
+
+    sqldefLINE  shift, and go to state 332
+
+    Lines  go to state 446
+    Line   go to state 334
+
+
+state 401
+
+  139 OptAlias: '(' . AnIdent ')'
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 447
+
+
+state 402
+
+  136 Field: AnIdent SetField $@1 OptAlias . FieldType OptNullUppers
+
+    sqldefBINARY     shift, and go to state 448
+    sqldefBLOB       shift, and go to state 449
+    sqldefBOOLEAN    shift, and go to state 450
+    sqldefCHAR       shift, and go to state 451
+    sqldefCLOB       shift, and go to state 452
+    sqldefDATETIME   shift, and go to state 453
+    sqldefDATE       shift, and go to state 454
+    sqldefFLOAT      shift, and go to state 455
+    sqldefHUGECHAR   shift, and go to state 456
+    sqldefIMAGE      shift, and go to state 457
+    sqldefINT        shift, and go to state 458
+    sqldefLONG       shift, and go to state 459
+    sqldefMONEY      shift, and go to state 460
+    sqldefNCHAR      shift, and go to state 461
+    sqldefNSEQUENCE  shift, and go to state 462
+    sqldefSEQUENCE   shift, and go to state 463
+    sqldefSMALLINT   shift, and go to state 464
+    sqldefTIMESTAMP  shift, and go to state 465
+    sqldefTINYINT    shift, and go to state 466
+    sqldefUSERSTAMP  shift, and go to state 467
+    sqldefVARNUM     shift, and go to state 468
+    sqldefXMLTYPE    shift, and go to state 469
+    sqldefZLOB       shift, and go to state 470
+    '='              shift, and go to state 471
+
+    FieldType  go to state 472
+
+
+state 403
+
+  216 Users: Users User .
+
+    $default  reduce using rule 216 (Users)
+
+
+state 404
+
+  227 Modifier: sqldefFREELIST sqldefGROUPS ANumber .
+
+    $default  reduce using rule 227 (Modifier)
+
+
+state 405
+
+  225 Modifier: sqldefINITIAL ANumber NumberSize .
+
+    $default  reduce using rule 225 (Modifier)
+
+
+state 406
+
+  232 Modifier: sqldefNEXT ANumber NumberSize .
+
+    $default  reduce using rule 232 (Modifier)
+
+
+state 407
+
+  233 Modifier: sqldefOPTIMAL ANumber NumberSize .
+
+    $default  reduce using rule 233 (Modifier)
+
+
+state 408
+
+  237 Columns: Columns OptComma Column .
+
+    $default  reduce using rule 237 (Columns)
+
+
+state 409
+
+  241 OptDeleteCascade: sqldefDELETE sqldefCASCADE .
+
+    $default  reduce using rule 241 (OptDeleteCascade)
+
+
+state 410
+
+  216 Users: Users . User
+  322 ToUsers: sqldefGRANT sqldefTO Users .
+
+    sqldefIDENT  shift, and go to state 200
+
+    $default  reduce using rule 322 (ToUsers)
+
+    AnIdent  go to state 355
+    User     go to state 403
+
+
+state 411
+
+  277 ViewCode: sqldefCODE SetView . Lines sqldefENDCODE
+
+    sqldefLINE  shift, and go to state 332
+
+    Lines  go to state 473
+    Line   go to state 334
+
+
+state 412
+
+  290 NoNo: sqldefNOC .
+
+    $default  reduce using rule 290 (NoNo)
+
+
+state 413
+
+  293 NoNo: sqldefNOEXT .
+
+    $default  reduce using rule 293 (NoNo)
+
+
+state 414
+
+  294 NoNo: sqldefNOIDL .
+
+    $default  reduce using rule 294 (NoNo)
+
+
+state 415
+
+  291 NoNo: sqldefNOPAS .
+
+    $default  reduce using rule 291 (NoNo)
+
+
+state 416
+
+  292 NoNo: sqldefNOVB .
+
+    $default  reduce using rule 292 (NoNo)
+
+
+state 417
+
+  286 NoExt: '(' NoNos . ')'
+  289 NoNos: NoNos . NoNo
+
+    sqldefNOC    shift, and go to state 412
+    sqldefNOEXT  shift, and go to state 413
+    sqldefNOIDL  shift, and go to state 414
+    sqldefNOPAS  shift, and go to state 415
+    sqldefNOVB   shift, and go to state 416
+    ')'          shift, and go to state 474
+
+    NoNo  go to state 475
+
+
+state 418
+
+  288 NoNos: NoNo .
+
+    $default  reduce using rule 288 (NoNos)
+
+
+state 419
+
+  297 ProcSwitch: switchEXTENDEDC . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 476
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 420
+
+  298 ProcSwitch: switchEXTENDEDPAS . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 477
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 421
+
+  299 ProcSwitch: switchEXTENDEDVB . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 478
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 422
+
+  300 ProcSwitch: switchTARGETC . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 479
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 423
+
+  301 ProcSwitch: switchTARGETIDL . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 480
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 424
+
+  302 ProcSwitch: switchTARGETPAS . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 481
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 425
+
+  303 ProcSwitch: switchTARGETPYTHON . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 482
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 426
+
+  304 ProcSwitch: switchTARGETVB . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 483
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 427
+
+  305 ProcSwitch: switchTARGETVB5 . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 484
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 428
+
+  314 ProcSwitch: switchINVALID .
+
+    $default  reduce using rule 314 (ProcSwitch)
+
+
+state 429
+
+  306 ProcSwitch: switchTARGETVBCODE3 . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 485
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 430
+
+  307 ProcSwitch: switchTARGETVBNET7 . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 486
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 431
+
+  308 ProcSwitch: switchTARGETCSNET7 . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 487
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 432
+
+  311 ProcSwitch: switchTARGETCSIDL2 . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 488
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 433
+
+  309 ProcSwitch: switchTARGETCSADONET . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 489
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 434
+
+  310 ProcSwitch: switchTARGETCSRW . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 490
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 435
+
+  312 ProcSwitch: switchTARGETVBFORIDL . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 491
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 436
+
+  313 ProcSwitch: switchTARGETVBFORADOR . SwitchNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 93 (SwitchNumber)
+
+    SwitchNumber  go to state 492
+    ANumber       go to state 104
+    Number        go to state 105
+
+
+state 437
+
+  296 ProcSwitches: ProcSwitches ProcSwitch .
+
+    $default  reduce using rule 296 (ProcSwitches)
+
+
+state 438
+
+  269 StdProc: sqldefSELECTPLUS OptPlusNumber NoExt .
+
+    $default  reduce using rule 269 (StdProc)
+
+
+state 439
+
+  320 ProcName: sqldefIDENT .
+
+    $default  reduce using rule 320 (ProcName)
+
+
+state 440
+
+  253 Proc: sqldefPROC SetExt SetProcGrant SetProjectState UserProc .
+
+    $default  reduce using rule 253 (Proc)
+
+
+state 441
+
+  285 UserProc: ProcName . NoExt ToUsers UsedBy Input InOut Output WithList Declares Code
+
+    '('  shift, and go to state 380
+
+    $default  reduce using rule 295 (ProcSwitches)
+
+    NoExt         go to state 493
+    ProcSwitches  go to state 382
+
+
+state 442
+
+  316 UsedBy: sqldefUSEDBY . Projects
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent   go to state 494
+    Projects  go to state 495
+    Project   go to state 496
+
+
+state 443
+
+  252 Proc: sqldefPROC SetExt StdProc ToUsers UsedBy .
+
+    $default  reduce using rule 252 (Proc)
+
+
+state 444
+
+  281 WithCode: sqldefCODE SetWith Lines . sqldefENDCODE
+  358 Lines: Lines . Line
+
+    sqldefENDCODE  shift, and go to state 497
+    sqldefLINE     shift, and go to state 332
+
+    Line  go to state 379
+
+
+state 445
+
+  282 WithCode: sqldefSQL sqldefCODE SetWith . Lines sqldefENDCODE
+
+    sqldefLINE  shift, and go to state 332
+
+    Lines  go to state 498
+    Line   go to state 334
+
+
+state 446
+
+  283 WithCode: sqldefSQLCODE SetWith Lines . sqldefENDCODE
+  358 Lines: Lines . Line
+
+    sqldefENDCODE  shift, and go to state 499
+    sqldefLINE     shift, and go to state 332
+
+    Line  go to state 379
+
+
+state 447
+
+  139 OptAlias: '(' AnIdent . ')'
+
+    ')'  shift, and go to state 500
+
+
+state 448
+
+  142 FieldType: sqldefBINARY . OptNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 169 (OptNumber)
+
+    ANumber    go to state 104
+    OptNumber  go to state 501
+    Number     go to state 502
+
+
+state 449
+
+  156 FieldType: sqldefBLOB . Number
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    ANumber  go to state 104
+    Number   go to state 503
+
+
+state 450
+
+  143 FieldType: sqldefBOOLEAN .
+
+    $default  reduce using rule 143 (FieldType)
+
+
+state 451
+
+  140 FieldType: sqldefCHAR . OptNumber OptConstIdents
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 169 (OptNumber)
+
+    ANumber    go to state 104
+    OptNumber  go to state 504
+    Number     go to state 502
+
+
+state 452
+
+  157 FieldType: sqldefCLOB . Number
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    ANumber  go to state 104
+    Number   go to state 505
+
+
+state 453
+
+  162 FieldType: sqldefDATETIME .
+
+    $default  reduce using rule 162 (FieldType)
+
+
+state 454
+
+  149 FieldType: sqldefDATE .
+
+    $default  reduce using rule 149 (FieldType)
+
+
+state 455
+
+  154 FieldType: sqldefFLOAT . OptPrecision
+
+    '('  shift, and go to state 506
+
+    $default  reduce using rule 166 (OptPrecision)
+
+    OptPrecision  go to state 507
+    Precision     go to state 508
+
+
+state 456
+
+  159 FieldType: sqldefHUGECHAR . Opt0Number
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 171 (Opt0Number)
+
+    ANumber     go to state 104
+    Opt0Number  go to state 509
+    Number      go to state 510
+
+
+state 457
+
+  160 FieldType: sqldefIMAGE . OptNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 169 (OptNumber)
+
+    ANumber    go to state 104
+    OptNumber  go to state 511
+    Number     go to state 502
+
+
+state 458
+
+  146 FieldType: sqldefINT . OptConsts
+
+    '('  shift, and go to state 512
+    '['  shift, and go to state 513
+    '{'  shift, and go to state 514
+
+    $default  reduce using rule 187 (OptConsts)
+
+    OptConsts  go to state 515
+
+
+state 459
+
+  148 FieldType: sqldefLONG . OptConsts
+
+    '('  shift, and go to state 512
+    '['  shift, and go to state 513
+    '{'  shift, and go to state 514
+
+    $default  reduce using rule 187 (OptConsts)
+
+    OptConsts  go to state 516
+
+
+state 460
+
+  155 FieldType: sqldefMONEY . Precision
+
+    '('  shift, and go to state 506
+
+    Precision  go to state 517
+
+
+state 461
+
+  141 FieldType: sqldefNCHAR . OptNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 169 (OptNumber)
+
+    ANumber    go to state 104
+    OptNumber  go to state 518
+    Number     go to state 502
+
+
+state 462
+
+  153 FieldType: sqldefNSEQUENCE . OptNumber
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 169 (OptNumber)
+
+    ANumber    go to state 104
+    OptNumber  go to state 519
+    Number     go to state 502
+
+
+state 463
+
+  152 FieldType: sqldefSEQUENCE .
+
+    $default  reduce using rule 152 (FieldType)
+
+
+state 464
+
+  145 FieldType: sqldefSMALLINT . OptConsts
+
+    '('  shift, and go to state 512
+    '['  shift, and go to state 513
+    '{'  shift, and go to state 514
+
+    $default  reduce using rule 187 (OptConsts)
+
+    OptConsts  go to state 520
+
+
+state 465
+
+  150 FieldType: sqldefTIMESTAMP . Opt0Number
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 171 (Opt0Number)
+
+    ANumber     go to state 104
+    Opt0Number  go to state 521
+    Number      go to state 510
+
+
+state 466
+
+  144 FieldType: sqldefTINYINT . OptConsts
+
+    '('  shift, and go to state 512
+    '['  shift, and go to state 513
+    '{'  shift, and go to state 514
+
+    $default  reduce using rule 187 (OptConsts)
+
+    OptConsts  go to state 522
+
+
+state 467
+
+  151 FieldType: sqldefUSERSTAMP . Opt0Number
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    $default  reduce using rule 171 (Opt0Number)
+
+    ANumber     go to state 104
+    Opt0Number  go to state 523
+    Number      go to state 510
+
+
+state 468
+
+  163 FieldType: sqldefVARNUM . OptPrecision
+
+    '('  shift, and go to state 506
+
+    $default  reduce using rule 166 (OptPrecision)
+
+    OptPrecision  go to state 524
+    Precision     go to state 508
+
+
+state 469
+
+  161 FieldType: sqldefXMLTYPE . Number
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    ANumber  go to state 104
+    Number   go to state 525
+
+
+state 470
+
+  158 FieldType: sqldefZLOB . Number
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    ANumber  go to state 104
+    Number   go to state 526
+
+
+state 471
+
+  147 FieldType: '=' . OptRefs
+
+    '('  shift, and go to state 527
+
+    $default  reduce using rule 164 (OptRefs)
+
+    OptRefs  go to state 528
+
+
+state 472
+
+  136 Field: AnIdent SetField $@1 OptAlias FieldType . OptNullUppers
+
+    $default  reduce using rule 176 (OptNullUppers)
+
+    OptNullUppers  go to state 529
+
+
+state 473
+
+  277 ViewCode: sqldefCODE SetView Lines . sqldefENDCODE
+  358 Lines: Lines . Line
+
+    sqldefENDCODE  shift, and go to state 530
+    sqldefLINE     shift, and go to state 332
+
+    Line  go to state 379
+
+
+state 474
+
+  286 NoExt: '(' NoNos ')' .
+
+    $default  reduce using rule 286 (NoExt)
+
+
+state 475
+
+  289 NoNos: NoNos NoNo .
+
+    $default  reduce using rule 289 (NoNos)
+
+
+state 476
+
+  297 ProcSwitch: switchEXTENDEDC SwitchNumber .
+
+    $default  reduce using rule 297 (ProcSwitch)
+
+
+state 477
+
+  298 ProcSwitch: switchEXTENDEDPAS SwitchNumber .
+
+    $default  reduce using rule 298 (ProcSwitch)
+
+
+state 478
+
+  299 ProcSwitch: switchEXTENDEDVB SwitchNumber .
+
+    $default  reduce using rule 299 (ProcSwitch)
+
+
+state 479
+
+  300 ProcSwitch: switchTARGETC SwitchNumber .
+
+    $default  reduce using rule 300 (ProcSwitch)
+
+
+state 480
+
+  301 ProcSwitch: switchTARGETIDL SwitchNumber .
+
+    $default  reduce using rule 301 (ProcSwitch)
+
+
+state 481
+
+  302 ProcSwitch: switchTARGETPAS SwitchNumber .
+
+    $default  reduce using rule 302 (ProcSwitch)
+
+
+state 482
+
+  303 ProcSwitch: switchTARGETPYTHON SwitchNumber .
+
+    $default  reduce using rule 303 (ProcSwitch)
+
+
+state 483
+
+  304 ProcSwitch: switchTARGETVB SwitchNumber .
+
+    $default  reduce using rule 304 (ProcSwitch)
+
+
+state 484
+
+  305 ProcSwitch: switchTARGETVB5 SwitchNumber .
+
+    $default  reduce using rule 305 (ProcSwitch)
+
+
+state 485
+
+  306 ProcSwitch: switchTARGETVBCODE3 SwitchNumber .
+
+    $default  reduce using rule 306 (ProcSwitch)
+
+
+state 486
+
+  307 ProcSwitch: switchTARGETVBNET7 SwitchNumber .
+
+    $default  reduce using rule 307 (ProcSwitch)
+
+
+state 487
+
+  308 ProcSwitch: switchTARGETCSNET7 SwitchNumber .
+
+    $default  reduce using rule 308 (ProcSwitch)
+
+
+state 488
+
+  311 ProcSwitch: switchTARGETCSIDL2 SwitchNumber .
+
+    $default  reduce using rule 311 (ProcSwitch)
+
+
+state 489
+
+  309 ProcSwitch: switchTARGETCSADONET SwitchNumber .
+
+    $default  reduce using rule 309 (ProcSwitch)
+
+
+state 490
+
+  310 ProcSwitch: switchTARGETCSRW SwitchNumber .
+
+    $default  reduce using rule 310 (ProcSwitch)
+
+
+state 491
+
+  312 ProcSwitch: switchTARGETVBFORIDL SwitchNumber .
+
+    $default  reduce using rule 312 (ProcSwitch)
+
+
+state 492
+
+  313 ProcSwitch: switchTARGETVBFORADOR SwitchNumber .
+
+    $default  reduce using rule 313 (ProcSwitch)
+
+
+state 493
+
+  285 UserProc: ProcName NoExt . ToUsers UsedBy Input InOut Output WithList Declares Code
+
+    sqldefGRANT  shift, and go to state 330
+
+    $default  reduce using rule 321 (ToUsers)
+
+    ToUsers  go to state 531
+
+
+state 494
+
+  319 Project: AnIdent .
+
+    $default  reduce using rule 319 (Project)
+
+
+state 495
+
+  316 UsedBy: sqldefUSEDBY Projects .
+  318 Projects: Projects . Project
+
+    sqldefIDENT  shift, and go to state 200
+
+    $default  reduce using rule 316 (UsedBy)
+
+    AnIdent  go to state 494
+    Project  go to state 532
+
+
+state 496
+
+  317 Projects: Project .
+
+    $default  reduce using rule 317 (Projects)
+
+
+state 497
+
+  281 WithCode: sqldefCODE SetWith Lines sqldefENDCODE .
+
+    $default  reduce using rule 281 (WithCode)
+
+
+state 498
+
+  282 WithCode: sqldefSQL sqldefCODE SetWith Lines . sqldefENDCODE
+  358 Lines: Lines . Line
+
+    sqldefENDCODE  shift, and go to state 533
+    sqldefLINE     shift, and go to state 332
+
+    Line  go to state 379
+
+
+state 499
+
+  283 WithCode: sqldefSQLCODE SetWith Lines sqldefENDCODE .
+
+    $default  reduce using rule 283 (WithCode)
+
+
+state 500
+
+  139 OptAlias: '(' AnIdent ')' .
+
+    $default  reduce using rule 139 (OptAlias)
+
+
+state 501
+
+  142 FieldType: sqldefBINARY OptNumber .
+
+    $default  reduce using rule 142 (FieldType)
+
+
+state 502
+
+  170 OptNumber: Number .
+
+    $default  reduce using rule 170 (OptNumber)
+
+
+state 503
+
+  156 FieldType: sqldefBLOB Number .
+
+    $default  reduce using rule 156 (FieldType)
+
+
+state 504
+
+  140 FieldType: sqldefCHAR OptNumber . OptConstIdents
+
+    '{'  shift, and go to state 534
+
+    $default  reduce using rule 182 (OptConstIdents)
+
+    OptConstIdents  go to state 535
+
+
+state 505
+
+  157 FieldType: sqldefCLOB Number .
+
+    $default  reduce using rule 157 (FieldType)
+
+
+state 506
+
+  168 Precision: '(' . Number ',' Number ')'
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    ANumber  go to state 104
+    Number   go to state 536
+
+
+state 507
+
+  154 FieldType: sqldefFLOAT OptPrecision .
+
+    $default  reduce using rule 154 (FieldType)
+
+
+state 508
+
+  167 OptPrecision: Precision .
+
+    $default  reduce using rule 167 (OptPrecision)
+
+
+state 509
+
+  159 FieldType: sqldefHUGECHAR Opt0Number .
+
+    $default  reduce using rule 159 (FieldType)
+
+
+state 510
+
+  172 Opt0Number: Number .
+
+    $default  reduce using rule 172 (Opt0Number)
+
+
+state 511
+
+  160 FieldType: sqldefIMAGE OptNumber .
+
+    $default  reduce using rule 160 (FieldType)
+
+
+state 512
+
+  189 OptConsts: '(' . Consts ')'
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 537
+    Consts   go to state 538
+    Const    go to state 539
+
+
+state 513
+
+  188 OptConsts: '[' . Consts ']'
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 537
+    Consts   go to state 540
+    Const    go to state 539
+
+
+state 514
+
+  190 OptConsts: '{' . Consts '}'
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 537
+    Consts   go to state 541
+    Const    go to state 539
+
+
+state 515
+
+  146 FieldType: sqldefINT OptConsts .
+
+    $default  reduce using rule 146 (FieldType)
+
+
+state 516
+
+  148 FieldType: sqldefLONG OptConsts .
+
+    $default  reduce using rule 148 (FieldType)
+
+
+state 517
+
+  155 FieldType: sqldefMONEY Precision .
+
+    $default  reduce using rule 155 (FieldType)
+
+
+state 518
+
+  141 FieldType: sqldefNCHAR OptNumber .
+
+    $default  reduce using rule 141 (FieldType)
+
+
+state 519
+
+  153 FieldType: sqldefNSEQUENCE OptNumber .
+
+    $default  reduce using rule 153 (FieldType)
+
+
+state 520
+
+  145 FieldType: sqldefSMALLINT OptConsts .
+
+    $default  reduce using rule 145 (FieldType)
+
+
+state 521
+
+  150 FieldType: sqldefTIMESTAMP Opt0Number .
+
+    $default  reduce using rule 150 (FieldType)
+
+
+state 522
+
+  144 FieldType: sqldefTINYINT OptConsts .
+
+    $default  reduce using rule 144 (FieldType)
+
+
+state 523
+
+  151 FieldType: sqldefUSERSTAMP Opt0Number .
+
+    $default  reduce using rule 151 (FieldType)
+
+
+state 524
+
+  163 FieldType: sqldefVARNUM OptPrecision .
+
+    $default  reduce using rule 163 (FieldType)
+
+
+state 525
+
+  161 FieldType: sqldefXMLTYPE Number .
+
+    $default  reduce using rule 161 (FieldType)
+
+
+state 526
+
+  158 FieldType: sqldefZLOB Number .
+
+    $default  reduce using rule 158 (FieldType)
+
+
+state 527
+
+  165 OptRefs: '(' . AnIdent ')'
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 542
+
+
+state 528
+
+  147 FieldType: '=' OptRefs .
+
+    $default  reduce using rule 147 (FieldType)
+
+
+state 529
+
+  136 Field: AnIdent SetField $@1 OptAlias FieldType OptNullUppers .
+  177 OptNullUppers: OptNullUppers . OptNullUpper
+
+    sqldefCHECK  shift, and go to state 543
+    sqldefNOT    shift, and go to state 544
+    sqldefNULL   shift, and go to state 545
+    sqldefUPPER  shift, and go to state 546
+
+    $default  reduce using rule 136 (Field)
+
+    OptNullUpper  go to state 547
+
+
+state 530
+
+  277 ViewCode: sqldefCODE SetView Lines sqldefENDCODE .
+
+    $default  reduce using rule 277 (ViewCode)
+
+
+state 531
+
+  285 UserProc: ProcName NoExt ToUsers . UsedBy Input InOut Output WithList Declares Code
+
+    sqldefUSEDBY  shift, and go to state 442
+
+    $default  reduce using rule 315 (UsedBy)
+
+    UsedBy  go to state 548
+
+
+state 532
+
+  318 Projects: Projects Project .
+
+    $default  reduce using rule 318 (Projects)
+
+
+state 533
+
+  282 WithCode: sqldefSQL sqldefCODE SetWith Lines sqldefENDCODE .
+
+    $default  reduce using rule 282 (WithCode)
+
+
+state 534
+
+  183 OptConstIdents: '{' . ConstIdents '}'
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent      go to state 549
+    ConstIdents  go to state 550
+    ConstIdent   go to state 551
+
+
+state 535
+
+  140 FieldType: sqldefCHAR OptNumber OptConstIdents .
+
+    $default  reduce using rule 140 (FieldType)
+
+
+state 536
+
+  168 Precision: '(' Number . ',' Number ')'
+
+    ','  shift, and go to state 552
+
+
+state 537
+
+  195 Const: AnIdent . '=' Number
+  196      | AnIdent . '=' sqldefCHARCONST
+  197      | AnIdent . '=' sqldefSTRING
+
+    '='  shift, and go to state 553
+
+
+state 538
+
+  189 OptConsts: '(' Consts . ')'
+  192 Consts: Consts . OptComma Const
+
+    ')'  shift, and go to state 554
+    ','  shift, and go to state 370
+
+    $default  reduce using rule 193 (OptComma)
+
+    OptComma  go to state 555
+
+
+state 539
+
+  191 Consts: Const .
+
+    $default  reduce using rule 191 (Consts)
+
+
+state 540
+
+  188 OptConsts: '[' Consts . ']'
+  192 Consts: Consts . OptComma Const
+
+    ']'  shift, and go to state 556
+    ','  shift, and go to state 370
+
+    $default  reduce using rule 193 (OptComma)
+
+    OptComma  go to state 555
+
+
+state 541
+
+  190 OptConsts: '{' Consts . '}'
+  192 Consts: Consts . OptComma Const
+
+    ','  shift, and go to state 370
+    '}'  shift, and go to state 557
+
+    $default  reduce using rule 193 (OptComma)
+
+    OptComma  go to state 555
+
+
+state 542
+
+  165 OptRefs: '(' AnIdent . ')'
+
+    ')'  shift, and go to state 558
+
+
+state 543
+
+  181 OptNullUpper: sqldefCHECK . sqldefSTRING
+
+    sqldefSTRING  shift, and go to state 559
+
+
+state 544
+
+  179 OptNullUpper: sqldefNOT . sqldefNULL
+
+    sqldefNULL  shift, and go to state 560
+
+
+state 545
+
+  178 OptNullUpper: sqldefNULL .
+
+    $default  reduce using rule 178 (OptNullUpper)
+
+
+state 546
+
+  180 OptNullUpper: sqldefUPPER .
+
+    $default  reduce using rule 180 (OptNullUpper)
+
+
+state 547
+
+  177 OptNullUppers: OptNullUppers OptNullUpper .
+
+    $default  reduce using rule 177 (OptNullUppers)
+
+
+state 548
+
+  285 UserProc: ProcName NoExt ToUsers UsedBy . Input InOut Output WithList Declares Code
+
+    sqldefINPUT  shift, and go to state 561
+
+    $default  reduce using rule 323 (Input)
+
+    Input  go to state 562
+
+
+state 549
+
+  186 ConstIdent: AnIdent .
+
+    $default  reduce using rule 186 (ConstIdent)
+
+
+state 550
+
+  183 OptConstIdents: '{' ConstIdents . '}'
+  185 ConstIdents: ConstIdents . OptComma ConstIdent
+
+    ','  shift, and go to state 370
+    '}'  shift, and go to state 563
+
+    $default  reduce using rule 193 (OptComma)
+
+    OptComma  go to state 564
+
+
+state 551
+
+  184 ConstIdents: ConstIdent .
+
+    $default  reduce using rule 184 (ConstIdents)
+
+
+state 552
+
+  168 Precision: '(' Number ',' . Number ')'
+
+    sqldefNUMBER  shift, and go to state 100
+    '('           shift, and go to state 101
+    '['           shift, and go to state 102
+
+    ANumber  go to state 104
+    Number   go to state 565
+
+
+state 553
+
+  195 Const: AnIdent '=' . Number
+  196      | AnIdent '=' . sqldefCHARCONST
+  197      | AnIdent '=' . sqldefSTRING
+
+    sqldefCHARCONST  shift, and go to state 566
+    sqldefNUMBER     shift, and go to state 100
+    sqldefSTRING     shift, and go to state 567
+    '('              shift, and go to state 101
+    '['              shift, and go to state 102
+
+    ANumber  go to state 104
+    Number   go to state 568
+
+
+state 554
+
+  189 OptConsts: '(' Consts ')' .
+
+    $default  reduce using rule 189 (OptConsts)
+
+
+state 555
+
+  192 Consts: Consts OptComma . Const
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 537
+    Const    go to state 569
+
+
+state 556
+
+  188 OptConsts: '[' Consts ']' .
+
+    $default  reduce using rule 188 (OptConsts)
+
+
+state 557
+
+  190 OptConsts: '{' Consts '}' .
+
+    $default  reduce using rule 190 (OptConsts)
+
+
+state 558
+
+  165 OptRefs: '(' AnIdent ')' .
+
+    $default  reduce using rule 165 (OptRefs)
+
+
+state 559
+
+  181 OptNullUpper: sqldefCHECK sqldefSTRING .
+
+    $default  reduce using rule 181 (OptNullUpper)
+
+
+state 560
+
+  179 OptNullUpper: sqldefNOT sqldefNULL .
+
+    $default  reduce using rule 179 (OptNullUpper)
+
+
+state 561
+
+  324 Input: sqldefINPUT . SetStateInput FieldDef
+
+    $default  reduce using rule 325 (SetStateInput)
+
+    SetStateInput  go to state 570
+
+
+state 562
+
+  285 UserProc: ProcName NoExt ToUsers UsedBy Input . InOut Output WithList Declares Code
+
+    sqldefINOUT  shift, and go to state 571
+
+    $default  reduce using rule 326 (InOut)
+
+    InOut  go to state 572
+
+
+state 563
+
+  183 OptConstIdents: '{' ConstIdents '}' .
+
+    $default  reduce using rule 183 (OptConstIdents)
+
+
+state 564
+
+  185 ConstIdents: ConstIdents OptComma . ConstIdent
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent     go to state 549
+    ConstIdent  go to state 573
+
+
+state 565
+
+  168 Precision: '(' Number ',' Number . ')'
+
+    ')'  shift, and go to state 574
+
+
+state 566
+
+  196 Const: AnIdent '=' sqldefCHARCONST .
+
+    $default  reduce using rule 196 (Const)
+
+
+state 567
+
+  197 Const: AnIdent '=' sqldefSTRING .
+
+    $default  reduce using rule 197 (Const)
+
+
+state 568
+
+  195 Const: AnIdent '=' Number .
+
+    $default  reduce using rule 195 (Const)
+
+
+state 569
+
+  192 Consts: Consts OptComma Const .
+
+    $default  reduce using rule 192 (Consts)
+
+
+state 570
+
+  324 Input: sqldefINPUT SetStateInput . FieldDef
+
+    $default  reduce using rule 133 (FieldDef)
+
+    FieldDef  go to state 575
+
+
+state 571
+
+  327 InOut: sqldefINOUT . SetStateInOut FieldDef
+
+    $default  reduce using rule 328 (SetStateInOut)
+
+    SetStateInOut  go to state 576
+
+
+state 572
+
+  285 UserProc: ProcName NoExt ToUsers UsedBy Input InOut . Output WithList Declares Code
+
+    sqldefOUTPUT  shift, and go to state 577
+
+    $default  reduce using rule 329 (Output)
+
+    Output  go to state 578
+
+
+state 573
+
+  185 ConstIdents: ConstIdents OptComma ConstIdent .
+
+    $default  reduce using rule 185 (ConstIdents)
+
+
+state 574
+
+  168 Precision: '(' Number ',' Number ')' .
+
+    $default  reduce using rule 168 (Precision)
+
+
+state 575
+
+  134 FieldDef: FieldDef . Field
+  324 Input: sqldefINPUT SetStateInput FieldDef .
+
+    sqldefIDENT  shift, and go to state 200
+
+    $default  reduce using rule 324 (Input)
+
+    AnIdent  go to state 279
+    Field    go to state 280
+
+
+state 576
+
+  327 InOut: sqldefINOUT SetStateInOut . FieldDef
+
+    $default  reduce using rule 133 (FieldDef)
+
+    FieldDef  go to state 579
+
+
+state 577
+
+  330 Output: sqldefOUTPUT . SetStateOutput OptMultiSingle ReUse
+
+    $default  reduce using rule 336 (SetStateOutput)
+
+    SetStateOutput  go to state 580
+
+
+state 578
+
+  285 UserProc: ProcName NoExt ToUsers UsedBy Input InOut Output . WithList Declares Code
+
+    sqldefWITH  shift, and go to state 581
+
+    $default  reduce using rule 337 (WithList)
+
+    WithList  go to state 582
+
+
+state 579
+
+  134 FieldDef: FieldDef . Field
+  327 InOut: sqldefINOUT SetStateInOut FieldDef .
+
+    sqldefIDENT  shift, and go to state 200
+
+    $default  reduce using rule 327 (InOut)
+
+    AnIdent  go to state 279
+    Field    go to state 280
+
+
+state 580
+
+  330 Output: sqldefOUTPUT SetStateOutput . OptMultiSingle ReUse
+
+    '('  shift, and go to state 583
+
+    $default  reduce using rule 333 (OptMultiSingle)
+
+    OptMultiSingle  go to state 584
+
+
+state 581
+
+  338 WithList: sqldefWITH . Withs
+
+    sqldefIDENT  shift, and go to state 200
+
+    AnIdent  go to state 585
+    Withs    go to state 586
+    With     go to state 587
+
+
+state 582
+
+  285 UserProc: ProcName NoExt ToUsers UsedBy Input InOut Output WithList . Declares Code
+
+    $default  reduce using rule 342 (Declares)
+
+    Declares  go to state 588
+
+
+state 583
+
+  334 OptMultiSingle: '(' . sqldefMULTIPLE ')'
+  335               | '(' . sqldefSINGLE ')'
+
+    sqldefMULTIPLE  shift, and go to state 589
+    sqldefSINGLE    shift, and go to state 590
+
+
+state 584
+
+  330 Output: sqldefOUTPUT SetStateOutput OptMultiSingle . ReUse
+
+    '*'  shift, and go to state 591
+
+    $default  reduce using rule 133 (FieldDef)
+
+    FieldDef  go to state 592
+    ReUse     go to state 593
+
+
+state 585
+
+  341 With: AnIdent .
+
+    $default  reduce using rule 341 (With)
+
+
+state 586
+
+  338 WithList: sqldefWITH Withs .
+  340 Withs: Withs . With
+
+    sqldefIDENT  shift, and go to state 200
+
+    $default  reduce using rule 338 (WithList)
+
+    AnIdent  go to state 585
+    With     go to state 594
+
+
+state 587
+
+  339 Withs: With .
+
+    $default  reduce using rule 339 (Withs)
+
+
+state 588
+
+  285 UserProc: ProcName NoExt ToUsers UsedBy Input InOut Output WithList Declares . Code
+  343 Declares: Declares . Declare
+
+    sqldefCODE     shift, and go to state 595
+    sqldefCURSOR   shift, and go to state 596
+    sqldefDECLARE  shift, and go to state 597
+    sqldefSQL      shift, and go to state 598
+    sqldefSQLCODE  shift, and go to state 599
+
+    Declare  go to state 600
+    Code     go to state 601
+
+
+state 589
+
+  334 OptMultiSingle: '(' sqldefMULTIPLE . ')'
+
+    ')'  shift, and go to state 602
+
+
+state 590
+
+  335 OptMultiSingle: '(' sqldefSINGLE . ')'
+
+    ')'  shift, and go to state 603
+
+
+state 591
+
+  331 ReUse: '*' .
+
+    $default  reduce using rule 331 (ReUse)
+
+
+state 592
+
+  134 FieldDef: FieldDef . Field
+  332 ReUse: FieldDef .
+
+    sqldefIDENT  shift, and go to state 200
+
+    $default  reduce using rule 332 (ReUse)
+
+    AnIdent  go to state 279
+    Field    go to state 280
+
+
+state 593
+
+  330 Output: sqldefOUTPUT SetStateOutput OptMultiSingle ReUse .
+
+    $default  reduce using rule 330 (Output)
+
+
+state 594
+
+  340 Withs: Withs With .
+
+    $default  reduce using rule 340 (Withs)
+
+
+state 595
+
+  354 Code: sqldefCODE . SetCode Lines sqldefENDCODE
+
+    $default  reduce using rule 355 (SetCode)
+
+    SetCode  go to state 604
+
+
+state 596
+
+  345 Declare: sqldefCURSOR . SetCursor Lines sqldefENDCURSOR
+
+    $default  reduce using rule 350 (SetCursor)
+
+    SetCursor  go to state 605
+
+
+state 597
+
+  344 Declare: sqldefDECLARE . SetStateDeclare DeclareFieldDef
+
+    $default  reduce using rule 351 (SetStateDeclare)
+
+    SetStateDeclare  go to state 606
+
+
+state 598
+
+  352 Code: sqldefSQL . SetSql sqldefCODE SetCode Lines sqldefENDCODE
+
+    $default  reduce using rule 356 (SetSql)
+
+    SetSql  go to state 607
+
+
+state 599
+
+  353 Code: sqldefSQLCODE . SetSql SetCode Lines sqldefENDCODE
+
+    $default  reduce using rule 356 (SetSql)
+
+    SetSql  go to state 608
+
+
+state 600
+
+  343 Declares: Declares Declare .
+
+    $default  reduce using rule 343 (Declares)
+
+
+state 601
+
+  285 UserProc: ProcName NoExt ToUsers UsedBy Input InOut Output WithList Declares Code .
+
+    $default  reduce using rule 285 (UserProc)
+
+
+state 602
+
+  334 OptMultiSingle: '(' sqldefMULTIPLE ')' .
+
+    $default  reduce using rule 334 (OptMultiSingle)
+
+
+state 603
+
+  335 OptMultiSingle: '(' sqldefSINGLE ')' .
+
+    $default  reduce using rule 335 (OptMultiSingle)
+
+
+state 604
+
+  354 Code: sqldefCODE SetCode . Lines sqldefENDCODE
+
+    sqldefLINE  shift, and go to state 332
+
+    Lines  go to state 609
+    Line   go to state 334
+
+
+state 605
+
+  345 Declare: sqldefCURSOR SetCursor . Lines sqldefENDCURSOR
+
+    sqldefLINE  shift, and go to state 332
+
+    Lines  go to state 610
+    Line   go to state 334
+
+
+state 606
+
+  344 Declare: sqldefDECLARE SetStateDeclare . DeclareFieldDef
+
+    $default  reduce using rule 346 (DeclareFieldDef)
+
+    DeclareFieldDef  go to state 611
+
+
+state 607
+
+  352 Code: sqldefSQL SetSql . sqldefCODE SetCode Lines sqldefENDCODE
+
+    sqldefCODE  shift, and go to state 612
+
+
+state 608
+
+  353 Code: sqldefSQLCODE SetSql . SetCode Lines sqldefENDCODE
+
+    $default  reduce using rule 355 (SetCode)
+
+    SetCode  go to state 613
+
+
+state 609
+
+  354 Code: sqldefCODE SetCode Lines . sqldefENDCODE
+  358 Lines: Lines . Line
+
+    sqldefENDCODE  shift, and go to state 614
+    sqldefLINE     shift, and go to state 332
+
+    Line  go to state 379
+
+
+state 610
+
+  345 Declare: sqldefCURSOR SetCursor Lines . sqldefENDCURSOR
+  358 Lines: Lines . Line
+
+    sqldefENDCURSOR  shift, and go to state 615
+    sqldefLINE       shift, and go to state 332
+
+    Line  go to state 379
+
+
+state 611
+
+  344 Declare: sqldefDECLARE SetStateDeclare DeclareFieldDef .
+  347 DeclareFieldDef: DeclareFieldDef . DeclareField
+
+    sqldefIDENT  shift, and go to state 200
+
+    $default  reduce using rule 344 (Declare)
+
+    AnIdent       go to state 616
+    Field         go to state 617
+    DeclareField  go to state 618
+
+
+state 612
+
+  352 Code: sqldefSQL SetSql sqldefCODE . SetCode Lines sqldefENDCODE
+
+    $default  reduce using rule 355 (SetCode)
+
+    SetCode  go to state 619
+
+
+state 613
+
+  353 Code: sqldefSQLCODE SetSql SetCode . Lines sqldefENDCODE
+
+    sqldefLINE  shift, and go to state 332
+
+    Lines  go to state 620
+    Line   go to state 334
+
+
+state 614
+
+  354 Code: sqldefCODE SetCode Lines sqldefENDCODE .
+
+    $default  reduce using rule 354 (Code)
+
+
+state 615
+
+  345 Declare: sqldefCURSOR SetCursor Lines sqldefENDCURSOR .
+
+    $default  reduce using rule 345 (Declare)
+
+
+state 616
+
+  136 Field: AnIdent . SetField $@1 OptAlias FieldType OptNullUppers
+  349 DeclareField: AnIdent . SetField sqldefEXCEPTION
+
+    $default  reduce using rule 137 (SetField)
+
+    SetField  go to state 621
+
+
+state 617
+
+  348 DeclareField: Field .
+
+    $default  reduce using rule 348 (DeclareField)
+
+
+state 618
+
+  347 DeclareFieldDef: DeclareFieldDef DeclareField .
+
+    $default  reduce using rule 347 (DeclareFieldDef)
+
+
+state 619
+
+  352 Code: sqldefSQL SetSql sqldefCODE SetCode . Lines sqldefENDCODE
+
+    sqldefLINE  shift, and go to state 332
+
+    Lines  go to state 622
+    Line   go to state 334
+
+
+state 620
+
+  353 Code: sqldefSQLCODE SetSql SetCode Lines . sqldefENDCODE
+  358 Lines: Lines . Line
+
+    sqldefENDCODE  shift, and go to state 623
+    sqldefLINE     shift, and go to state 332
+
+    Line  go to state 379
+
+
+state 621
+
+  136 Field: AnIdent SetField . $@1 OptAlias FieldType OptNullUppers
+  349 DeclareField: AnIdent SetField . sqldefEXCEPTION
+
+    sqldefEXCEPTION  shift, and go to state 624
+
+    $default  reduce using rule 135 ($@1)
+
+    $@1  go to state 354
+
+
+state 622
+
+  352 Code: sqldefSQL SetSql sqldefCODE SetCode Lines . sqldefENDCODE
+  358 Lines: Lines . Line
+
+    sqldefENDCODE  shift, and go to state 625
+    sqldefLINE     shift, and go to state 332
+
+    Line  go to state 379
+
+
+state 623
+
+  353 Code: sqldefSQLCODE SetSql SetCode Lines sqldefENDCODE .
+
+    $default  reduce using rule 353 (Code)
+
+
+state 624
+
+  349 DeclareField: AnIdent SetField sqldefEXCEPTION .
+
+    $default  reduce using rule 349 (DeclareField)
+
+
+state 625
+
+  352 Code: sqldefSQL SetSql sqldefCODE SetCode Lines sqldefENDCODE .
+
+    $default  reduce using rule 352 (Code)

@@ -1,0 +1,67 @@
+SERVER   @DN29
+CONNECT  NPUD00/CONTROL
+
+TABLE Accuity
+
+proc ContactStatus
+input
+  Id          int 
+  Status      tinyint   (Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+sqlcode 
+update AccuityContact set Status = :Status
+   where Id = :Id
+endcode
+
+proc CorrespondentStatus
+input
+  Id          int 
+  Status      tinyint   (Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+sqlcode 
+  update AccuityCorrespondent set Status = :Status
+   where Id = :Id
+endcode
+
+proc CorrespondentSubStatus
+input
+  Id          int 
+  Status      tinyint   (Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+sqlcode 
+  update AccuityCorrespondentSub set Status = :Status
+   where Id = :Id
+endcode
+
+proc LocationStatus
+input
+  Id          int 
+  Status      tinyint   (Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+sqlcode 
+  update AccuityLocation set Status = :Status
+   where Id = :Id
+endcode
+
+proc OfficerStatus
+input
+  Id          int 
+  Status      tinyint   (Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+sqlcode 
+  update AccuityOfficer set Status = :Status
+   where Id = :Id
+endcode
+
+proc RoutingAttStatus
+input
+  Id          int 
+  Status      tinyint   (Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+sqlcode 
+  update AccuityRoutingAtt set Status = :Status
+   where Id = :Id
+endcode
+
+proc RoutingCodeStatus
+input
+  Id          int 
+  Status      tinyint   (Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+sqlcode 
+  update AccuityRoutingCode set Status = :Status
+   where Id = :Id
+endcode

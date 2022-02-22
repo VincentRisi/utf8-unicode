@@ -1,0 +1,233 @@
+#ifndef ANOTHER_UNGUARDED_LC_ENUM_H_
+#define ANOTHER_UNGUARDED_LC_ENUM_H_ "$Revision: 92 $ $Date: 2005-04-21 11:34:40 +0200 (Thu, 21 Apr 2005) $"
+#include "versions.h"
+HEADER_VERSION(ANOTHER_UNGUARDED_LC_ENUM_H_);
+enum{
+LC_BUILD_SUBMIT,		// submit from access to server
+LC_BUILD_GET_SRV,		// get from server and store in access
+//LC_BUILD_FILL_BLOCK,	// *** COMMENT *** fill the VB array with data held in DLL memory from previous call
+LC_BUILD_FETCH_BLOCK,	// get VB array info from server and store in DLL memory
+LC_BUILD_GET_BLOCK,		// get VB array info from server and store in array
+LC_BUILD,				// optionally send block to server and optionally return another
+LC_BUILD_SWSTATUS,		// special for Process/reroute
+LC_BUILD_USE_BLOCK,
+LC_BUILD_FILL_BLOCK
+};
+#define REQBASE REQ_LC_BASE
+#define ERRORBASE ERROR_LC_BASE
+
+#define LCTEST 77
+#define LARGESTPACKETSIZE 15000
+#ifndef _NXLCRPC_H_
+#define VERSIONSEQNO 5
+#endif
+enum{
+EOP=0,	//END OF PARAMS
+LCN,	//LCNumber
+TTP,	//TableType
+RTP,	//RecordType
+ATP,	//AdviceType
+UID,	//UserID
+LOK,	//Lock
+PRC,	//ProductCode
+BRN,	//BranchNo
+STA,	//Status
+REC,	//Records
+LLC,	//LastLCNumber
+EVT,	//Event
+SEQ,	//SeqNumber
+DAN,	//DrawAmendNo
+TAN,	//TableNo
+AUT,	//AuthType
+AUU,	//AuthUser
+ADT,	//AuthDateTime
+SIG,	//SignatoryNo
+REA,	//Reason,
+CIF,	//CIFNumber
+AUL,	//AuthLock
+NUT,	//NoTemplates
+DRF,	//Diary Ref No
+DAT,	//Start Date
+LOG,	//LogNumber
+SFB,	//sFisrtVblockDest
+FBK,	//FisrtVblockDest
+SSB,	//sSecondVblockDest
+SBK,	//SecondVblockDest
+SDB,	//Size of Diary Block
+DBK,	//Diary Block (from VB to Diary Server)
+IDN,	//Doc File ID Number
+RBA, 	//Reverse Bytes Array - Client (DLL) passes its own values to server
+TRN,	//Their Ref No
+QSF,	//Query suffix
+MBN,	//	char		msgBrnNo[4];
+MLN,   	//	char		msgLogNo[5];
+MTP,   	//	char		msgType[4];
+MSN,   	//	char		msgSeqNo[7];
+SSN,  	//	char		sessionNo[5];
+RFN,	// remoteFileName
+RFP,	// remoteFilePosn
+MPI,	// msgProcInd
+MLI,	// msgLockInd
+DRI,	// DrawingInd
+HSQ,	// Visual Basic's DBase handle
+TXT,	// a general purpose text field of size 220
+STS, 	// Settlement String for Auth info
+LS0,	// List 0 of comma seperated parameters
+LS1,	// List 1 of comma seperated parameters
+LS2,	// List 2 of comma seperated parameters
+LS3,	// List 3 of comma seperated parameters
+LS4,	// List 4 of comma seperated parameters
+LS5,	// List 5 of comma seperated parameters
+LS6,	// List 6 of comma seperated parameters
+LS7,	// List 7 of comma seperated parameters
+LS8,	// List 8 of comma seperated parameters
+LS9,	// List 9 of comma seperated parameters
+EDD	// endDate
+};
+/*
+enum{
+ONEBYTETYPE,
+TWOBYTETYPE,
+FOURBYTETYPE,
+EIGHTBYTETYP,
+IMAGETYPE,
+FILLTYPE,
+DATETIMETYPE,
+DATETYPE
+};
+*/
+// Function numbers  NB Keep in line with funText[] in LC_SRV.C
+enum{
+LCSUBMIT,
+LCGET,
+LCGETWORKINPROGRESS,
+LCWAITAUTHORISATION,
+LCUPDATEAUTHORISATION,
+LCREJECT,
+LCGETOUTGOING,
+LCSWIFTVALID,
+LCUNLOCK,
+LCDELETE,
+LCCLIENTOUT,
+LCCLIENTNAMEOUT,
+LCGETALLSWIFT,
+LCGETALLADVICES,
+LCGETALLEMAIL,
+LCGETALLDIARY,
+LCGETOUTTEXT,
+LCALLSWIFT,
+LCSWIFTNOLOOK,
+LCSWIFTNOLOOKL,
+LCSWIFTNOLOOKT,
+LCSWIFTIN,
+LCSWIFTVIEW,
+LCSWIFTEXTRACTCOMPLETE,
+LCSWIFTPROCESS,
+LCGETALLTEMPLATES,
+LCGETTEMPLATE,
+LCDELETETEMPLATE,
+LCSTOREDIARY,
+LCGETACTIVEDIARYEVENTS,
+LCCAPTURELOG,
+LCGETALLLOG,
+LCGETWORKLOG,
+LCDELETEWORKLOG,
+LCGETSTANDINSTR,
+LCPUTSTANDINSTR,
+LCFTPR,
+LCFTPS,
+LCGETLONGPACKET,
+LCDELETEFILE,
+BIG2SRV_INI,
+BIG2SRV_MID,
+BIG2SRV_END,
+LCNOLOOKBOTH,
+LCFORCEDRESEND,
+LCGETBINFILE,
+LCCANCELONE,
+LCDELETEONE,
+FTP_CREATE_FILE,
+LCGETALLTELEXS,
+LCTELEXSENT,
+LCVIEWTELEX,
+LCUPDATETELEXSENT,
+LCREVERSESTATUS,
+LCSETTLESUBMIT,
+LCSETTLEGET,
+LCSETTLEINFOSUBMIT,
+LCSETTLEINFOGET,
+LCEXPORTS,
+LCEVENTGET,
+LCGETWIPFLAGS,
+LCSUMMARYFIXED,
+LCSUMMARYAMEND,
+LCSUMMARYDRAW,
+LCSUMMARYHIST,
+LCSUMMARYTELE1,
+LCSUMMARYTELE2,
+LCSWIFTREPORT,
+LCREPORTL001,
+LCREPORTL002,
+LCREPORTL003,
+LCREPORTL004,
+LCREPORTL005,
+LCREPORTL006,
+LCREPORTL007,
+LCREPORTL008,
+LCREPORTL009,
+SAVE_FOR_LCTEST, // uses 77
+LCREPORTL010,
+LCREPORTL011,
+LCREPORTL012,
+LCVALIDGET,
+LCREPORTL013,
+LCREPORTL014,
+LCINST_QRY,
+LCINST_PROC,
+LCSQLPLUS
+};	//NB Keep in line with funText[] in LC_SRV.C
+
+#define REQ_LC_BIG2SRV_INI			(REQ_LC_BASE+BIG2SRV_INI)
+#define REQ_LC_BIG2SRV_MID			(REQ_LC_BASE+BIG2SRV_MID)
+#define REQ_LC_BIG2SRV_END			(REQ_LC_BASE+BIG2SRV_END)
+#define REQ_LC_TEST                 (REQ_LC_BASE+LCTEST)
+#define REQ_LC_GETLONGPACKET		(REQ_LC_BASE+LCGETLONGPACKET)
+#define REQ_LC_DELETEFILE			(REQ_LC_BASE+LCDELETEFILE)
+#define REQ_LC_GETBINFILE_SIZE		(REQ_LC_BASE+LCGETBINFILE)
+#define REQ_LC_SETTLESUBMIT			(REQ_LC_BASE+LCSETTLESUBMIT)
+#define REQ_LC_SETTLEGET			(REQ_LC_BASE+LCSETTLEGET)
+#define REQ_LC_EXPORTS				(REQ_LC_BASE+LCEXPORTS)
+#define REQ_LC_INST_QRY				(REQ_LC_BASE+LCINST_QRY)
+#define REQ_LC_INST_PROC			(REQ_LC_BASE+LCINST_PROC)
+#define REQ_LC_SQLPLUS				(REQ_LC_BASE+LCSQLPLUS)
+
+enum{
+DB_ERROR=51,
+CORRUPT_DATA,
+COMMS_FAILURE,
+LOCKED,
+CORRUPT_NET_DATA,
+SRV_MEMORY,
+INVALIDLOCK,
+INVALID,
+INVALID_TABLENO,
+AUTHDONE,
+OUT_OF_DATA,
+OUT_OF_DATASPACE,
+FUNCTION_PARAMS,
+INVALID_DATE,
+LONG_PACKET,
+SRV_FILE,
+AUTHLOCK,
+SRV_TEMPFILE,
+INCORRECT_STATUS,
+SWIFT_SERVER_ERROR,
+CANCELLED,
+DELETED,
+AUTHLOCKED,
+INCOMING_SWIFT,
+SETTLEMENT_SERVER_ERROR,
+EXIT_TRAP
+};
+
+#endif

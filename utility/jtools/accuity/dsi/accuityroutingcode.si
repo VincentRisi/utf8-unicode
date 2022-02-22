@@ -1,0 +1,59 @@
+SERVER   @DN29
+CONNECT  NPUD00/CONTROL
+
+TABLE AccuityRoutingCode
+  Id               int
+  LocationId       int
+  Department       char(5)	NULL
+  Rank             char(8)	NULL
+  RoutingType      char(6)	NULL
+  RoutingCode      char(20)	NULL
+  RoutingCodeAlt   char(20)	NULL
+  FederalDistrict  char(6)	NULL
+  SwiftPairingCode char(11) NULL
+  Status           tinyint  (Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+  USId             char(16)
+  TmStamp          timestamp
+
+KEY AccuityRoutingCodeKey PRIMARY
+  Id
+
+KEY KEY01
+  LocationId
+  RoutingType
+  Status
+  
+KEY KEY02
+  RoutingCodeAlt
+  RoutingType
+  Status
+
+PROC Insert 
+PROC Update 
+PROC SelectOne 
+PROC DeleteOne
+PROC DeleteAll
+PROC Exists 
+
+# used by accuityimport
+PROC Truncate
+INPUT
+OUTPUT
+SQLCODE
+   TRUNCATE TABLE NPUD00.AccuityRoutingCode
+ENDCODE
+
+# used by almanacto
+PROC UpdateAllStatus
+INPUT
+  Status        tinyint
+  USId          char  (16)
+SQL CODE
+  Update
+    AccuityRoutingCode
+  Set
+      Status = :Status
+     ,USId = :USId
+     ,TMStamp = SYSDATE
+ENDCODE
+

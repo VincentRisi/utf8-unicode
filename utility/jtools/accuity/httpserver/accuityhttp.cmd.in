@@ -1,0 +1,2 @@
+set PYTHONPATH=${PYTHON3PATH};${PYD_DIR};${PYD_DIR}\accuity.zip
+Debug\accuityhttp -c accuityhttp.ini

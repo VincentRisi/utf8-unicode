@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:bt="http://www.sars.gov.za/enterpriseMessagingModel/GMD/BaseTypes/xml/schemas/version/54.19" 
+	xmlns:frgnTPInfoSuppData="http://www.sars.gov.za/enterpriseMessagingModel/ForeignTaxpayerInfoSupportingData/xml/schemas/version/1.1" 
+	targetNamespace="http://www.sars.gov.za/enterpriseMessagingModel/ForeignTaxpayerInfoSupportingData/xml/schemas/version/1.1" 
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="http://www.sars.gov.za/enterpriseMessagingModel/GMD/BaseTypes/xml/schemas/version/54.19" schemaLocation="SARSGMD_BaseTypesV54.19.xsd"/>
+	<annotation>
+		<documentation>
+			2014-08-06 Dirk Grobler. First draft.
+			2014-12-18 Dirk Grobler. Updated to reference latest base types.
+		</documentation>
+	</annotation>
+	<element name="SubmittingEntityInfo">
+		<complexType>
+			<sequence>
+				<element name="SectionIdentifier" minOccurs="1" maxOccurs="1">
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="H"/>
+						</restriction>
+					</simpleType>
+				</element>
+				<element name="HeaderType" minOccurs="1" maxOccurs="1">
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="SE"/>
+						</restriction>
+					</simpleType>
+				</element>
+				<element name="TaxYear" minOccurs="1" maxOccurs="1">
+					<simpleType>
+						<restriction base="gYear">
+							<minInclusive value="2015"/>
+						</restriction>
+					</simpleType>
+				</element>
+				<element name="PeriodStartDate" type="date" minOccurs="1" maxOccurs="1"/>
+				<element name="PeriodEndDate" type="date" minOccurs="1" maxOccurs="1"/>
+				<element name="NatureOfPerson" type="bt:EntityTypeType" minOccurs="1" maxOccurs="1"/>
+				<element name="Surname" type="bt:SurnameType" minOccurs="0" maxOccurs="1"/>
+				<element name="RegisteredName" type="bt:OrganisationNameType" minOccurs="0" maxOccurs="1"/>
+				<element name="TradingName" type="bt:OrganisationNameType" minOccurs="0" maxOccurs="1"/>
+				<element name="Initials" type="bt:InitialsType" minOccurs="0" maxOccurs="1"/>
+				<element name="RegistrationNumber" minOccurs="0" maxOccurs="1">
+					<simpleType>
+						<restriction base="string">
+							<minLength value="1"/>
+							<maxLength value="20"/>
+						</restriction>
+					</simpleType>
+				</element>
+				<element name="TaxRefNo" type="bt:TaxRefNoType" minOccurs="1" maxOccurs="1"/>
+				<element name="GIIN" type="frgnTPInfoSuppData:GIINType" minOccurs="1" maxOccurs="1"/>
+				<element name="PostalAddress" minOccurs="1" maxOccurs="1">
+					<complexType>
+						<sequence>
+							<element name="PostalAddressLines" minOccurs="1" maxOccurs="1">
+								<complexType>
+									<sequence>
+										<element name="PostalAddressLine" type="bt:AddressLineType" minOccurs="1" maxOccurs="4"/>
+									</sequence>
+								</complexType>
+							</element>
+							<element name="PostalCode" minOccurs="0" maxOccurs="1">
+								<simpleType>
+									<restriction base="string">
+										<minLength value="1"/>
+										<maxLength value="10"/>
+									</restriction>
+								</simpleType>
+							</element>
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="ReportingFinancialInstitutionInfo">
+		<complexType>
+			<sequence>
+				<element name="SectionIdentifier" minOccurs="1" maxOccurs="1">
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="B"/>
+						</restriction>
+					</simpleType>
+				</element>
+				<element name="RecordType" minOccurs="1" maxOccurs="1">
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="RFI"/>
+						</restriction>
+					</simpleType>
+				</element>
+				<element name="RecordStatus" minOccurs="1" maxOccurs="1">
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="N"/>
+							<enumeration value="C"/>
+							<enumeration value="D"/>
+						</restriction>
+					</simpleType>
+				</element>
+				<element name="UniqueNumber" type="frgnTPInfoSuppData:UniqueNumberType" minOccurs="1" maxOccurs="1"/>
+				<element name="RowNumber" type="frgnTPInfoSuppData:RowIndexType" minOccurs="1" maxOccurs="1"/>
+				<element name="NatureOfPerson" type="bt:EntityTypeType" minOccurs="1" maxOccurs="1"/>
+				<element name="GIIN" type="frgnTPInfoSuppData:GIINType" minOccurs="1" maxOccurs="1"/>
+				<element name="TaxRefNo" type="bt:TaxRefNoType" minOccurs="1" maxOccurs="1"/>
+				<element name="RegisteredName" type="bt:OrganisationNameType" minOccurs="1" maxOccurs="1"/>
+				<element name="TradingName" type="bt:OrganisationNameType" minOccurs="1" maxOccurs="1"/>
+				<element name="PostalAddressSameAsPhysicalInd" type="bt:YesNoIndType" minOccurs="1" maxOccurs="1"/>
+				<element name="PhysicalAddressDetails" minOccurs="0" maxOccurs="1">
+					<complexType>
+						<sequence>
+							<element name="CareOfInd" type="bt:YesNoIndType" minOccurs="1" maxOccurs="1"/>
+							<element name="CareOfName" type="bt:SurnameType" minOccurs="1" maxOccurs="1"/>
+							<element name="UnitNo" type="bt:UnitStreetNoType" minOccurs="0" maxOccurs="1"/>
+							<element name="ComplexName" type="bt:ComplexStreetNameType" minOccurs="0" maxOccurs="1"/>
+							<element name="StreetNo" type="bt:UnitStreetNoType" minOccurs="0" maxOccurs="1"/>
+							<element name="StreetName" type="bt:ComplexStreetNameType" minOccurs="0" maxOccurs="1"/>
+							<element name="Suburb" type="bt:SuburbType" minOccurs="0" maxOccurs="1"/>
+							<element name="City" type="bt:CityType" minOccurs="0" maxOccurs="1"/>
+							<element name="PostalCode" type="bt:PostalCodeType" minOccurs="0" maxOccurs="1"/>
+							<element name="CountryCode" type="bt:PostalCountryCodeType" minOccurs="0" maxOccurs="1"/>
+						</sequence>
+					</complexType>
+				</element>
+				<element name="PostalAddressDetails" minOccurs="0" maxOccurs="1">
+					<complexType>
+						<sequence>
+							<element name="CareOfInd" type="bt:YesNoIndType" minOccurs="1" maxOccurs="1"/>
+							<element name="CareOfName" type="bt:SurnameType" minOccurs="1" maxOccurs="1"/>
+							<element name="PostalAddressLines" minOccurs="1" maxOccurs="1">
+								<complexType>
+									<sequence>
+										<element name="PostalAddressLine" type="bt:AddressLineType" minOccurs="1" maxOccurs="4"/>
+									</sequence>
+								</complexType>
+							</element>
+							<element name="PostalCode" minOccurs="0" maxOccurs="1">
+								<simpleType>
+									<restriction base="string">
+										<minLength value="1"/>
+										<maxLength value="10"/>
+									</restriction>
+								</simpleType>
+							</element>
+							<element name="CountryCode" type="bt:PostalCountryCodeType" minOccurs="0" maxOccurs="1"/>
+						</sequence>
+					</complexType>
+				</element>
+				<element name="ContactDetails" minOccurs="1" maxOccurs="1">
+					<complexType>
+						<sequence>
+							<element name="Name" minOccurs="1" maxOccurs="1">
+								<simpleType>
+									<restriction base="string">
+										<minLength value="1"/>
+										<maxLength value="100"/>
+									</restriction>
+								</simpleType>
+							</element>
+							<element name="Surname" type="bt:SurnameType" minOccurs="1" maxOccurs="1"/>
+							<element name="BusinessTelephoneNumber1" type="frgnTPInfoSuppData:TelNoType" minOccurs="0" maxOccurs="1"/>
+							<element name="BusinessTelephoneNumber2" type="frgnTPInfoSuppData:TelNoType" minOccurs="0" maxOccurs="1"/>
+							<element name="CellPhoneNumber" type="frgnTPInfoSuppData:TelNoType" minOccurs="0" maxOccurs="1"/>
+							<element name="EmailAddress" minOccurs="1" maxOccurs="1">
+								<simpleType>
+									<restriction base="string">
+										<minLength value="5"/>
+										<maxLength value="80"/>
+									</restriction>
+								</simpleType>
+							</element>
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="AccountHolders">
+		<complexType>
+			<sequence>
+				<element name="AccountHolderInfo" minOccurs="1" maxOccurs="999999">
+					<complexType>
+						<sequence>
+							<element name="DemographicInfo" minOccurs="0" maxOccurs="1">
+								<complexType>
+									<sequence>
+										<element name="SectionIdentifier" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="B"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="RecordType" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="AHDD"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="RecordStatus" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="N"/>
+													<enumeration value="C"/>
+													<enumeration value="D"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="UniqueNumber" type="frgnTPInfoSuppData:UniqueNumberType" minOccurs="1" maxOccurs="1"/>
+										<element name="RowNumber" type="frgnTPInfoSuppData:RowIndexType" minOccurs="1" maxOccurs="1"/>
+										<element name="RFIUniqueNumber" type="frgnTPInfoSuppData:UniqueNumberType" minOccurs="1" maxOccurs="1"/>
+										<element name="AccountHolderType" minOccurs="1" maxOccurs="1">
+											<annotation>
+												<documentation>
+													PNFE = Passive
+													non-financial entity
+													with substantial
+													owner(s) NPFI =
+													Non-participating FI
+													SRP = Specified
+													reportable person
+												</documentation>
+											</annotation>
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="PNFE"/>
+													<enumeration value="NPFI"/>
+													<enumeration value="SRP"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="FirstTINProvidedInd" type="bt:YesNoIndType" minOccurs="1" maxOccurs="1"/>
+										<element name="IDNoProvidedInd" type="bt:YesNoIndType" minOccurs="1" maxOccurs="1"/>
+										<element name="IDNo" type="bt:PassportNoType" minOccurs="0" maxOccurs="1"/>
+										<element name="IDNoType" minOccurs="0" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<pattern value="\d{3}"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="NatureOfPerson" type="bt:EntityTypeType" minOccurs="1" maxOccurs="1"/>
+										<element name="Surname" type="bt:SurnameType" minOccurs="0" maxOccurs="1"/>
+										<element name="RegisteredName" type="bt:OrganisationNameType" minOccurs="0" maxOccurs="1"/>
+										<element name="Initials" type="bt:InitialsType" minOccurs="0" maxOccurs="1"/>
+										<element name="FirstNames" type="bt:FullNamesType" minOccurs="0" maxOccurs="1"/>
+										<element name="DateOfBirth" type="date" minOccurs="0" maxOccurs="1"/>
+										<element name="PostalAddressSameAsPhysicalInd" type="bt:YesNoIndType" minOccurs="1" maxOccurs="1"/>
+										<element name="PhysicalAddressDetails" minOccurs="0" maxOccurs="1">
+											<complexType>
+												<sequence>
+													<element name="CareOfInd" type="bt:YesNoIndType" minOccurs="0" maxOccurs="1"/>
+													<element name="CareOfName" type="bt:SurnameType" minOccurs="0" maxOccurs="1"/>
+													<element name="UnitNo" type="bt:UnitStreetNoType" minOccurs="0" maxOccurs="1"/>
+													<element name="ComplexName" type="bt:ComplexStreetNameType" minOccurs="0" maxOccurs="1"/>
+													<element name="StreetNo" type="bt:UnitStreetNoType" minOccurs="0" maxOccurs="1"/>
+													<element name="StreetName" type="bt:ComplexStreetNameType" minOccurs="0" maxOccurs="1"/>
+													<element name="Suburb" type="bt:SuburbType" minOccurs="0" maxOccurs="1"/>
+													<element name="City" type="bt:CityType" minOccurs="0" maxOccurs="1"/>
+													<element name="PostalCode" type="bt:PostalCodeType" minOccurs="0" maxOccurs="1"/>
+													<element name="CountryCode" type="bt:PostalCountryCodeType" minOccurs="0" maxOccurs="1"/>
+												</sequence>
+											</complexType>
+										</element>
+										<element name="PostalAddressDetails" minOccurs="0" maxOccurs="1">
+											<complexType>
+												<sequence>
+													<element name="CareOfInd" type="bt:YesNoIndType" minOccurs="0" maxOccurs="1"/>
+													<element name="CareOfName" type="bt:SurnameType" minOccurs="0" maxOccurs="1"/>
+													<element name="PostalAddressLines" minOccurs="1" maxOccurs="1">
+														<complexType>
+															<sequence>
+																<element name="PostalAddressLine" type="bt:AddressLineType" minOccurs="1" maxOccurs="4"/>
+															</sequence>
+														</complexType>
+													</element>
+													<element name="PostalCode" minOccurs="0" maxOccurs="1">
+														<simpleType>
+															<restriction base="string">
+																<minLength value="1"/>
+																<maxLength value="10"/>
+															</restriction>
+														</simpleType>
+													</element>
+													<element name="CountryCode" type="bt:PostalCountryCodeType" minOccurs="0" maxOccurs="1"/>
+												</sequence>
+											</complexType>
+										</element>
+										<element name="ContactDetails" minOccurs="1" maxOccurs="1">
+											<complexType>
+												<sequence>
+													<element name="Name" minOccurs="1" maxOccurs="1">
+														<simpleType>
+															<restriction base="string">
+																<minLength value="1"/>
+																<maxLength value="100"/>
+															</restriction>
+														</simpleType>
+													</element>
+													<element name="Surname" type="bt:SurnameType" minOccurs="1" maxOccurs="1"/>
+													<element name="BusinessTelephoneNumber1" type="frgnTPInfoSuppData:TelNoType" minOccurs="0" maxOccurs="1"/>
+													<element name="BusinessTelephoneNumber2" type="frgnTPInfoSuppData:TelNoType" minOccurs="0" maxOccurs="1"/>
+													<element name="CellPhoneNumber" type="frgnTPInfoSuppData:TelNoType" minOccurs="0" maxOccurs="1"/>
+													<element name="EmailAddress" minOccurs="1" maxOccurs="1">
+														<simpleType>
+															<restriction base="string">
+																<minLength value="5"/>
+																<maxLength value="80"/>
+															</restriction>
+														</simpleType>
+													</element>
+												</sequence>
+											</complexType>
+										</element>
+									</sequence>
+								</complexType>
+							</element>
+							<element name="IndiciaNationalityTINInfo" minOccurs="0" maxOccurs="1">
+								<complexType>
+									<sequence>
+										<element name="SectionIdentifier" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="B"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="RecordType" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="AHINT"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="RecordStatus" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="N"/>
+													<enumeration value="C"/>
+													<enumeration value="D"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="UniqueNumber" type="frgnTPInfoSuppData:UniqueNumberType" minOccurs="1" maxOccurs="1"/>
+										<element name="RowNumber" type="frgnTPInfoSuppData:RowIndexType" minOccurs="1" maxOccurs="1"/>
+										<element name="AHDDUniqueNumber" type="frgnTPInfoSuppData:UniqueNumberType" minOccurs="1" maxOccurs="1"/>
+										<element name="IndiciaCountryCode" type="bt:PostalCountryCodeType" minOccurs="1" maxOccurs="1"/>
+										<element name="TaxResidencyCountryCode" type="bt:PostalCountryCodeType" minOccurs="0" maxOccurs="1"/>
+										<element name="Nationality" type="bt:PostalCountryCodeType" minOccurs="1" maxOccurs="1"/>
+										<element name="TIN" type="frgnTPInfoSuppData:TINType" minOccurs="0" maxOccurs="1">
+											<annotation>
+												<documentation>
+													The Tax
+													Identification
+													Number of the
+													Account Holder in a
+													foreign
+													jurisdiction.
+												</documentation>
+											</annotation>
+										</element>
+										<element name="JurisdictionOfIssuedTIN" type="bt:PostalCountryCodeType" minOccurs="0" maxOccurs="1"/>
+									</sequence>
+								</complexType>
+							</element>
+							<element name="FinancialInfo" minOccurs="0" maxOccurs="1">
+								<complexType>
+									<sequence>
+										<element name="SectionIdentifier" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="B"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="RecordType" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="AHFD"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="RecordStatus" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="N"/>
+													<enumeration value="C"/>
+													<enumeration value="D"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="UniqueNumber" type="frgnTPInfoSuppData:UniqueNumberType" minOccurs="1" maxOccurs="1"/>
+										<element name="RowNumber" type="frgnTPInfoSuppData:RowIndexType" minOccurs="1" maxOccurs="1"/>
+										<element name="AHDDUniqueNumber" type="frgnTPInfoSuppData:UniqueNumberType" minOccurs="1" maxOccurs="1"/>
+										<element name="AccountNoAvailableInd" type="bt:YesNoIndType" minOccurs="1" maxOccurs="1"/>
+										<element name="AccountNo" minOccurs="0" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<minLength value="1"/>
+													<maxLength value="40"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="DividendsPaidAmt" type="bt:FinancialTotalAmtDecimalType" minOccurs="0" maxOccurs="1"/>
+										<element name="InterestPaidAmt" type="bt:FinancialTotalAmtDecimalType" minOccurs="0" maxOccurs="1"/>
+										<element name="GrossProceedsPaidAmt" type="bt:FinancialTotalAmtDecimalType" minOccurs="0" maxOccurs="1"/>
+										<element name="OtherPaidAmt" type="bt:FinancialTotalAmtDecimalType" minOccurs="0" maxOccurs="1"/>
+										<element name="ClosingBalanceAmt" type="bt:FinancialTotalAmtDecimalType" minOccurs="1" maxOccurs="1"/>
+									</sequence>
+								</complexType>
+							</element>
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="ControllingPersons">
+		<complexType>
+			<sequence>
+				<element name="ControllingPersonInfo" minOccurs="1" maxOccurs="999999">
+					<complexType>
+						<sequence>
+							<element name="DemographicInfo" minOccurs="1" maxOccurs="1">
+								<complexType>
+									<sequence>
+										<element name="SectionIdentifier" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="B"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="RecordType" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="CPDD"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="RecordStatus" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="N"/>
+													<enumeration value="C"/>
+													<enumeration value="D"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="UniqueNumber" type="frgnTPInfoSuppData:UniqueNumberType" minOccurs="1" maxOccurs="1"/>
+										<element name="RowNumber" type="frgnTPInfoSuppData:RowIndexType" minOccurs="1" maxOccurs="1"/>
+										<element name="AHDDUniqueNumber" type="frgnTPInfoSuppData:UniqueNumberType" minOccurs="1" maxOccurs="1"/>
+										<element name="TINProvidedInd" type="bt:YesNoIndType" minOccurs="1" maxOccurs="1"/>
+										<element name="NatureOfPerson" type="bt:EntityTypeType" minOccurs="1" maxOccurs="1"/>
+										<element name="Surname" type="bt:SurnameType" minOccurs="0" maxOccurs="1"/>
+										<element name="RegisteredName" type="bt:OrganisationNameType" minOccurs="0" maxOccurs="1"/>
+										<element name="Initials" type="bt:InitialsType" minOccurs="0" maxOccurs="1"/>
+										<element name="FirstNames" type="bt:FullNamesType" minOccurs="0" maxOccurs="1"/>
+										<element name="IDNoProvidedInd" type="bt:YesNoIndType" minOccurs="1" maxOccurs="1"/>
+										<element name="IDNo" type="bt:PassportNoType" minOccurs="0" maxOccurs="1"/>
+										<element name="IDNoType" minOccurs="0" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<pattern value="\d{3}"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="DateOfBirth" type="date" minOccurs="0" maxOccurs="1"/>
+										<element name="PostalAddressSameAsPhysicalInd" type="bt:YesNoIndType" minOccurs="1" maxOccurs="1"/>
+										<element name="PhysicalAddressDetails" minOccurs="0" maxOccurs="1">
+											<complexType>
+												<sequence>
+													<element name="CareOfInd" type="bt:YesNoIndType" minOccurs="0" maxOccurs="1"/>
+													<element name="CareOfName" type="bt:SurnameType" minOccurs="0" maxOccurs="1"/>
+													<element name="UnitNo" type="bt:UnitStreetNoType" minOccurs="0" maxOccurs="1"/>
+													<element name="ComplexName" type="bt:ComplexStreetNameType" minOccurs="0" maxOccurs="1"/>
+													<element name="StreetNo" type="bt:UnitStreetNoType" minOccurs="0" maxOccurs="1"/>
+													<element name="StreetName" type="bt:ComplexStreetNameType" minOccurs="0" maxOccurs="1"/>
+													<element name="Suburb" type="bt:SuburbType" minOccurs="0" maxOccurs="1"/>
+													<element name="City" type="bt:CityType" minOccurs="0" maxOccurs="1"/>
+													<element name="PostalCode" type="bt:PostalCodeType" minOccurs="0" maxOccurs="1"/>
+													<element name="CountryCode" type="bt:PostalCountryCodeType" minOccurs="0" maxOccurs="1"/>
+												</sequence>
+											</complexType>
+										</element>
+										<element name="PostalAddressDetails" minOccurs="0" maxOccurs="1">
+											<complexType>
+												<sequence>
+													<element name="CareOfInd" type="bt:YesNoIndType" minOccurs="0" maxOccurs="1"/>
+													<element name="CareOfName" type="bt:SurnameType" minOccurs="0" maxOccurs="1"/>
+													<element name="PostalAddressLines" minOccurs="1" maxOccurs="1">
+														<complexType>
+															<sequence>
+																<element name="PostalAddressLine" type="bt:AddressLineType" minOccurs="1" maxOccurs="4"/>
+															</sequence>
+														</complexType>
+													</element>
+													<element name="PostalCode" minOccurs="0" maxOccurs="1">
+														<simpleType>
+															<restriction base="string">
+																<minLength value="1"/>
+																<maxLength value="10"/>
+															</restriction>
+														</simpleType>
+													</element>
+													<element name="CountryCode" type="bt:PostalCountryCodeType" minOccurs="0" maxOccurs="1"/>
+												</sequence>
+											</complexType>
+										</element>
+									</sequence>
+								</complexType>
+							</element>
+							<element name="TINJurisdictionNationalityInfo" minOccurs="1" maxOccurs="1">
+								<complexType>
+									<sequence>
+										<element name="SectionIdentifier" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="B"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="RecordType" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="CPTJN"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="RecordStatus" minOccurs="1" maxOccurs="1">
+											<simpleType>
+												<restriction base="string">
+													<enumeration value="N"/>
+													<enumeration value="C"/>
+													<enumeration value="D"/>
+												</restriction>
+											</simpleType>
+										</element>
+										<element name="UniqueNumber" type="frgnTPInfoSuppData:UniqueNumberType" minOccurs="1" maxOccurs="1"/>
+										<element name="RowNumber" type="frgnTPInfoSuppData:RowIndexType" minOccurs="1" maxOccurs="1"/>
+										<element name="CPDDUniqueNumber" type="frgnTPInfoSuppData:UniqueNumberType" minOccurs="1" maxOccurs="1"/>
+										<element name="ControllingPersonTIN" type="frgnTPInfoSuppData:TINType" minOccurs="0" maxOccurs="1">
+											<annotation>
+												<documentation>
+													The Tax
+													Identification
+													Number of the
+													Account Holder in a
+													foreign
+													jurisdiction.
+												</documentation>
+											</annotation>
+										</element>
+										<element name="ControllingPersonTINJurisdiction" type="bt:PostalCountryCodeType" minOccurs="0" maxOccurs="1"/>
+										<element name="ControllingPersonNationality" type="bt:PostalCountryCodeType" minOccurs="0" maxOccurs="1"/>
+									</sequence>
+								</complexType>
+							</element>
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="ForeignTaxpayerInfoSupportingData" type="frgnTPInfoSuppData:ForeignTaxpayerInfoSupportingDataStructure">
+	</element>
+	<!--	Types -->
+	<simpleType name="TINType">
+		<restriction base="string">
+			<minLength value="1"/>
+			<maxLength value="20"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="GIINType">
+		<annotation>
+			<documentation>Global Intermediary Identification Number
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<length value="19"/>
+			<pattern value="\w{6}\.\w{5}\.\w{2}\.\w{3}"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="UniqueNumberType">
+		<restriction base="string">
+			<minLength value="1"/>
+			<maxLength value="100"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="RowIndexType">
+		<restriction base="integer">
+			<minInclusive value="1"/>
+			<maxInclusive value="9999999999"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="TelNoType">
+		<restriction base="string">
+			<pattern value="\d{9,15}"/>
+		</restriction>
+	</simpleType>
+	<complexType name="ForeignTaxpayerInfoSupportingDataStructure">
+		<sequence>
+			<element minOccurs="1" maxOccurs="1"
+				ref="frgnTPInfoSuppData:SubmittingEntityInfo">
+			</element>
+			<element minOccurs="1" maxOccurs="1"
+				ref="frgnTPInfoSuppData:ReportingFinancialInstitutionInfo">
+			</element>
+			<element minOccurs="0" maxOccurs="1"
+				ref="frgnTPInfoSuppData:AccountHolders">
+			</element>
+			<element minOccurs="0" maxOccurs="1"
+				ref="frgnTPInfoSuppData:ControllingPersons">
+			</element>
+		</sequence>
+	</complexType>
+</schema>

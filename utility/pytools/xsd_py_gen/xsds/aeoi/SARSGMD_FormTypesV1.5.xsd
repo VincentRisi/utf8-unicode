@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<schema
+    targetNamespace="http://www.sars.gov.za/enterpriseMessagingModel/GMD/FormTypes/xml/schemas/version/1.5"
+    elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+    xmlns:ft="http://www.sars.gov.za/enterpriseMessagingModel/GMD/FormTypes/xml/schemas/version/1.5">
+    <annotation>
+
+        <documentation>
+            2014-08-14 Dirk Grobler. Added FormLockIDs and WrapperLockIds to FormInfoStructure to cater for form wrappers.
+            2013-01-16 Dirk Grobler. Reverted GUID and LockedInd
+            change (Added them back to DataStructure)
+            2013-01-09 Dirk Grobler.
+            Changed type of Language to be an enumeration as per base types.
+            Removed GUID and LockedInd attributes since they are not required.
+            2012-11-16 Edwin du Preez. Changed AreaType to be more restrictive
+            with a pattern restriction.
+            Changed FormType to be max 59 characters.
+            Added SignatureBiometricStructure.
+            Added SignatureType and changed to have a min length.
+            Added min length to Image.
+            2012-10-25 Dirk Grobler. Min lengths added.
+            2012-09-14 Edwin du Preez.
+        </documentation>
+    </annotation>
+    <complexType name="FormInfoStructure">
+        <annotation>
+            <documentation>
+                Structure representing the form processing data needed
+                for the correct rendering and functioning of SARS forms
+            </documentation>
+        </annotation>
+        <all>
+            <element name="FormID" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents an ID used to identify the form
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                        <maxLength value="8"></maxLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="TimeStamp" type="dateTime" minOccurs="0"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the date and time on which the form
+                        was
+                        submitted
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="VersionNo" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the version number of the form
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                        <maxLength value="12"></maxLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="HasSupportDocs" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Indicates whether there are supporting documents
+                        associated with the form
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="Signed" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Indicates whether the form was signed
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                        <enumeration value="Y"></enumeration>
+                        <enumeration value="N"></enumeration>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="Incomplete" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Indicates whether the form is incomplete
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="TaxYear" type="ft:YearType" minOccurs="0"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the year associated with the form
+                        submission
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="FormYear" type="ft:YearType" minOccurs="0"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the year in which the version was
+                        created
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="TaxRefNo" type="ft:TaxRefNoType" minOccurs="0"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents a reference number for the tax
+                        product
+                        associated with the form
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="Language" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the language in which the form was
+                        completed
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="ENGLISH" />
+                        <enumeration value="AFRIKAANS" />
+                        <enumeration value="NDEBELE" />
+                        <enumeration value="XHOSA" />
+                        <enumeration value="ZULU" />
+                        <enumeration value="SESOTHO_LEBOA" />
+                        <enumeration value="SESOTHO" />
+                        <enumeration value="SETSWANA" />
+                        <enumeration value="SISWATI" />
+                        <enumeration value="TSHIVENDA" />
+                        <enumeration value="XITSONGA" />
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="Area" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the area associated with the form
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+
+                        <pattern value="\d{1,4}"></pattern>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="SourceID" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the ID of the source application
+                        through
+                        which the form was captured
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="SubmitUrl" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents a web site to which the party must be
+                        redirected when the form is submitted
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                        <maxLength value="255"></maxLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="SaveUrl" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents a web site to which the party must be
+                        redirected when the form is saved
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                        <maxLength value="255"></maxLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="SaveUrlWs" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents a web site to which the party must be
+                        redirected when the form is submitted
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                        <maxLength value="255"></maxLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="CalculateUrl" minOccurs="0" maxOccurs="1">
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                        <maxLength value="255"></maxLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="FormType" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the type of form
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                        <maxLength value="59"></maxLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="RevisionNo" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the revision number of the form
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="ITID" type="long" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the IT ID associated with the form
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="WizardID" type="long" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the ID of the wizard used to
+                        determine the
+                        contents of the form
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="UserRights" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the user rights details used to
+                        determine
+                        access to the form
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                        <maxLength value="2"></maxLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="IsOnline" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Indicates whether the party completing the form
+                        is
+                        online
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="UniqueRef" type="ft:UniqueIdentifierType"
+                minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents a unique reference number assigned to
+                        the
+                        form for identification
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="ReadOnly" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Indicates whether the form is for display and
+                        read
+                        purposes only
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="Metadata" type="ft:MetadataStructure"
+                minOccurs="0">
+                <annotation>
+                    <documentation>
+                        Represents the application specific processing
+                        meta
+                        data associated with the form
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="CurCalenderYear" type="ft:YearType" minOccurs="0"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the current calendar year
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="DateReceived" type="dateTime" minOccurs="0"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the date and time on which the form
+                        was
+                        received
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="Hash" minOccurs="0" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents a hash for verifying the form's
+                        contents
+                        were not altered
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                        <maxLength value="256"></maxLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="SignatureBiometric" minOccurs="0" maxOccurs="1"
+                type="ft:SignatureBiometricStructure">
+                <annotation>
+                    <documentation>
+                        Represents the details of the signature
+                        biometric
+                        associated with the form
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="ScanningVersion" minOccurs="0" maxOccurs="1">
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1" />
+                        <maxLength value="4" />
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="PartyID" type="ft:PartyIDType" minOccurs="0"
+                maxOccurs="1" />
+            <element name="CaseNo" type="ft:CaseNoType" minOccurs="0"
+                maxOccurs="1" />
+            <element name="TransactionDate" type="date" minOccurs="0"
+                maxOccurs="1" />
+            <element name="PrintIndicator" minOccurs="0" maxOccurs="1">
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="SARS" />
+                        <enumeration value="TAXPAYER" />
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="FormLockIDs" minOccurs="0" maxOccurs="1">
+                <complexType>
+                    <sequence>
+                        <element name="FormLockID" minOccurs="1" maxOccurs="30">
+                            <simpleType>
+                                <restriction base="string">
+                                    <minLength value="1"></minLength>
+                                    <maxLength value="100"></maxLength>
+                                </restriction>
+                            </simpleType>
+                        </element>
+                    </sequence>
+                </complexType>
+            </element>
+
+            <element name="WrapperLockIDs" minOccurs="0" maxOccurs="1">
+                <complexType>
+
+                    <sequence>
+                        <element name="WrapperLockID" minOccurs="1" maxOccurs="60">
+                            <simpleType>
+                                <restriction base="string">
+                                    <minLength value="1"></minLength>
+                                    <maxLength value="100"></maxLength>
+                                </restriction>
+                            </simpleType>
+                        </element>
+                    </sequence>
+
+                </complexType>
+            </element>
+        </all>
+    </complexType>
+    <complexType name="SecurityInfoStructure">
+        <annotation>
+            <documentation>
+                Structure representing the authentication/security
+                information associated with a form
+            </documentation>
+        </annotation>
+        <all>
+            <element name="SessionID" type="string" minOccurs="0"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents an identifier for the session
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="TaxUserID" type="string" minOccurs="0"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the identifier for the tax user
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="TaxPayerID" type="string" minOccurs="0"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the identifier for the tax payer
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="ReturnGroupID" type="string" minOccurs="0"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the identifier for the return group
+                    </documentation>
+                </annotation>
+            </element>
+        </all>
+    </complexType>
+
+    <simpleType name="UniqueIdentifierType">
+        <annotation>
+            <documentation>
+                Represents a universal unique identifier
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <length value="36"></length>
+        </restriction>
+    </simpleType>
+
+    <complexType name="MetadataStructure">
+        <annotation>
+            <documentation>
+                Structure representing sets of application metadata
+                together with username and timestamp for auditing purposes
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="ApplicationMetadata" type="ft:ApplicationMetadataStructure"
+                minOccurs="0" maxOccurs="999">
+                <annotation>
+                    <documentation>
+                        Represents the application specific metadata
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="ChangedInd" maxOccurs="1" minOccurs="0">
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="NEW"></enumeration>
+                        <enumeration value="UPDATED"></enumeration>
+                        <enumeration value="DELETED"></enumeration>
+                        <enumeration value="NO_CHANGE"></enumeration>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="Username" type="ft:UsernameType" minOccurs="0"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the username of the SARS
+                        employee/application that changed the data
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="TimeStamp" type="dateTime" minOccurs="0"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the date and time when the data was last
+                        updated
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+
+    <complexType name="DataStructure">
+        <annotation>
+            <documentation>
+                Structure representing a name value pair
+            </documentation>
+        </annotation>
+        <all>
+            <element name="Name" minOccurs="1" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the name of the data element being
+                        described
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <maxLength value="500" />
+                        <minLength value="1"></minLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="Value" minOccurs="1" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the value associated with the data
+                        element being described
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <maxLength value="500" />
+                        <minLength value="1"></minLength>
+                    </restriction>
+                </simpleType>
+            </element>
+        </all>
+        <attribute name="GUID" type="ft:UniqueIdentifierType" use="optional" />
+        <attribute name="LockedInd" type="ft:YesNoIndType" use="optional" />
+    </complexType>
+
+    <complexType name="ApplicationMetadataStructure">
+        <annotation>
+            <documentation>
+                Structure used to represent application specific
+                metadata. Should only be used in instances where application needs
+                to store identification keys and relate data to keys or when the
+                data itself is unstructured
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="Data" type="ft:DataStructure" minOccurs="0"
+                maxOccurs="999">
+                <annotation>
+                    <documentation>Represents the metadata</documentation>
+                </annotation>
+            </element>
+        </sequence>
+        <attribute name="GUID" type="ft:UniqueIdentifierType" use="optional" />
+    </complexType>
+    <simpleType name="TaxRefNoType">
+        <annotation>
+            <documentation>
+                Represents a sars allocated tax/customs number
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\w{8}|\w{10}" />
+        </restriction>
+    </simpleType>
+
+    <simpleType name="PartyIDType">
+        <annotation>
+            <documentation>
+                Represents a unique id allocated to a party on
+                registration with SARS as a legal entity
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="20" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="YearType">
+        <annotation>
+            <documentation>Represents a year in format CCYY</documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\d{4}" />
+        </restriction>
+    </simpleType>
+
+    <simpleType name="UsernameType">
+        <annotation>
+            <documentation>
+                Represents a SARS user name. Includes admin user names
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="35" />
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="YesNoIndType">
+        <annotation>
+            <documentation>Represents a yes or no indicator value</documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="Y" />
+            <enumeration value="N" />
+        </restriction>
+    </simpleType>
+
+    <simpleType name="CaseNoType">
+        <annotation>
+            <documentation>
+                Represents a sars generated case number
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="\d{1,10}"></pattern>
+            <minLength value="1"></minLength>
+        </restriction>
+    </simpleType>
+
+    <complexType name="SignatureBiometricStructure">
+
+        <annotation>
+            <documentation>
+                Structure representing the signature biometric used to
+                confirm a party's acceptance of details of a completed
+                form
+            </documentation>
+        </annotation>
+        <all>
+            <element name="Signature" minOccurs="1" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents the party's signature
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="Image" minOccurs="1" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        Represents an encoded image of the party's
+                        signature
+                    </documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="1"></minLength>
+                    </restriction>
+                </simpleType>
+            </element>
+        </all>
+    </complexType>
+</schema>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="Workflow"/>
+      <xsd:import namespace="Workflow2"/>
+      <xsd:element name="CreateCase">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="channel" type="xsd:string"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="processType" type="xsd:string"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="processData" type="xsd:string"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="processDataExt" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateCaseResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="s1:CreateCaseResult"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CompleteStep">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="Channel" type="xsd:string"/>
+            <xsd:element minOccurs="1" maxOccurs="1" name="StepNo" type="xsd:int"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="ProcessData" type="xsd:string"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="ProcessDataExt" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CompleteStepResponse">
+        <xsd:complexType/>
+      </xsd:element>
+      <xsd:element name="LocateCaseByInvolvedParty">
+        <xsd:complexType/>
+      </xsd:element>
+      <xsd:element name="LocateCaseByInvolvedPartyResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="LocateCaseByInvolvedPartyResult" type="s2:LocateCaseByInvolvedPartyResponseLocateCaseByInvolvedPartyResult"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="UpdateCaseStatusByInvolvedParty">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="Channel" type="xsd:string"/>
+            <xsd:element minOccurs="1" maxOccurs="1" name="PartyType" type="xsd:int"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="PrimaryIDNo" type="xsd:string"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AssessmentPeriod" type="xsd:string"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="ProcessType" type="xsd:string"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CaseStatus" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="UpdateCaseStatusByInvolvedPartyResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="UpdateCaseStatusByInvolvedPartyResult" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="SubmitSupportingDocument">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="channel" type="xsd:string"/>
+            <xsd:element minOccurs="1" maxOccurs="1" name="partyType" type="xsd:int"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="primaryID" type="xsd:string"/>
+            <xsd:element minOccurs="1" maxOccurs="1" name="assessmentPeriod" type="xsd:int"/>
+            <xsd:element minOccurs="1" maxOccurs="1" name="caseNo" type="xsd:int"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="supportingDocument" type="xsd:base64Binary"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="SubmitSupportingDocumentResponse">
+        <xsd:complexType/>
+      </xsd:element>
+      <xsd:element name="AssignStep">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="CaseNo" type="xsd:int"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="ProcessType" type="xsd:string"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CaseStatus" type="xsd:string"/>
+            <xsd:element minOccurs="1" maxOccurs="1" name="StepNo" type="xsd:int"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="UniqueStepID" type="xsd:string"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="ProcessData" type="xsd:string"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="ProcessDataExt" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AssignStepResponse">
+        <xsd:complexType/>
+      </xsd:element>
+    </xsd:schema>
+      <xsd:element name="CreateCaseResult">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="caseNo" type="xsd:integer"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="stepNo" type="xsd:integer"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="uniqueStepIdentifier" type="xsd:integer"/>
+            <xsd:element minOccurs="0" maxOccurs="1" name="caseStatus" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+      <xsd:complexType name="LocateCaseByInvolvedPartyResponseLocateCaseByInvolvedPartyResult">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="caseNo" type="xsd:integer"/>
+          <xsd:element minOccurs="0" maxOccurs="1" name="processType" type="xsd:integer"/>
+          <xsd:element minOccurs="0" maxOccurs="1" name="caseStatus" type="xsd:integer"/>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stepNo" type="xsd:string"/>
+          <xsd:element minOccurs="0" maxOccurs="1" name="uniqueStepID" type="xsd:string"/>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stepStatus" type="xsd:string"/>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stepStatus" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>

@@ -1,0 +1,23 @@
+# accuity CSharp Code Config
+
+In order to use this you need to install node.js - node-v10.14.1-x64.msi
+Once node is installed and running, use the following commands
+
+    # npm-repository-url=https://nexus.nednet.co.za/repository/npm-group
+    npm config set registry https://nexus.nednet.co.za/repository/npm-group
+    npm config set strict-ssl false
+    npm config set proxy https://nexus.nednet.co.za/repository/npm-public
+    npm config set https-proxy https://nexus.nednet.co.za/repository/npm-public
+    npm install -g autorest
+
+---
+
+``` yaml
+# list all the input OpenAPI files (may be YAML, JSON, or Literate-OpenAPI markdown)
+input-file: ${INPUT_FILE}
+
+csharp:
+  namespace: Accuityhttp
+  output-folder: ${OUTPUT_DIR}
+
+```

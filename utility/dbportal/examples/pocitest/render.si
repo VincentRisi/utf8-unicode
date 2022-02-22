@@ -1,0 +1,77 @@
+$CSIDL2 0 $CSADONET 0
+SERVER @MW01
+CONNECT nard00/control
+
+tablespace NDWT001M1
+
+table Render
+RenderID      nsequence(12)      # Key 
+Name          char(50)           # Name of the renderer
+RenderStream  hugechar  (262144) # The actual XSLT string
+RenderTypeID  int                # Type of render
+xsmall        smallint
+xtiny         tinyint
+xint          int
+xlong         long
+xchar         char(10)
+xnchar        nchar(10)
+UserCode      nchar(6)
+UsrID         char(50)
+TMStamp       datetime
+
+
+KEY PKEY PRIMARY TABLESPACE NDWX001M1
+RenderID
+
+#Foreign Key Constraints  
+Link RenderType  RenderTypeID
+
+proc Insert (noidl)
+proc Update (noidl)
+proc SelectOne (noidl)
+proc DeleteOne (noidl)
+proc Exists (noidl)
+proc SelectAll (noidl)
+
+# Dieter Rosch 2005/05/03
+# Retrieve Report info
+proc GetRenderInfo (noidl)
+input
+  RenderID      int
+output (single)
+  RenderID      int
+  Name          char(50)
+  RenderStream  hugechar
+  RenderTypeID  int
+  UsrID         char(50)
+  TMStamp       char(15)
+
+sql code
+  Select RenderID, Name, RenderStream,
+  RenderTypeID,
+  UsrID, to_char(TMStamp,'YYYYMMDDHH24MISS')
+  from Render
+  where RenderID = :RenderID;
+endcode
+
+# Dieter Rosch 2005/05/03
+# Retrieve Report info
+proc MySelectAll (noidl)
+output (multiple)
+RenderID  =
+Name   =
+RenderTypeID  =
+
+UsrID   =
+TMStamp   =
+
+sql code
+select
+ RenderID
+ , Name
+ , RenderTypeID
+ , UsrID
+ , to_char(TMStamp, 'YYYYMMDDHH24MISS')
+ from Render
+endcode
+

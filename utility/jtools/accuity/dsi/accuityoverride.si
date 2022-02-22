@@ -1,0 +1,19 @@
+SERVER   @DN29
+CONNECT  NPUD00/CONTROL
+
+TABLE AccuityUserOverride
+    Id        int
+    TableName char(40)
+    AuditsId  int         
+    USId      char(16)
+    TmStamp   timestamp
+
+KEY AccuityUserOverrideKey PRIMARY
+  Id
+
+PROC Insert 
+PROC Update
+PROC SelectOne 
+PROC DeleteOne
+PROC DeleteAll
+PROC Exists

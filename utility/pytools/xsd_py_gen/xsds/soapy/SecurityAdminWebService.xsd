@@ -1,0 +1,1100 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="HelloWorld">
+        <xsd:complexType />
+      </xsd:element>
+      <xsd:element name="HelloWorldResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="SoapContructorHeader" type="tnxsd:SoapContructorHeader" />
+      <xsd:complexType name="SoapContructorHeader">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="AppName" type="xsd:string" />
+        </xsd:sequence>
+        <xsd:anyAttribute />
+      </xsd:complexType>
+      <xsd:element name="CreateStore">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="NewOpsList" type="tnxsd:ArrayOfOperationRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="NewTaskList" type="tnxsd:ArrayOfTaskRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="NewRoleList" type="tnxsd:ArrayOfRoleRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="DelOpsList" type="tnxsd:ArrayOfOperationRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="DelTaskList" type="tnxsd:ArrayOfTaskRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="DelRoleList" type="tnxsd:ArrayOfRoleRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleAssignments" type="tnxsd:ArrayOfRoleAssignRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskAssignments" type="tnxsd:ArrayOfTaskAssignRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserAssignments" type="tnxsd:ArrayOfUserAssignRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="ArrayOfOperationRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="OperationRec" nillable="true" type="tnxsd:OperationRec" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="OperationRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="OpName" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="OpID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="OpDescrip" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfTaskRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="TaskRec" nillable="true" type="tnxsd:TaskRec" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TaskRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="TaskDescrip" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfRoleRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="RoleRec" nillable="true" type="tnxsd:RoleRec" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RoleRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="RoleDescrip" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfRoleAssignRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="RoleAssignRec" nillable="true" type="tnxsd:RoleAssignRec" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RoleAssignRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="RoleDescrip" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="AssignedTasks" type="tnxsd:ArrayOfString" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfString">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfTaskAssignRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="TaskAssignRec" nillable="true" type="tnxsd:TaskAssignRec" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TaskAssignRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="TaskDescrip" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="AssignedOps" type="tnxsd:ArrayOfString" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfUserAssignRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="UserAssignRec" nillable="true" type="tnxsd:UserAssignRec" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="UserAssignRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="AssignedUsers" type="tnxsd:ArrayOfString" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="CreateStoreResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CreateStoreResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="AdminReply">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="ReturnVal" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ErrMsg" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="CheckOpsList">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="InOpsList" type="tnxsd:ArrayOfOperationRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CheckOpsListResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CheckOpsListResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="DelOpsList" type="tnxsd:ArrayOfOperationRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="NewOpsList" type="tnxsd:ArrayOfOperationRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CheckTasksList">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="InTasksList" type="tnxsd:ArrayOfTaskRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CheckTasksListResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CheckTasksListResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="DelTasksList" type="tnxsd:ArrayOfTaskRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="NewTasksList" type="tnxsd:ArrayOfTaskRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CheckRolesList">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="InRolesList" type="tnxsd:ArrayOfRoleRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CheckRolesListResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CheckRolesListResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="DelRolesList" type="tnxsd:ArrayOfRoleRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="NewRolesList" type="tnxsd:ArrayOfRoleRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateApplication">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AppName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateApplicationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CreateApplicationResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RenameApplication">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="NewAppName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RenameApplicationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RenameApplicationResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="tnxsd:RoleRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CreateRoleResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RenameRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="tnxsd:RoleRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="NewRoleName" type="tnxsd:RoleRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RenameRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RenameRoleResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateTask">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="tnxsd:TaskRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateTaskResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CreateTaskResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RenameTask">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="tnxsd:TaskRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="NewTaskName" type="tnxsd:TaskRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RenameTaskResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RenameTaskResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateOperation">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpName" type="tnxsd:OperationRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateOperationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CreateOperationResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RenameOperation">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpName" type="tnxsd:OperationRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="NewOpName" type="tnxsd:OperationRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RenameOperationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RenameOperationResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateRoles">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleNames" type="tnxsd:ArrayOfRoleRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateRolesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CreateRolesResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateTasks">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskNames" type="tnxsd:ArrayOfTaskRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateTasksResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CreateTasksResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateOperations">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpNames" type="tnxsd:ArrayOfOperationRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateOperationsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CreateOperationsResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteApplication">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AppName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteApplicationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="DeleteApplicationResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteRoles">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteRolesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="DeleteRolesResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="DeleteRoleResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteTasks">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteTasksResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="DeleteTasksResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteTask">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteTaskResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="DeleteTaskResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteOperations">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteOperationsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="DeleteOperationsResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteOperation">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteOperationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="DeleteOperationResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetAllApps">
+        <xsd:complexType />
+      </xsd:element>
+      <xsd:element name="GetAllAppsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetAllAppsResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetAllRoles">
+        <xsd:complexType />
+      </xsd:element>
+      <xsd:element name="GetAllRolesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetAllRolesResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfRoleRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetAllTasks">
+        <xsd:complexType />
+      </xsd:element>
+      <xsd:element name="GetAllTasksResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetAllTasksResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfTaskRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetAllOperations">
+        <xsd:complexType />
+      </xsd:element>
+      <xsd:element name="GetAllOperationsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetAllOperationsResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfOperationRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetRegisteredUsers">
+        <xsd:complexType />
+      </xsd:element>
+      <xsd:element name="GetRegisteredUsersResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetRegisteredUsersResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfUserRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="ArrayOfUserRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="UserRec" nillable="true" type="tnxsd:UserRec" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="UserRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="DomainName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="UserID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="UserName" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="GetDomainUsers">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="DomainName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetDomainUsersResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetDomainUsersResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfUserRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="SearchDomainUsers">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="DomainName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="SrchString" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="SrchType" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="SrchLimit" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="SearchDomainUsersResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="SearchDomainUsersResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfUserRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetUsersInRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetUsersInRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetUsersInRoleResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfUserRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetRolesPerUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetRolesPerUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetRolesPerUserResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfRoleRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetRolesPerTask">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetRolesPerTaskResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetRolesPerTaskResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfRoleRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetTasksPerRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetTasksPerRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetTasksPerRoleResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfTaskRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetTasksPerOp">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetTasksPerOpResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetTasksPerOpResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfTaskRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetOpsPerTask">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetOpsPerTaskResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetOpsPerTaskResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfOperationRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="IsOpInTask">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="IsOpInTaskResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="IsOpInTaskResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="OutVal" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="IsTaskInRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="IsTaskInRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="IsTaskInRoleResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="OutVal" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetUnAssignedOps">
+        <xsd:complexType />
+      </xsd:element>
+      <xsd:element name="GetUnAssignedOpsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetUnAssignedOpsResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfOperationRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetUnAssignedTasks">
+        <xsd:complexType />
+      </xsd:element>
+      <xsd:element name="GetUnAssignedTasksResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetUnAssignedTasksResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfTaskRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetUnAssignedRoles">
+        <xsd:complexType />
+      </xsd:element>
+      <xsd:element name="GetUnAssignedRolesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetUnAssignedRolesResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OutList" type="tnxsd:ArrayOfRoleRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddOpToTask">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddOpToTaskResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AddOpToTaskResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddOpToTasks">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddOpToTasksResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AddOpToTasksResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddOpsToTasks">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpNames" type="tnxsd:ArrayOfString" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddOpsToTasksResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AddOpsToTasksResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddOpsToTask">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpNames" type="tnxsd:ArrayOfString" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddOpsToTaskResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AddOpsToTaskResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddTaskToRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddTaskToRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AddTaskToRoleResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddTaskToRoles">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddTaskToRolesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AddTaskToRolesResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddTasksToRoles">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskNames" type="tnxsd:ArrayOfString" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddTasksToRolesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AddTasksToRolesResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddTasksToRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskNames" type="tnxsd:ArrayOfString" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddTasksToRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AddTasksToRoleResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveOpFromTask">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveOpFromTaskResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RemoveOpFromTaskResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveOpFromTasks">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveOpFromTasksResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RemoveOpFromTasksResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveOpsFromTask">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpNames" type="tnxsd:ArrayOfString" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveOpsFromTaskResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RemoveOpsFromTaskResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveOpsFromTasks">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="OpNames" type="tnxsd:ArrayOfString" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveOpsFromTasksResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RemoveOpsFromTasksResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveTaskFromRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveTaskFromRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RemoveTaskFromRoleResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveTaskFromRoles">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveTaskFromRolesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RemoveTaskFromRolesResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveTasksFromRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskNames" type="tnxsd:ArrayOfString" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveTasksFromRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RemoveTasksFromRoleResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveTasksFromRoles">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskNames" type="tnxsd:ArrayOfString" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveTasksFromRolesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RemoveTasksFromRolesResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveUserFromRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveUserFromRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RemoveUserFromRoleResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveUserFromRoles">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveUserFromRolesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RemoveUserFromRolesResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveUsersFromRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserNames" type="tnxsd:ArrayOfString" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveUsersFromRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RemoveUsersFromRoleResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveUsersFromRoles">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserNames" type="tnxsd:ArrayOfString" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoveUsersFromRolesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="RemoveUsersFromRolesResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddUserToRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddUserToRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AddUserToRoleResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddUserToRoles">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddUserToRolesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AddUserToRolesResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddUsersToRole">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserNames" type="tnxsd:ArrayOfString" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddUsersToRoleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AddUsersToRoleResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddUsersToRoles">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserNames" type="tnxsd:ArrayOfString" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleNames" type="tnxsd:ArrayOfString" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddUsersToRolesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="AddUsersToRolesResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CheckUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="DomainName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserID" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CheckUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CheckUserResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserRecIn" type="tnxsd:UserRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CreateUserResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="DeleteUserResult" type="tnxsd:AdminReply" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetStoreDetails">
+        <xsd:complexType />
+      </xsd:element>
+      <xsd:element name="GetStoreDetailsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetStoreDetailsResult" type="tnxsd:AdminReply" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="OperationList" type="tnxsd:ArrayOfOperationRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskList" type="tnxsd:ArrayOfTaskRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleList" type="tnxsd:ArrayOfRoleRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="RoleAssignments" type="tnxsd:ArrayOfRoleAssignRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="TaskAssignments" type="tnxsd:ArrayOfTaskAssignRec" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="UserAssignments" type="tnxsd:ArrayOfUserAssignRec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>

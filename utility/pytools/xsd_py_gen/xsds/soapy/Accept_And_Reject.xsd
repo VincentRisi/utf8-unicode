@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="RejectTransaction">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="transactionID" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="contentLocation" type="xsd:string" />	    
+            <xsd:element minOccurs="0" maxOccurs="1" name="rejectionReasons" type="tnxsd:ArrayOfRejectionReason" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="ArrayOfRejectionReason">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="RejectionReason" type="tnxsd:RejectionReason" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RejectionReason">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="Code" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Description" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="RejectTransactionResponse">
+        <xsd:complexType />
+      </xsd:element>
+      <xsd:element name="MessageIdentification" type="tnxsd:MessageIdentification" />
+      <xsd:complexType name="MessageIdentification">
+        <xsd:anyAttribute />
+      </xsd:complexType>
+      <xsd:element name="AcceptTransaction">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="transactionID" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="contentLocation" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AcceptTransactionResponse">
+        <xsd:complexType />
+      </xsd:element>
+    </xsd:schema>

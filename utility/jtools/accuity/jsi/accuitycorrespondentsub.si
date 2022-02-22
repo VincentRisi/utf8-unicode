@@ -1,0 +1,53 @@
+DATABASE MCPE FLAGS "param=named"
+PACKAGE  putty3.accuity
+OUTPUT   accuitycorrespondentsub
+SERVER   DN29
+SCHEMA   NPUD00
+USERID   npu
+PASSWORD npudev
+
+TABLE AccuityCorrespondentSub
+  Id                            Int
+  CorrespondentId               int
+  SubCategory                   char(3)	 
+  Status                        byte     (Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+  USId                          Char(16)
+  TmStamp                       timestamp
+
+
+KEY AccuityCorrespondentSubKey PRIMARY
+  Id
+
+KEY KEY01
+  CorrespondentId
+  
+PROC Insert
+PROC Update
+PROC SelectOne
+PROC DeleteOne
+PROC Exists
+
+proc bulkinsert (1000)
+
+PROC UpdateAllStatus
+INPUT
+  Status        byte
+  USId          char  (16)
+SQLCODE
+  Update
+    AccuityCorrespondentSubCat
+  Set
+      Status = :Status
+     ,USId = :USId
+     ,TMStamp = SYSDATE
+ENDCODE
+
+proc UpdStatus
+input
+  Id     =
+  Status =
+  USId   =
+sqlcode
+  update AccuityCorrespondentSub set Status = :Status, USId = :USId, TmStamp = SYSDATE where Id = :Id
+endcode
+

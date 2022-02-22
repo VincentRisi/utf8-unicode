@@ -1,0 +1,59 @@
+project (libs-main)
+
+include_directories (
+  ${LIBS_SOURCE_DIR}/expat
+  ${LIBS_SOURCE_DIR}/expat/src
+  ${LIBS_SOURCE_DIR}/main
+  ${LIBS_SOURCE_DIR}/main/src
+  )
+
+set (source
+  src/addlist.h
+  src/base64.cpp src/base64.h
+  src/basemacros.h
+  src/binio.cpp src/binio.h
+  src/bstring.cpp src/bstring.h
+  src/cbsocket.cpp src/cbsocket.h
+  src/cmdlinearg.cpp src/cmdlinearg.h
+  src/collection.h
+  src/config.cpp src/config.h
+  src/csvbuilder.h
+  src/databuilder2.h
+  src/databuilderjp.h
+  src/getargs.cpp src/getargs.h
+  src/handles.h
+  src/hugechar.h
+  src/ini.cpp src/ini.h
+  src/inistr.cpp src/inistr.h
+  #src/kvstore.cpp src/kvstore.h
+  src/logfile.cpp src/logfile.h
+  src/machine.h
+  src/md5.h
+  src/mutex.cpp src/mutex.h
+  src/obsocket.cpp src/obsocket.h
+  src/padgen.h
+  src/percent_encoding.cpp src/percent_encoding.h
+  src/rdc.cpp src/rdc.h
+  src/splits.cpp src/splits.h
+  src/sqlbin.cpp src/sqlbin.h
+  src/sqlcons.h
+  #src/sqlhnd.cpp src/sqlhnd.h
+  src/swapbytes.h
+  src/tbuffer.h
+  src/tstring.cpp src/tstring.h
+  src/xcept.cpp src/xcept.h
+  src/xdir.h
+  src/xmlcore.cpp src/xmlcore.h
+  src/xmlmake.cpp src/xmlmake.h
+  src/xmlrecord.cpp src/xmlrecord.h
+  src/xstring.cpp src/xstring.h
+  src/xtalloc.cpp src/xtalloc.h
+  )
+
+add_library(main
+   ${source}
+)
+target_link_libraries (main expat)
+
+set_target_properties(main PROPERTIES PROJECT_LABEL libs-main)
+set_property(TARGET main PROPERTY FOLDER ${LIBS_FOLDER}/main)

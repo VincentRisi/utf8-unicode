@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:submitFrgnTPInfoDecl="http://www.sars.gov.za/enterpriseMessagingModel/SubmitForeignTaxpayerInfoDeclaration/xml/schemas/version/2.3"
+	targetNamespace="http://www.sars.gov.za/enterpriseMessagingModel/SubmitForeignTaxpayerInfoDeclaration/xml/schemas/version/2.3"
+	elementFormDefault="qualified"
+	xmlns:frgnTPInfoDecl="http://www.sars.gov.za/enterpriseMessagingModel/ForeignTaxpayerInfoDeclaration/xml/schemas/version/1.1">
+	<xsd:import schemaLocation="SARSForeignTaxpayerInfoDeclarationV2.3.1.xsd" namespace="http://www.sars.gov.za/enterpriseMessagingModel/ForeignTaxpayerInfoDeclaration/xml/schemas/version/1.1"></xsd:import>
+	<xsd:annotation>
+		<xsd:documentation>
+			2020-05-25 Dirk Grobler. Updated to reference latest form schema for production issue.
+			2017-01-27 Dirk Grobler. Updated to reference latest form schema. Updated namespace version.
+			2017-01-19 Dirk Grobler. Updated to reference latest form schema and base types schema. Updated namespace version.
+			2016-10-25 Dirk Grobler. Updated to reference latest form schema and base types schema. Updated namespace version. 
+			2016-07-18 Dirk Grobler. Updated to reference latest form schema and base types schema. Updated namespace version.
+		    2015-02-25 Dakalo Netshiya . Updated to reference the latest form schema.namespace updated.
+		    removed the reference of the basetype schema since its not used.
+			2014-12-15 Dirk Grobler. First draft.
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="SubmitForeignTaxpayerInfoDeclaration"
+		type="submitFrgnTPInfoDecl:SubmitForeignTaxpayerInfoDeclarationRequestStructure" />
+	<xsd:complexType
+		name="SubmitForeignTaxpayerInfoDeclarationRequestStructure">
+		<xsd:all>
+			<xsd:element name="RequestOperation" minOccurs="1"
+				maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="SUBMIT_DECLARATION" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element
+				ref="frgnTPInfoDecl:ForeignTaxpayerInfoDeclaration" minOccurs="0"
+				maxOccurs="1" />
+		</xsd:all>
+	</xsd:complexType>
+</xsd:schema>

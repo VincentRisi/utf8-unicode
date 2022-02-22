@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="oracle">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jars/oracle/jta.zip!/" />
+      <root url="jar://$PROJECT_DIR$/jars/oracle/jndi.zip!/" />
+      <root url="jar://$PROJECT_DIR$/jars/oracle/nls_charset12.zip!/" />
+      <root url="jar://$PROJECT_DIR$/jars/oracle/classes12.zip!/" />
+      <root url="jar://$PROJECT_DIR$/jars/oracle/classes111.zip!/" />
+      <root url="jar://$PROJECT_DIR$/jars/oracle/nls_charset11.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,103 @@
+server @t:hulk:dn06
+connect napd00/control
+
+tablespace sysw401
+table Ccy
+  CcyCde char(4)
+  CcyName char(50)
+  CcyNo int
+  IntRateDays smallint
+  CcyFundSeqNo smallint
+  MultyDivInd char
+  UnpostAccNo char(16)
+  DirIndirQuotation char
+  IntSuspAccNo char(16)
+  CcyAdvSuspAccNo char(16)
+  CcyDrawSuspAccNo char(16)
+  DecimalPoints int
+  UserId userstamp
+  TmStamp Timestamp
+
+KEY key1 PRIMARY TABLESPACE sysw401
+CcyCde
+
+proc Insert
+proc Update
+proc SelectOne
+proc DeleteOne
+proc Exists
+proc SelectAll
+
+
+PROC SelectByCcyNo
+input
+  CcyNo   int
+output (single)
+  CcyCde char(4)
+sql code
+  select CcyCde
+  from Ccy
+  where CcyNo = :CcyNo;
+endcode
+
+PROC SelAllCcyExecptZARUSD
+input
+  CcyCde char(4)
+output (multiple)
+  CcyCde char(4)
+sql code
+  select CcyCde
+  from Ccy
+  where CcyCde <> 'ZAR' and CcyCde <> 'USD';
+endcode
+
+proc SelCcyInOrder
+output (multiple)
+                CcyCde char(4)
+                CcyNo int
+                MultyDivInd char
+sql code
+select
+                CcyCde,
+                CcyNo,
+                MultyDivInd
+from Ccy
+order by CcyNo;
+endcode
+
+
+#=====
+#Louis
+#TIP010.c TIP001.c TIP101.c
+#=====
+proc AmountOfCcy
+output (single)
+ cnt int
+sql code
+ select count( distinct( CcyCde ) )
+ from ccytype;
+endcode
+
+#=====
+# report.c
+#=====
+proc CcyNumber
+output (multiple)
+  CcyCde char(4)
+sql code
+  select ccycde,
+         ccyno
+  from ccytype
+  order by ccyno
+endcode
+
+#====
+#TIP010.c
+#====
+proc SelectDist
+output (multiple)
+  CcyCde char(4)
+sql code
+  select distinct ( CcyCde )
+  from ccytype;
+endcode

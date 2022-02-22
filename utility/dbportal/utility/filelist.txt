@@ -1,0 +1,2 @@
+C:\nedbank\QA-TRS461987\targbin\load\Prod\mcaaccounts
+C:\nedbank\QA-TRS461987\targbin\load\Prod\saffyextract

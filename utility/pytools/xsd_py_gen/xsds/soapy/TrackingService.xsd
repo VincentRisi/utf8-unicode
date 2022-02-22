@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="GetLatestStatus">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="channel" type="tnxsd:Channel" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="formReferenceNo" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="form" type="tnxsd:formType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="periodOfAssesment" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:simpleType name="Channel">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="Scanning" />
+          <xsd:enumeration value="InterFile" />
+          <xsd:enumeration value="EFiling" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="formType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="Case" />
+          <xsd:enumeration value="IT12S" />
+          <xsd:enumeration value="IT12S_Paper" />
+          <xsd:enumeration value="IT12C" />
+          <xsd:enumeration value="IT12C_Paper" />
+          <xsd:enumeration value="ITOBJ" />
+          <xsd:enumeration value="ITCOR" />
+          <xsd:enumeration value="IRP5" />
+          <xsd:enumeration value="IT12EI" />
+          <xsd:enumeration value="IT12TR" />
+          <xsd:enumeration value="IT12TR_Paper" />
+          <xsd:enumeration value="IT14" />
+          <xsd:enumeration value="IT14_Paper" />
+          <xsd:enumeration value="ITCHN_I_B" />
+          <xsd:enumeration value="ITR12" />
+          <xsd:enumeration value="ITR12_Paper" />
+          <xsd:enumeration value="EMP501" />
+          <xsd:enumeration value="EMP501_Paper" />
+          <xsd:enumeration value="EMP601" />
+          <xsd:enumeration value="EMP601_Paper" />
+          <xsd:enumeration value="IRP5IT3A" />
+          <xsd:enumeration value="IRP5IT3A_Paper" />
+          <xsd:enumeration value="ITRR" />
+          <xsd:enumeration value="ITRR_Paper" />
+          <xsd:enumeration value="EMP201_Paper" />
+          <xsd:enumeration value="COR_Paper" />
+          <xsd:enumeration value="SDCSU_Paper" />
+          <xsd:enumeration value="IRP511_Paper" />
+          <xsd:enumeration value="IT12C_1_Paper" />
+          <xsd:enumeration value="IT12C_2_Paper" />
+          <xsd:enumeration value="IT12C_3_Paper" />
+          <xsd:enumeration value="IT12C_4_Paper" />
+          <xsd:enumeration value="IT12EI_Paper" />
+          <xsd:enumeration value="ITCHN_I_Paper" />
+          <xsd:enumeration value="NOO_Paper" />
+          <xsd:enumeration value="RFC_Paper" />
+          <xsd:enumeration value="SDCS_Paper" />
+          <xsd:enumeration value="IRP5_Paper" />
+          <xsd:enumeration value="IRP501" />
+          <xsd:enumeration value="IRP501_Paper" />
+          <xsd:enumeration value="Provision_Return_Paper" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="GetLatestStatusResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetLatestStatusResult" type="tnxsd:TrackingStatus" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="TrackingStatus">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="TrackingStatusShortCode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Description" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Username" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="DateCreated" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Source" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Note" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="RevisionNumber" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="ParentID" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="MessageIdentification" type="tnxsd:MessageIdentification" />
+      <xsd:complexType name="MessageIdentification">
+        <xsd:anyAttribute />
+      </xsd:complexType>
+      <xsd:element name="GetLatestStatusByCaseNo">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="caseNo" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetLatestStatusByCaseNoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="GetLatestStatusByCaseNoResult" type="tnxsd:TrackingStatus" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="UpdateStatus">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="channel" type="tnxsd:Channel" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="formReferenceNo" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="periodOfAssesment" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="form" type="tnxsd:formType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="userName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="TrackingStatusShortCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="freeTextNote" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="UpdateStatusResponse">
+        <xsd:complexType />
+      </xsd:element>
+    </xsd:schema>

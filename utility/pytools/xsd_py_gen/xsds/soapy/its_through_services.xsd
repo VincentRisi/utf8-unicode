@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://www.sars.gov.za/services/its" />
+      <xsd:element name="RequestAssessmentNotices">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="s1:GetAssessmentNotices" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RequestAssessmentNoticesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="s1:RequestAssessmentNoticesResult" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RequestStatementOfAccount">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="s1:GetStatementOfAccount" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RequestStatementOfAccountResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="s1:RequestStatementOfAccountResult" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RequestAssessmentNotice">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="s1:GetAssessmentNotice" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RequestAssessmentNoticeResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="s1:RequestAssessmentNoticeResult" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+      <xsd:element name="GetAssessmentNotices">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="taxReferenceNo" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="taxYear" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="printDateFrom" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="printDateTo" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RequestAssessmentNoticesResult">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="Notices">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="taxYear" type="xsd:string" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="seqNo" type="xsd:string" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="typeOfAssessment" type="xsd:string" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="noticeNo" type="xsd:string" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="printDate" type="xsd:string" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetStatementOfAccount">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="taxReferenceNo" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="dateFrom" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RequestStatementOfAccountResult">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="returnMessage" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="fileId" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetAssessmentNotice">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="taxReferenceNo" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="taxYear" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="seqNo" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="noticeNo" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="dateFrom" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RequestAssessmentNoticeResult">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="returnMessage" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="noticeNo" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+      <xsd:element name="MessageIdentification">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:choice minOccurs="1" maxOccurs="1">
+              <xsd:element minOccurs="0" maxOccurs="1" name="systemID" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="channelID" type="xsd:string" />
+            </xsd:choice>
+            <xsd:element minOccurs="0" maxOccurs="1" name="applicationID" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="machineID" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="messageSeqNo" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="serviceID" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="serviceVersionNo" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="messageDate" type="xsd:date" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="messageTime" type="xsd:time" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="InvolvedParty">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="Party">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="PartyIdentity">
+                          <xsd:complexType>
+                            <xsd:sequence>
+                              <xsd:element minOccurs="1" maxOccurs="1" name="identityType">
+                                <xsd:simpleType>
+                                  <xsd:restriction base="xsd:string">
+                                    <xsd:enumeration value="sarxsd:taxReferenceNo" />
+                                    <xsd:enumeration value="sarxsd:passport" />
+                                    <xsd:enumeration value="sarxsd:saIdentity" />
+                                  </xsd:restriction>
+                                </xsd:simpleType>
+                              </xsd:element>
+                              <xsd:element minOccurs="0" maxOccurs="1" name="issuingAuthorityID" type="xsd:string" />
+                              <xsd:element minOccurs="0" maxOccurs="1" name="identityNo" type="xsd:string" />
+                            </xsd:sequence>
+                          </xsd:complexType>
+                        </xsd:element>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="role">
+                  <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                      <xsd:enumeration value="sarxsd:employee" />
+                      <xsd:enumeration value="sarxsd:taxPayer" />
+                      <xsd:enumeration value="sarxsd:trader" />
+                      <xsd:enumeration value="sarxsd:taxPractitioner" />
+                    </xsd:restriction>
+                  </xsd:simpleType>
+                </xsd:attribute>
+              </xsd:complexType>
+            </xsd:element>
+            <xsd:element minOccurs="0" maxOccurs="1" name="Batch">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="batchID" type="xsd:string" />
+                  <xsd:element minOccurs="1" maxOccurs="1" name="batchSeqNo" type="xsd:long" />
+                  <xsd:element minOccurs="1" maxOccurs="1" name="batchSize" type="xsd:long" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+          <xsd:anyAttribute />
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>

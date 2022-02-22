@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<schema
+    targetNamespace="http://www.sars.gov.za/enterpriseMessagingModel/ForeignTaxpayerInfoDeclaration/xml/schemas/version/1.1"
+    elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:frgnTPInfoDecl="http://www.sars.gov.za/enterpriseMessagingModel/ForeignTaxpayerInfoDeclaration/xml/schemas/version/1.1"
+    xmlns:ft="http://www.sars.gov.za/enterpriseMessagingModel/GMD/FormTypes/xml/schemas/version/1.5"
+    xmlns:bt="http://www.sars.gov.za/enterpriseMessagingModel/GMD/BaseTypes/xml/schemas/version/54.19">
+
+    <import schemaLocation="SARSGMD_FormTypesV1.5.xsd"
+        namespace="http://www.sars.gov.za/enterpriseMessagingModel/GMD/FormTypes/xml/schemas/version/1.5">
+    </import>
+    <import schemaLocation="SARSGMD_BaseTypesV54.19.xsd"
+        namespace="http://www.sars.gov.za/enterpriseMessagingModel/GMD/BaseTypes/xml/schemas/version/54.19">
+    </import>
+    <annotation>
+        <documentation>
+            2020-05-25 Dirk Grobler. Increased number of occurrences to unlimited for Payment, GrossProceeds, ClosingBalance, InterestPayment, OtherPayment.
+            2017-01-27 Dirk Grobler. BusTelNo1 made optional.
+            2017-01-19 Dirk Grobler. Made GIINNo optional.
+            2016-10-25 Dirk Grobler. Reverted back to previous base
+            types, namespace. Currency codes added as seperate fields.
+            ClosingBalanceAmt made optional for backwards compatibility.
+            2016-07-18 Dirk Grobler. Updated to add currency codes, and updated
+            to latest base types version. Namespace version updated.
+            2015-02-25 Dakalo Netshiya . Updated the namespace prefix. Namespace updated.
+            2014-12-15 Dirk Grobler. First draft.
+        </documentation>
+    </annotation>
+    <element name="ForeignTaxpayerInfoDeclaration"
+        type="frgnTPInfoDecl:ForeignTaxpayerInfoDeclarationStructure"></element>
+
+    <complexType name="ForeignTaxpayerInfoDeclarationStructure">
+        <all>
+
+            <element name="FormInfo" type="ft:FormInfoStructure"
+                minOccurs="0" maxOccurs="1">
+            </element>
+            <element name="SecurityInfo" type="ft:SecurityInfoStructure"
+                minOccurs="0" maxOccurs="1">
+            </element>
+            <element name="ReportingYear" type="ft:YearType" minOccurs="1"
+                maxOccurs="1">
+            </element>
+            <element name="ReportingFinancialInstitutionDetails"
+                minOccurs="0" maxOccurs="1">
+                <complexType>
+                    <all>
+                        <element name="TaxRefNo" type="ft:TaxRefNoType" minOccurs="1"
+                            maxOccurs="1">
+                        </element>
+                        <element name="GIINNo" minOccurs="0" maxOccurs="1"
+                            type="frgnTPInfoDecl:GIINNoType">
+                        </element>
+                        <element name="RegisteredName" type="bt:OrganisationNameType"
+                            minOccurs="1" maxOccurs="1">
+                        </element>
+                        <element name="TradingName" type="bt:OrganisationNameType"
+                            minOccurs="0" maxOccurs="1">
+                        </element>
+                        <element name="ContactPersonDetails" type="frgnTPInfoDecl:ContactPersonDetailsType"
+                            minOccurs="0" maxOccurs="1">
+                        </element>
+                    </all>
+                </complexType>
+            </element>
+            <element name="SubmittingEntityDetails" minOccurs="0"
+                maxOccurs="1">
+                <complexType>
+                    <all>
+                        <element name="TaxRefNo" type="frgnTPInfoDecl:InternationalTaxRefNoType"
+                            minOccurs="1" maxOccurs="1">
+                        </element>
+                        <element name="GIINNo" minOccurs="0" maxOccurs="1"
+                            type="frgnTPInfoDecl:GIINNoType">
+                        </element>
+                        <element name="RegisteredName" type="bt:OrganisationNameType"
+                            minOccurs="1" maxOccurs="1">
+                        </element>
+                        <element name="TradingName" type="bt:OrganisationNameType"
+                            minOccurs="0" maxOccurs="1">
+                        </element>
+                        <element name="ContactPersonDetails" type="frgnTPInfoDecl:ContactPersonDetailsType"
+                            minOccurs="0" maxOccurs="1">
+                        </element>
+                    </all>
+                </complexType>
+            </element>
+            <element name="FinancialAccountDetails" minOccurs="0"
+                maxOccurs="1">
+                <complexType>
+                    <all>
+                        <element name="NoOfAccountHoldersReportedOn" minOccurs="1"
+                            maxOccurs="1" type="frgnTPInfoDecl:NoOfPersonsType">
+                        </element>
+                        <element name="NoOfControllingPersonsReportedOn" type="frgnTPInfoDecl:NoOfPersonsType"
+                            minOccurs="1" maxOccurs="1">
+                        </element>
+                        <element name="NoOfAccountsReportedOn" type="frgnTPInfoDecl:NoOfPersonsType"
+                            minOccurs="1" maxOccurs="1">
+                        </element>
+                        <element name="TotalPaymentAmt" type="bt:FinancialTotalAmtDecimalType"
+                            minOccurs="0" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>
+                                    Field should not be used going forward, only
+                                    kept for backwards compatibility.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </element>
+                        <element name="TotalGrossProceedsAmt" type="bt:FinancialTotalAmtDecimalType"
+                            minOccurs="0" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>
+                                    Field should not be used going forward, only
+                                    kept for backwards compatibility.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </element>
+
+                        <element name="ClosingBalanceAmt" type="bt:FinancialTotalAmtDecimalType"
+                            minOccurs="0" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>
+                                    Field should not be used going forward, only
+                                    kept for backwards compatibility.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </element>
+                        <element name="TotalInterestPaymentAmt" type="bt:FinancialTotalAmtDecimalType"
+                            minOccurs="0" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>
+                                    Field should not be used going forward, only
+                                    kept for backwards compatibility.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </element>
+                        <element name="TotalOtherPaymentAmt" type="bt:FinancialTotalAmtDecimalType"
+                            minOccurs="0" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>
+                                    Field should not be used going forward, only
+                                    kept for backwards compatibility.
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </element>
+                        <element name="TotalPayments" minOccurs="0" maxOccurs="1">
+                            <complexType>
+                                <sequence>
+                                    <element name="Payment" type="frgnTPInfoDecl:CurrencyAmountType"
+                                        minOccurs="1" maxOccurs="unbounded">
+                                    </element>
+                                </sequence>
+
+                            </complexType>
+                        </element>
+                        <element name="TotalGrossProceeds" minOccurs="0"
+                            maxOccurs="1">
+                            <complexType>
+                                <sequence>
+                                    <element name="GrossProceeds" type="frgnTPInfoDecl:CurrencyAmountType"
+                                        minOccurs="1" maxOccurs="unbounded">
+                                    </element>
+                                </sequence>
+                            </complexType>
+                        </element>
+                        <element name="ClosingBalances" minOccurs="0" maxOccurs="1">
+                            <complexType>
+                                <sequence>
+                                    <element name="ClosingBalance" type="frgnTPInfoDecl:CurrencyAmountType"
+                                        minOccurs="1" maxOccurs="unbounded">
+                                    </element>
+                                </sequence>
+                            </complexType>
+                        </element>
+                        <element name="TotalInterestPayment" minOccurs="0"
+                            maxOccurs="1">
+                            <complexType>
+                                <sequence>
+                                    <element name="InterestPayment" type="frgnTPInfoDecl:CurrencyAmountType"
+                                        minOccurs="1" maxOccurs="unbounded">
+                                    </element>
+                                </sequence>
+                            </complexType>
+                        </element>
+                        <element name="TotalOtherPayment" minOccurs="0" maxOccurs="1">
+                            <complexType>
+                                <sequence>
+                                    <element name="OtherPayment" type="frgnTPInfoDecl:CurrencyAmountType"
+                                        minOccurs="1" maxOccurs="unbounded">
+                                    </element>
+                                </sequence>
+                            </complexType>
+                        </element>
+                    </all>
+                </complexType>
+            </element>
+            <element name="DeclarationDate" type="date" minOccurs="0"
+                maxOccurs="1"></element>
+        </all>
+    </complexType>
+
+    <complexType name="ContactPersonDetailsType">
+        <all>
+            <element name="FirstNames" type="bt:FullNamesType" minOccurs="0"
+                maxOccurs="1">
+            </element>
+            <element name="Surname" type="bt:SurnameType" minOccurs="1"
+                maxOccurs="1">
+            </element>
+            <element name="BusTelNo1" type="bt:TelFaxCellNoType"
+                minOccurs="0" maxOccurs="1">
+            </element>
+            <element name="BusTelNo2" type="bt:TelFaxCellNoType"
+                minOccurs="0" maxOccurs="1">
+            </element>
+            <element name="CellNo" type="bt:TelFaxCellNoType" minOccurs="0"
+                maxOccurs="1"></element>
+            <element name="EmailAddress" type="bt:EmailType" minOccurs="1"
+                maxOccurs="1">
+            </element>
+            <element name="PostalAddress" minOccurs="0" maxOccurs="1"
+                type="frgnTPInfoDecl:PostalAddressStructure">
+            </element>
+        </all>
+    </complexType>
+
+    <complexType name="PostalAddressStructure">
+        <all>
+            <element name="AddressLines" maxOccurs="1" minOccurs="1">
+                <complexType>
+                    <sequence>
+                        <element name="AddressLine" type="bt:AddressLineType"
+                            maxOccurs="4" minOccurs="1">
+                        </element>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="PostalCode" type="bt:PostalCodeType"
+                maxOccurs="1" minOccurs="0">
+            </element>
+        </all>
+    </complexType>
+
+    <simpleType name="GIINNoType">
+        <restriction base="string">
+            <length value="19"></length>
+            <pattern value="\w{6}[.]\w{5}[.]\w{2}[.]\w{3}"></pattern>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="NoOfPersonsType">
+        <restriction base="int">
+            <minInclusive value="0"></minInclusive>
+            <maxInclusive value="99999999"></maxInclusive>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="InternationalTaxRefNoType">
+        <restriction base="string">
+            <minLength value="1"></minLength>
+            <maxLength value="20"></maxLength>
+        </restriction>
+    </simpleType>
+
+    <complexType name="CurrencyAmountType">
+        <sequence>
+            <element name="CurrencyCode" type="bt:CurrencyTypeType"
+                minOccurs="0" maxOccurs="1">
+            </element>
+            <element name="Amount" type="bt:FinancialTotalAmtDecimalType"
+                minOccurs="1" maxOccurs="1"></element>
+        </sequence>
+    </complexType>
+
+
+</schema>

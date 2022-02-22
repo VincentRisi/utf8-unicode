@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<schema targetNamespace="http://www.sars.gov.za/enterpriseMessagingModel/ThirdPartyCorrespondence/xml/schemas/version/1.10" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tdCorr="http://www.sars.gov.za/enterpriseMessagingModel/ThirdPartyCorrespondence/xml/schemas/version/1.10">
+	<complexType name="ThirdPartyCorrespondenceHeaderStructure">
+	
+	<annotation>
+		<documentation>
+			2012-10-22 Nisch Kanahia, Included Data Type for TCS and added a fault element
+			2012-10-22 Nisch Kanahia, Included Data Types for Insurance, Medical Schemes and IT3s
+			2012-06-11 Dirk Grobler. Updated to align with version 6.0.0.c of the External BRS for Dividends Wittholding Tax. ResponseReason length changed to 300.
+			2012-03-16 Dirk Grobler. Updated to align with version 4.0.0 of the External BRS for Dividends Withholding Tax. FileHashTotal made optional, TestDataIndicator made mandatory.
+			2012-03-01 Dirk Grobler. Updated to align with version 3.0.0 of the External BRS for Dividends Withholding Tax.
+			2011-12-15 Dirk Grobler. Updated to align with version 1.0.0 of the Withholding Tax BRS.
+			2011-12-11 Nisch Kanahia, Updated to align with version 0.9.0 of withholding tax and 0.5.0 of VIM External BRSes.
+			2011-11-17 Dirk Grobler. Updated to align with version 0.7.0 of External BRS.	
+			2011-11-07 Dirk Grobler. Updated to align with version 0.6.0 of External BRS. Replaced all elements with sequence elements.
+			2012-12-10 Ayanda Makinza Added TCR on the DataTypeBeingSupplied element.
+		</documentation>
+	</annotation>
+		<sequence>
+			<element name="SectionIdentifier" maxOccurs="1"
+				minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="H"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="HeaderType" minOccurs="1" maxOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="GH"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="MessageCreateDate" type="dateTime"
+				maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="FileLayoutVersion" maxOccurs="1"
+				minOccurs="1">
+				<simpleType>
+					<restriction base="int">
+						<maxInclusive value="9999"></maxInclusive>
+						<minInclusive value="1"></minInclusive>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="UniqueFileID" maxOccurs="1" minOccurs="0"
+				type="tdCorr:UniqueReferenceType">
+			</element>
+			<element name="SARSRequestReference"
+				type="tdCorr:UniqueReferenceType" maxOccurs="1" minOccurs="0">
+			</element>
+			<element name="TestDataIndicator" maxOccurs="1"
+				minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="T"></enumeration>
+						<enumeration value="L"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+    		<element name="DataTypeBeingSupplied" maxOccurs="1" minOccurs="0">
+    			<simpleType>
+    				<restriction base="string">
+    					<enumeration value="WHD"></enumeration>
+    					<enumeration value="VSL"></enumeration>
+    					<enumeration value="VLL"></enumeration>
+    					<enumeration value="IPR"></enumeration>
+    					<enumeration value="MED"></enumeration>
+    					<enumeration value="INS"></enumeration>
+    					<enumeration value="I3B"></enumeration>
+    					<enumeration value="I3C"></enumeration>
+    					<enumeration value="I3E"></enumeration>
+    					<enumeration value="TCS"></enumeration>
+    					<enumeration value="TCR"></enumeration>
+    				</restriction>
+    			</simpleType>
+    		</element>
+			<element name="SourceIdentifier" maxOccurs="1"
+				minOccurs="0">
+				<simpleType>
+					<restriction base="string">
+						<length value="144"></length>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="GroupID" maxOccurs="1" minOccurs="0" type="tdCorr:UniqueReferenceType"/>
+			<element name="GroupTotal" maxOccurs="1" minOccurs="0">
+							<simpleType>
+								<restriction base="int">
+									<maxInclusive value="9999"></maxInclusive>
+									<minInclusive value="1"></minInclusive>
+								</restriction>
+							</simpleType>
+			</element>
+            <element name="UniqueGroupItemID" maxOccurs="1" minOccurs="0">
+							<simpleType>
+								<restriction base="int">
+									<maxInclusive value="9999"></maxInclusive>
+									<minInclusive value="1"></minInclusive>
+								</restriction>
+							</simpleType>
+            </element>
+            <element name="FileResponseCode" maxOccurs="1"
+				minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<minLength value="3"></minLength>
+						<maxLength value="3"></maxLength>
+					</restriction>
+				</simpleType>
+			</element>
+            <element name="FileResponseReason" minOccurs="0" maxOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<minLength value="1"></minLength>
+						<maxLength value="300"></maxLength>
+					</restriction>
+				</simpleType>
+            </element>
+			<element name="TransactionDate" type="date" minOccurs="0" maxOccurs="1"></element>
+            <element name="TaxPeriod" type="tdCorr:PeriodType" minOccurs="0" maxOccurs="1"></element>
+            <element name="TransactionYear" type="gYear" minOccurs="0"
+            	maxOccurs="1">
+            </element>
+            <element name="SLARequirementDate" maxOccurs="1" minOccurs="0" type="date"></element>
+		</sequence>
+	</complexType>
+	<simpleType name="UniqueReferenceType">
+		<restriction base="string">
+			<minLength value="1"></minLength>                                  
+			<maxLength value="64"></maxLength>
+		</restriction>
+	</simpleType>
+	<element name="ThirdPartyCorrespondenceRequest" type="tdCorr:ThirdPartyCorrespondenceRequestStructure"></element>
+	<complexType name="ThirdPartyCorrespondenceRequestStructure">
+		<sequence>
+			<element name="ThirdPartyCorrespondenceHeader" type="tdCorr:ThirdPartyCorrespondenceHeaderStructure" maxOccurs="1" minOccurs="1"></element>
+			<element name="RequestDetails" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<sequence>
+						<element name="RequestDetail" type="tdCorr:DetailStructure" minOccurs="1" maxOccurs="999999"></element>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="Trailer" type="tdCorr:TrailerStructure" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+	<complexType name="ThirdPartyCorrespondenceResponseStructure">
+		<sequence>
+			<element name="ThirdPartyCorrespondenceHeader" type="tdCorr:ThirdPartyCorrespondenceHeaderStructure" maxOccurs="1" minOccurs="1"></element>
+			<element name="ResponseDetails" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<sequence>
+						<element name="ResponseDetail" type="tdCorr:DetailStructure" minOccurs="1" maxOccurs="999999"></element>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="Trailer" type="tdCorr:TrailerStructure" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+	<complexType name="DetailStructure">
+		<sequence>
+			<element name="SectionIdentifier" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="B"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="RowNumber" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="integer">
+						<minInclusive value="1"></minInclusive>
+						<maxInclusive value="9999999999"></maxInclusive>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="UniqueNumber" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<minLength value="1"></minLength>
+						<maxLength value="100"></maxLength>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="FieldDetails" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<sequence>
+                        <element name="FieldName" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<minLength value="1"></minLength>
+						<maxLength value="100"></maxLength>
+					</restriction>
+				</simpleType>
+			</element>
+                        <element name="OverallFieldStatus" minOccurs="1" maxOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="R"></enumeration>
+						<enumeration value="W"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+                    </sequence>
+				</complexType>
+			</element>
+			<element name="ResponseCode" minOccurs="1" maxOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<minLength value="3"></minLength>
+						<maxLength value="3"></maxLength>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="ResponseReason" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<minLength value="1"></minLength>
+						<maxLength value="300"></maxLength>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="FieldValue" maxOccurs="1" minOccurs="0">
+				<simpleType>
+					<restriction base="string">
+						<minLength value="1"></minLength>
+						<maxLength value="120"></maxLength>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="Range" maxOccurs="1" minOccurs="0">
+				<complexType>
+					<sequence>
+						<element name="StartRange" type="tdCorr:RangeType" maxOccurs="1" minOccurs="1"></element>
+						<element name="EndRange" type="tdCorr:RangeType" maxOccurs="1" minOccurs="1"></element>
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<simpleType name="RangeType">
+		<restriction base="integer">
+			<minInclusive value="1"></minInclusive>
+			<maxInclusive value="9999999999"></maxInclusive>
+		</restriction>
+	</simpleType>
+	<complexType name="TrailerStructure">
+		<sequence>
+			<element name="SectionIdentifier" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="T"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="TotalNumberOfRecords" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="integer">
+						<minInclusive value="1"></minInclusive>
+						<maxInclusive value="999999999999999"></maxInclusive>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="FileHashTotal" maxOccurs="1" minOccurs="0">
+					<simpleType>
+						<restriction base="string">
+							<length value="32"></length>
+						</restriction>
+					</simpleType>
+			</element>
+		</sequence>
+	</complexType>
+	<simpleType name="PeriodType">
+	<restriction base="string">
+		<pattern value="\d{6}" />
+	</restriction>
+	</simpleType>
+
+	<element name="ThirdPartyCorrespondenceResponse" type="tdCorr:ThirdPartyCorrespondenceResponseStructure"></element>
+	
+
+	<element name="Fault"
+		type="tdCorr:ThirdPartyCorrespondenceResponseStructure">
+	</element>
+</schema>

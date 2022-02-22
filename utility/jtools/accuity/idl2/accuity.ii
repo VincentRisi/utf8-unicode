@@ -1,0 +1,4 @@
+pragma openapi: urlPrefix: $urlPrefix
+pragma openapi: defSqlSub: $defSqlSub
+pragma openapi: compSqlSub: $compSqlSub
+pragma JSON

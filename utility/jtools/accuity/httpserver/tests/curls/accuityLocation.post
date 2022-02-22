@@ -1,0 +1,28 @@
+{
+  "newRec": {
+    "LocationId": 10002640,
+    "CountryCode": "US",
+    "InstitutionType": "01",
+    "OfficeType": "06",
+    "NameAbbrev": "TRADERS AND FARMERS BANK",
+    "NameFull": "TRADERS AND FARMERS BANK",
+    "BranchName": "",
+    "AddressLine1": "10 BLAKE DR",
+    "AddressLine2": "",
+    "City": "DOUBLE SPRINGS",
+    "StateAbbr": "AL",
+    "StateFull": "ALABAMA",
+    "PostalCode": "35553",
+    "CountryName": "UNITED STATES",
+    "EmployerTaxId": "",
+    "DateOfFinancial": "00000000",
+    "CurrentAssets": "             0",
+    "HeadOfficeId": 10004340,
+    "InstitutionId": 10004340,
+    "CorrLocationType": 0,
+    "CorrLocationId": 0,
+    "Status": 0,
+    "USId": "accuityimport",
+    "TmStamp": "20191029161234"  
+  }
+}

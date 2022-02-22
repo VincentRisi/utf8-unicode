@@ -1,0 +1,218 @@
+$CSIDL2 0 $CSADONET 0
+SERVER @MW01
+CONNECT nard00/control
+
+tablespace NDWT001M1 
+
+table Report
+  ReportID          sequence                # Key
+  Name              char(50)                # Name of the report
+  Description       char(50)                # Report Description
+  SQLStatement      hugechar (262144) null  # The SQL Statement used to
+                                            # generate the report's data
+  RenderID          int                     # The type of renderer the report
+                                            # should use.
+  OvernightForce    int                     # Should this report be an overnight
+                                            # only report?
+  MaxTimeout        int                     # The maximum time this report
+                                            # should be allowed to execute
+  PollingTime       int                     # How often should the front-end
+                                            # check whether the report is done
+  ArchiveFrequency  int                     # How many days must the report
+                                            # be kept for.
+  DataAcquireID     int                     # Used for special reports.
+                                            # ID of the process that'll
+                                            # generate the special report.
+  DataSourceID      int                     # The datasource for the report
+  WizardType        tinyint (Guided=0 Manual=1 Special=2)
+                                            # The type of wizard that the user
+                                            # specified when the report was
+                                            # created
+  UsrID             char(50)                # The last user to modify this 
+                                            # record
+  TMStamp           datetime                # Time of last modification
+
+
+KEY PKEY PRIMARY TABLESPACE NDWX001M1
+ReportID
+
+#Foreign Key Constraints
+Link Render        RenderID
+Link DataAcquire   DataAcquireID
+Link DataSource    DataSourceID
+
+proc Insert (noidl)   
+proc Update (noidl)   
+proc SelectOne (noidl)  
+proc DeleteOne (noidl)   
+proc Exists (noidl)   
+proc SelectAll (noidl)   
+
+# Dieter Rosch 2005/05/03
+# Retrieve Report info
+proc GetReportInfo (noidl) 
+input
+  ReportID         =
+output (single)    
+  ReportID         =
+  Name             =
+  Description      =
+  SQLStatement     =
+  RenderID         =
+  OvernightForce   =
+  MaxTimeout       =
+  PollingTime      =
+  ArchiveFrequency =
+  DataAcquireID    =
+  DataSourceID     =
+  UsrID            =
+  TMStamp          char(15)
+
+sql code
+  Select ReportID, Name, Description,
+     SQLStatement, RenderID, OvernightForce,
+     MaxTimeout, PollingTime, ArchiveFrequency, 
+     DataAcquireID, DataSourceID,
+     UsrID, to_char(TMStamp,'YYYYMMDDHH24MISS')
+  from Report
+  where ReportID = :ReportID;
+endcode
+
+
+proc MySelectAll (noidl) 
+output
+ ReportID    =
+ Name      =
+ Description    =
+ RenderID    =  
+ OvernightForce    =
+ MaxTimeout    =
+ PollingTime    =
+ ArchiveFrequency  =
+ DataAcquireID    =
+ DataSourceID    =
+ WizardType    =
+ NumberOfReportRuns     int
+ UsrID      =
+ TMStamp    char(15)
+
+sql code
+select distinct 
+   Report.ReportID
+ , Report.Name
+ , Report.Description
+ , Report.RenderID
+ , Report.OvernightForce
+ , Report.MaxTimeout
+ , Report.PollingTime
+ , Report.ArchiveFrequency
+ , Report.DataAcquireID
+ , Report.DataSourceID
+ , Report.WizardType
+ , repcount As NumberOfReportRuns
+ , Report.UsrID
+ , to_char(Report.TMStamp, 'YYYYMMDDHH24MISS')
+from report, 
+     (select 
+        reportid as repid, 
+        count(reportrunid) as repcount 
+      from reportrun group by reportid)  
+where report.reportid=repid;
+endcode
+
+proc SelectAllInGroup (noidl) 
+input
+ groupID    int
+output (multiple)
+ ReportID    =
+ Name      =
+ Description    =
+ RenderID    =  
+ OvernightForce    =
+ MaxTimeout    =
+ PollingTime    =
+ ArchiveFrequency  =
+ DataAcquireID    =
+ DataSourceID    =
+ WizardType    =
+ UsrID      =
+ TMStamp    char(15)
+
+sql code
+select distinct
+ Report.ReportID
+ , Report.Name
+ , Report.Description
+ , Report.RenderID
+ , Report.OvernightForce
+ , Report.MaxTimeout
+ , Report.PollingTime
+ , Report.ArchiveFrequency
+ , Report.DataAcquireID
+ , Report.DataSourceID
+ , WizardType
+ , Report.UsrID
+ , to_char(Report.TMStamp, 'YYYYMMDDHH24MISS')
+ from Report, ReportGroupRel
+ where Report.ReportID=ReportGroupRel.ReportID
+ and ReportGroupRel.GroupID=:groupID
+endcode
+
+#Dieter - 2005/09/06
+#Delete all Related records for a given report, and then
+#delete the report.
+PROC DelRepAndAllRelRecords (noidl) 
+INPUT
+  ReportID             INT
+
+SQL CODE
+  BEGIN
+    DELETE FROM ReportGroupRel WHERE ReportID = :ReportID;
+    DELETE FROM ReportParameter WHERE ReportID = :ReportID;
+    DELETE FROM ReportColumnHeader WHERE ReportID = :ReportID;
+    DELETE FROM ReportRunParameter WHERE ReportRunID IN (
+        Select ReportRunID 
+        from Report, ReportRun 
+        where Report.ReportID=ReportRun.ReportID
+        and Report.ReportID = :ReportID
+    );
+    DELETE FROM ReportRun WHERE ReportID = :ReportID;
+    DELETE FROM Report WHERE ReportID = :ReportID;
+  END;
+ENDCODE
+
+# Craig - 2006/03/20
+# Retrieves all the reports that are linked to a datasource
+proc SelectByDataSource (noidl) 
+input
+ DataSourceID     =
+output(multiple)
+ ReportID    =
+ Name      =
+ Description    =
+ RenderID    =  
+ OvernightForce    =
+ MaxTimeout    =
+ PollingTime    =
+ ArchiveFrequency  =
+ DataAcquireID    =
+ WizardType    =
+ UsrID      =
+ TMStamp    char(15)
+sqlcode
+select distinct
+ ReportID
+ , Name
+ , Description
+ , RenderID
+ , OvernightForce
+ , MaxTimeout
+ , PollingTime
+ , ArchiveFrequency
+ , DataAcquireID
+ , WizardType
+ , UsrID
+ , to_char(TMStamp, 'YYYYMMDDHH24MISS')
+ from Report
+ where DataSourceID = :DataSourceID
+endcode    

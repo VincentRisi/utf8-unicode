@@ -1,0 +1,46 @@
+SERVER   @DN29
+CONNECT  NPUD00/CONTROL
+
+TABLE AccuityCorrespondentSub
+    Id              int
+    CorrespondentId int
+    SubCategory     char(3)	 
+    Status          tinyint  (Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+    USId            char(16)
+    TmStamp         timestamp
+
+KEY AccuityCorrespondentSubKey PRIMARY
+  Id
+
+KEY KEY01
+  CorrespondentId
+  
+PROC Insert 
+PROC Update 
+PROC SelectOne 
+PROC DeleteOne
+PROC DeleteAll
+PROC Exists 
+
+# used by accuityimport
+PROC Truncate
+INPUT
+OUTPUT
+SQLCODE
+   TRUNCATE TABLE NPUD00.AccuityCorrespondentSub
+ENDCODE
+
+# used by almanacto
+PROC UpdateAllStatus 
+INPUT
+  Status        tinyint
+  USId          char  (16)
+SQL CODE
+  Update
+    AccuityCorrespondentSubCat
+  Set
+      Status = :Status
+     ,USId = :USId
+     ,TMStamp = SYSDATE
+ENDCODE
+

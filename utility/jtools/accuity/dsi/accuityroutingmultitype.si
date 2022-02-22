@@ -1,0 +1,18 @@
+SERVER   @DN29
+CONNECT  NPUD00/CONTROL
+
+TABLE AccuityRoutingMultiType
+	Id 			int
+	RoutingType char(50)
+	Description char(250)
+	USId 		char(16)
+	Tmstamp 	timestamp
+
+KEY AccuityRoutingMultiTypeKey PRIMARY
+  ID
+
+PROC Insert
+PROC Update
+PROC SelectOne
+PROC DeleteOne
+PROC Exists

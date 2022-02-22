@@ -1,0 +1,12 @@
+{
+  "newRec": {
+    "Id": 2,
+    "LocationId": 10000010,
+    "Department": "MAIN",
+    "ContactType": "TEL",
+    "ContactInfo": "1-479-127-1363 EXT 124",
+    "Status": 0,
+    "USId": "curler",
+    "TmStamp": "20200701"
+  }
+}

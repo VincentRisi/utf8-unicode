@@ -1,0 +1,46 @@
+export NoProcs=1
+export Debug=1
+export LogLevel=1
+export LogReceive=0
+export LogTransmit=0
+export LogDisplay=0
+export Metrics=0
+export WaitForChildren=0
+export RestartCount=0
+export PYTHONPATH=${PYTHON3PATH}:${PYD_DIR}:${PYD_DIR}/accuity.zip
+if [ "$1" == "dbx" ]; then
+  NoProcs=1
+  Debug=1
+  WaitForChildren=0
+  RestartCount=0
+  echo -cingress3http.ini
+  dbx accuityhttp 
+elif [ "$1" == "fg" ]; then 
+  LogLevel=0
+  LogReceive=1
+  LogTransmit=1
+  LogDisplay=1
+  ./accuityhttp -caccuityhttp.ini
+elif [ "$1" == "1" ]; then 
+  LogLevel=0
+  LogReceive=1
+  LogTransmit=1
+  LogDisplay=1
+  ./accuityhttp -caccuityhttp.ini &
+elif  [ "$1" == "log" ]; then
+  LogLevel=0
+  LogReceive=1
+  LogTransmit=1
+  LogDisplay=1
+  NoProcs=3
+  Debug=0
+  WaitForChildren=1
+  RestartCount=10
+  nohup ./accuityhttp -caccuityhttp.ini &
+else
+  NoProcs=3
+  Debug=0
+  WaitForChildren=1
+  RestartCount=10
+  nohup ./accuityhttp -caccuityhttp.ini &
+fi

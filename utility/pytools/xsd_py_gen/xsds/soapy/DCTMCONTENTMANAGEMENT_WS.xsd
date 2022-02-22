@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:schema targetNamespace="http://schemas.xmlsoap.org/soap/envelope/" xmlnxsd:mrm="http://schemas.xmlsoap.org/soap/envelope/">
+      <xsd:import namespace="http://www.sars.gov.za/enterpriseMessagingModel/ContentManagement/xml/schemas/version/1.2" schemaLocation="za/gov/sars/www/enterprisemessagingmodel/contentmanagement/xml/schemas/version/_12/SARSContentManagementV1.2.mxsd"/>
+      <xsd:import namespace="http://www.sars.gov.za/services/esb/v000002/applicationInformation" schemaLocation="za/gov/sars/www/services/esb/v000002/applicationinformation/ApplicationInformationv000002.mxsd"/>
+    </xsd:schema>

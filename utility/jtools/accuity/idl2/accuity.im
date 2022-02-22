@@ -1,0 +1,82 @@
+module Accuity;
+version "19.07.13.0";
+
+code
+BOTH:using namespace std;
+#include "date.h"
+#include "xmlrecord.h"
+#include "putty3shell.h"
+endcode
+
+message
+{
+  DB_ERROR        "DB Exception Error."
+  XCEPT_ERROR     "Generic Exception Error."
+  SCRIPT_ERROR    "Script Error."
+  PYTHON_ERROR    "Python Exception Error."
+  NOT_YET_DONE    "This has not yet been done."
+}
+
+private struct Accuity
+{
+  TBChar errors;
+  Putty3Shell *putty3;
+  char binFileName[256];
+  char connectString[64];
+code
+  Connect.CB()->isVB = 0;
+  LoadConfig();
+  putty3 = new Putty3Shell("AccuityServer", ConfigFile, "ACCUITY");
+  runPython = putty3Runner;
+onshutdown:
+  delete putty3;
+endcode
+}
+
+struct tBananaRama
+{
+   int count;
+   double whipped;
+}
+
+code
+template <size_t N>
+inline char* zzcopy(char(&target)[N], const char *source)
+{ 
+  char* result = strncpy(target, source, N-1); 
+  target[N-1] = 0;
+  return result;
+}
+
+inline void queryValue(char* work, int len, tINI &ini, const char* key, const char* section)
+{
+  tString temp;
+  ini.QueryValue(key, temp, section);
+  strncpy(work, temp.c_str(), len-1);
+  work[len-1] = 0;
+}
+endcode
+
+private void LoadConfig()
+{
+code
+  tINI ini(ConfigFile);
+  const int len=256;
+  char work[len];
+  queryValue(work, len, ini, "{BinFile}",    "DataBase");  zzcopy(binFileName, work);
+  queryValue(work, len, ini, "{Connection}", "DataBase");  zzcopy(connectString, work);
+endcode
+}
+
+int pong(int given, int add)
+{
+message: #
+openapi: get "pong/given/{given}/add/{add}" Utility
+input 
+    given;
+    add;
+code
+    return given + add;
+endcode
+}
+

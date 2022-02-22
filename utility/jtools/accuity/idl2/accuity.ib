@@ -1,0 +1,1496 @@
+struct DBananaRama
+{
+   int count;
+   double whipped;
+}
+
+code
+PYTHON:
+from DB_AUDITS import DBAudits
+
+actions = ['ADD', 'CHANGE', 'DELETE']
+ADD, CHANGE, DELETE = 0, 1, 2
+
+def amp_fix(value, asis=False):
+    ''' 
+      asis=True - leaves previous escapes 
+    '''
+    escapes = [('&', '&amp;'), ('<','&lt;'), ('>', '&gt;'), ('"','&quot;'), ("'",'&apos;')]
+    if asis == False:
+        for pair in escapes:
+            value = value.replace(pair[1], pair[0])
+    for pair in escapes:
+        value = value.replace(pair[0], pair[1])
+    return value
+
+def make_xml(name, action, fields, values):
+    usid = ''
+    xml = '<%s action="%s">\r\n' % (name, actions[action])
+    for i, field in enumerate(fields):
+        value = str(values[i]) if len(values) == len(fields) else ''
+        xml += '  <%s value="%s"/>\r\n' % (field, amp_fix(value))
+        if field.lower() == 'usid':
+            usid = value
+    xml += '</%s>' % (name)
+    return usid, xml
+
+def write_audit(name, action, fields, old, new):
+    if actions[action] != 'ADD':
+        usid, xmlOld = make_xml(name, action, fields, old)
+    else:
+        xmlOld = ' '
+    if actions[action] != 'DELETE':
+        usid, xmlNew = make_xml(name, action, fields, new)
+    else:
+        xmlNew = ' '
+    audit = DBAudits(connect)
+    tmStamp = '20190101000000'
+    audit.runInsert(0, name, actions[action], xmlOld, xmlNew, usid, tmStamp)
+endcode
+
+int ping(int given, int add)
+{
+message: #
+openapi: get "ping/given/{given}/add/{add}" Utility
+input 
+    given;
+    add;
+code
+PYTHON: 
+    return given + add
+endcode
+}
+
+int pang(int given, int add, string gotten)
+{
+message: #
+openapi: get "pang/given/{given}/add/{add}/and/{gotten}" Utility
+input 
+    given;
+    add;
+    gotten;
+code
+PYTHON:
+    log_info(gotten)
+    return given + add;
+endcode
+}
+
+void banana(tBananaRama *splits)
+{
+message: #
+openapi: options banana Utility
+input
+    splits;
+code
+PYTHON:
+    return
+endcode
+}
+
+void bananaFor(int opt, tBananaRama *splits)
+{
+message: #
+openapi: options "banana/opt/{opt}" Utility
+input
+    opt;
+output
+    splits;
+code
+PYTHON:
+    return
+endcode
+}
+
+struct DAccuityContact "accuitycontact.sh"
+
+void accuityContactInsert(DAccuityContact *newRec)
+{
+message: #
+openapi: post accuityContact Contact
+input
+    newRec;
+output
+    newRec;
+code
+PYTHON:
+    try:
+        write_audit('AccuityContact', ADD, newRec._fields(), None, newRec._data())
+        newRec.execInsert()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+        connect.rollback()
+    return newRec
+endcode
+}
+
+void accuityContactUpdate(DAccuityContact *newRec)
+{
+message: #
+openapi: put accuityContact Contact
+input
+    newRec;
+output
+    newRec;
+code
+PYTHON:
+    try:
+        oldRec = DBAccuityContact(connect)
+        oldRec.Id = newRec.Id
+        oldRec.execSelectOne()
+        write_audit('AccuityContact', CHANGE, newRec._fields(), oldRec._data(), newRec._data())
+        newRec.execUpdate()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+        connect.rollback()
+    return newRec
+endcode
+}
+
+struct DAccuityContactUpdateAllStatus "accuitycontact.sh"
+
+void accuityContactUpdateAllStatus(int status, char* usId)
+{
+message: #
+openapi: patch accuityContact Contact
+input
+  status;
+  usId;
+code
+PYTHON:
+    try:
+        rec = DBAccuityContactUpdateAllStatus(connect)
+        rec.runUpdateAllStatus(status, usId)
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+void accuityContactSelectOne(int Id, DAccuityContact *rec)
+{
+message: #
+openapi: get "accuityContact/Id/{Id}" Contact
+input
+    Id;
+output
+    rec;
+code
+PYTHON:
+    try:
+        rec = DBAccuityContact(connect)
+        rec.Id = Id
+        rec.execSelectOne()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+    return rec
+endcode
+}
+
+struct DAccuityContactDeleteOne "accuitycontact.sh"
+
+void accuityContactDeleteOne(int Id)
+{
+message: #
+openapi: delete "accuityContact/Id/{Id}" Contact
+input
+    Id;
+code
+PYTHON:
+    try:
+        rec = DBAccuityContactDeleteOne(connect)
+        rec.Id = Id
+        rec.execDeleteOne()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityContactExists "accuitycontact.sh"
+
+int accuityContactExists(int Id)
+{
+message: #
+openapi: get "accuityContactExists/Id/{Id}" Contact
+input
+    Id;
+code
+PYTHON:
+    try:
+        rec = DBAccuityContactExists(connect)
+        if rec.readExists(Id) == 1:
+            return rec.Count
+        else:
+            return 0
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+//------------------------------------------------------------------------------
+
+struct DAccuityCorrespondent "accuitycorrespondent.sh"
+
+void accuityCorrespondentInsert(DAccuityCorrespondent *newRec)
+{
+message: #
+openapi: post accuityCorrespondent Correspondent
+input
+    newRec;
+output
+    newRec;
+code
+PYTHON:
+    try:
+        write_audit('AccuityCorrespondent', ADD, newRec._fields(), None, newRec._data())
+        newRec.execInsert()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+        connect.rollback()
+    return newRec
+endcode
+}
+
+void accuityCorrespondentUpdate(DAccuityCorrespondent *newRec)
+{
+message: #
+openapi: put accuityCorrespondent Correspondent
+input
+    newRec;
+output
+    newRec;
+code
+PYTHON:
+    try:
+        oldRec = DBAccuityCorrespondent(connect)
+        oldRec.Id = newRec.Id
+        oldRec.execSelectOne()
+        write_audit('AccuityCorrespondent', CHANGE, newRec._fields(), oldRec._data(), newRec._data())
+        newRec.execUpdate()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+        connect.rollback()
+    return newRec
+endcode
+}
+
+struct DAccuityCorrespondentUpdateAllStatus "accuitycorrespondent.sh"
+
+void accuityCorrespondentUpdateAllStatus(int status, char* usId)
+{
+message: #
+openapi: patch accuityCorrespondent Correspondent
+input
+  status;
+  usId;
+code
+PYTHON:
+    try:
+        rec = DBAccuityCorrespondentUpdateAllStatus(connect)
+        rec.runUpdateAllStatus(status, usId)
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+void accuityCorrespondentSelectOne(int Id, DAccuityCorrespondent *rec)
+{
+message: #
+openapi: get "accuityCorrespondent/Id/{Id}" Correspondent
+input
+    Id;
+output
+    rec;
+code
+PYTHON:
+    try:
+        rec = DBAccuityCorrespondent(connect)
+        rec.Id = Id
+        rec.execSelectOne()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+    return rec
+endcode
+}
+
+struct DAccuityCorrespondentDeleteOne "accuitycorrespondent.sh"
+
+void accuityCorrespondentDeleteOne(int Id)
+{
+message: #
+openapi: delete "accuityCorrespondent/Id/{Id}" Correspondent
+input
+    Id;
+code
+PYTHON:
+    try:
+        rec = DBAccuityCorrespondentDeleteOne(connect)
+        rec.Id = Id
+        rec.execDeleteOne()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityCorrespondentExists "accuitycorrespondent.sh"
+int accuityCorrespondentExists(int Id)
+{
+message: #
+openapi: get "accuityCorrespondentExists/Id/{Id}" Correspondent
+input
+    Id;
+code
+PYTHON:
+    try:
+        rec = DBAccuityCorrespondentExists(connect)
+        if rec.readExists(Id) == 1:
+            return rec.Count
+        else:
+            return 0
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityCorrespondentGet "accuitycorrespondent.sh"
+
+int accuityCorrespondentGet(int FinId, char* CorrCurrency, DAccuityCorrespondentGet* rec)
+{
+message: #
+openapi: get "accuityCorrespondentGet/FinId/{FinId}/CorrCurrency/{CorrCurrency}" Correspondent
+input
+    FinId;
+    CorrCurrency;
+output
+    rec;    
+code
+PYTHON:
+    try:   
+        rec = DBAccuityCorrespondentGet(connect)
+        rec.FinId = FinId
+        rec.CorrCurrency = CorrCurrency;
+        return rec.readGet(FinId, CorrCurrency), rec
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityCorrespondentGetSwiftList "accuitycorrespondent.sh"
+int accuityCorrespondentGetSwiftList(int FinId, char* CorrCurrency, int* NoOf, DAccuityCorrespondentGetSwiftList*& Recs)
+{
+message: #
+openapi: get "accuityCorrespondentSwiftList/FinId/{FinId}/CorrCurrency/{CorrCurrency}" Correspondent
+input
+    FinId;
+    CorrCurrency;
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityCorrespondentGetSwiftList(connect)
+        rec.FinId = FinId
+        rec.CorrCurrency = CorrCurrency;
+        recs = rec.loadGetSwiftList()
+        noOf = len(recs);
+        rc = 1 if noOf > 0 else 0
+        return rc, noOf, recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+//------------------------------------------------------------------------------
+
+struct DAccuityCorrespondentSub "accuitycorrespondentsub.sh"
+
+void accuityCorrespondentSubInsert(DAccuityCorrespondentSub *newRec)
+{
+message: #
+openapi: post accuityCorrespondentSub CorrespondentSub
+input
+    newRec;
+output
+    newRec;
+code
+PYTHON:
+    try:
+        write_audit('AccuityCorrespondentSub', ADD, newRec._fields(), None, newRec._data())
+        newRec.execInsert()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+        connect.rollback()
+    return newRec
+endcode
+}
+
+void accuityCorrespondentSubUpdate(DAccuityCorrespondentSub *newRec)
+{
+message: #
+openapi: put accuityCorrespondentSub CorrespondentSub
+input
+    newRec;
+output
+    newRec;
+code
+PYTHON:
+    try:
+        oldRec = DBAccuityCorrespondentSub(connect)
+        oldRec.Id = newRec.Id
+        oldRec.execSelectOne()
+        write_audit('AccuityCorrespondentSub', CHANGE, newRec._fields(), oldRec._data(), newRec._data())
+        newRec.execUpdate()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+        connect.rollback()
+    return newRec
+endcode
+}
+
+struct DAccuityCorrespondentSubUpdateAllStatus "accuitycorrespondentsub.sh"
+
+void accuityCorrespondentSubUpdateAllStatus(int status, char* usId)
+{
+message: #
+openapi: patch accuityCorrespondentSub CorrespondentSub
+input
+  status;
+  usId;
+code
+PYTHON:
+    try:
+        rec = DBAccuityCorrespondentSubUpdateAllStatus(connect)
+        rec.runUpdateAllStatus(status, usId)
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+void accuityCorrespondentSubSelectOne(int Id, DAccuityCorrespondentSub *rec)
+{
+message: #
+openapi: get "accuityCorrespondentSub/Id/{Id}" CorrespondentSub
+input
+    Id;
+output
+    rec;
+code
+PYTHON:
+    try:
+        rec = DBAccuityCorrespondentSub(connect)
+        rec.Id = Id
+        rec.execSelectOne()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+    return rec
+endcode
+}
+
+struct DAccuityCorrespondentSubDeleteOne "accuitycorrespondentsub.sh"
+
+void accuityCorrespondentSubDeleteOne(int Id)
+{
+message: #
+openapi: delete "accuityCorrespondentSub/Id/{Id}" CorrespondentSub
+input
+    Id;
+code
+PYTHON:
+    try:
+        rec = DBAccuityCorrespondentSubDeleteOne(connect)
+        rec.Id = Id
+        rec.execDeleteOne()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityCorrespondentSubExists "accuitycorrespondentsub.sh"
+int accuityCorrespondentSubExists(int Id)
+{
+message: #
+openapi: get "accuityCorrespondentSubExists/Id/{Id}" CorrespondentSub
+input
+    Id;
+code
+PYTHON:
+    try:
+        rec = DBAccuityCorrespondentSubExists(connect)
+        if rec.readExists(Id) == 1:
+            return rec.Count
+        else:
+            return 0
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+//------------------------------------------------------------------------------
+
+struct DAccuityLocation "accuitylocation.sh"
+
+void accuityLocationInsert(DAccuityLocation *newRec)
+{
+message: #
+openapi: post accuityLocation Location
+input
+    newRec;
+output
+    newRec;
+code
+PYTHON:
+    try:
+        write_audit('AccuityLocation', ADD, newRec._fields(), None, newRec._data())
+        newRec.execInsert()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+        connect.rollback()
+    return newRec
+endcode
+}
+
+void accuityLocationUpdate(DAccuityLocation *newRec)
+{
+message: #
+openapi: put accuityLocation Location
+input
+    newRec;
+output
+    newRec;
+code
+PYTHON:
+    try:
+        oldRec = DBAccuityLocation(connect)
+        oldRec.LocationId = newRec.LocationId
+        oldRec.execSelectOne()
+        write_audit('AccuityLocation', CHANGE, newRec._fields(), oldRec._data(), newRec._data())
+        newRec.execUpdate()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+        connect.rollback()
+    return newRec
+endcode
+}
+
+struct DAccuityLocationUpdateAllStatus "accuitylocation.sh"
+void accuityLocationUpdateAllStatus(int status, char* usId)
+{
+message: #
+openapi: patch accuityLocation Location
+input
+  status;
+  usId;
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationUpdateAllStatus(connect)
+        rec.runUpdateAllStatus(status, usId)
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+void accuityLocationSelectOne(int Id, DAccuityLocation *rec)
+{
+message: #
+openapi: get "accuityLocation/Id/{Id}" Location
+input
+    Id;
+output
+    rec;
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocation(connect)
+        log_debug(f'LocationSelecetOne Id:{Id}')
+        rec.LocationId = Id
+        rec.execSelectOne()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+    return rec
+endcode
+}
+
+struct DAccuityLocationDeleteOne "accuitylocation.sh"
+
+void accuityLocationDeleteOne(int Id)
+{
+message: #
+openapi: delete "accuityLocation/Id/{Id}" Location
+input
+    Id;
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationDeleteOne(connect)
+        log_debug(f'LocationDeleteOne Id:{Id}')
+        rec.LocationId = Id
+        rec.execDeleteOne()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationExists "accuitylocation.sh"
+
+int accuityLocationExists(int LocationId)
+{
+message: #
+openapi: get "accuityLocationExists/Id/{Id}" Location
+input
+    LocationId;
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationExists(connect)
+        log_debug(f'LocationExists LocationId:{LocationId}')
+        if rec.readExists(LocationId) == 1:
+            return rec.Count
+        else:
+            return 0
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationGet "accuitylocation.sh"
+
+int accuityLocationGet(int FinId, DAccuityLocationGet* rec)
+{
+message: #
+openapi: get "accuityLocationGet/FinId/{FinId}" Location
+input
+    FinId;
+output
+    rec;    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationGet(connect)
+        log_debug(f'LocationGet FinId:{FinId}')
+        rec.FinId = FinId
+        return rec.readGet(FinId), rec
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationGetBankCode "accuitylocation.sh"
+
+int accuityLocationGetBankCode(int FinId, DAccuityLocationGetBankCode* rec)
+{
+message: #
+openapi: get "accuityLocationBankCode/FinId/{/FinId}" Location
+input
+    FinId;
+output
+    rec;    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationGetBankCode(connect)
+        log_debug(f'LocationGetBankCode FinId:{FinId}')
+        rec.FinId = FinId
+        return rec.readGetBankCode(FinId), rec
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationFinIdBankCodeCheck "accuitylocation.sh"
+
+int accuityLocationFinIdBankCodeCheck(int FinId, char* NationalBankCode, DAccuityLocationFinIdBankCodeCheck* rec)
+{
+message: #
+openapi: get "accuityLocationCheck/FinId/{FinId}/NationalBankCode/{NationalBankCode}" Location
+input
+    FinId;
+    NationalBankCode;
+output
+    rec;    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationFinIdBankCodeCheck(connect)
+        log_debug(f'LocationFinIdBankCodeCheck FinId:{FinId} NationalBankCode:{NationalBankCode}')
+        rec.FinId = FinId
+        rec.NationalBankCode = NationalBankCode
+        return rec.readFinIdBankCodeCheck(FinId, NationalBankCode), rec
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationSwiftLookup "accuitylocation.sh"
+
+int accuityLocationSwiftLookup(char* SwiftAddress, char* Currency, int *NoOf, DAccuityLocationSwiftLookup*& Recs)
+{
+message: #
+openapi: get "accuityLocationSwiftLookup/SwiftAddress/{SwiftAddress}/Currency/{Currency}" Location
+input
+    SwiftAddress;
+    Currency;
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationSwiftLookup(connect)
+        log_debug(f'LocationSwiftLookup SwiftAddress:{SwiftAddress} Currency:{Currency}')
+        rec.SwiftAddress = SwiftAddress
+        rec.Currency = Currency
+        Recs = rec.loadSwiftLookup()
+        NoOf = len(Recs)
+        rc = 1 if NoOf > 0 else 0
+        return rc, NoOf, Recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationSwiftCountryLookup "accuitylocation.sh"
+
+int accuityLocationSwiftCountryLookup(char* SwiftAddress, char* Country, int *NoOf, DAccuityLocationSwiftCountryLookup*& Recs)
+{
+message: #
+openapi: get "accuityLocationSwiftCountryLookup/SwiftAddress/{SwiftAddress}/Country/{Country}" Location
+input
+    SwiftAddress;
+    Country;
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationSwiftCountryLookup(connect)
+        log_debug(f'LocationSwiftCountryLookup SwiftAddress:{SwiftAddress} Country:{Country}')
+        rec.SwiftAddress = SwiftAddress
+        rec.Country = Country
+        Recs = rec.loadSwiftCountryLookup()
+        NoOf = len(Recs)
+        rc = 1 if NoOf > 0 else 0
+        return rc, NoOf, Recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationFinIdLookup "accuitylocation.sh"
+
+int accuityLocationFinIdLookup(char* SwiftAddress, int *NoOf, DAccuityLocationFinIdLookup*& Recs)
+{
+message: #
+openapi: get "accuityLocationFinIdLookup/SwiftAddress/{SwiftAddress}" Location
+input
+    SwiftAddress;
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationFinIdLookup(connect)
+        log_debug(f'LocationFinIdLookup SwiftAddress:{SwiftAddress}')
+        rec.SwiftAddress = SwiftAddress
+        Recs = rec.loadFinIdLookup()
+        NoOf = len(Recs)
+        rc = 1 if NoOf > 0 else 0
+        return rc, NoOf, Recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationAccuityBank "accuitylocation.sh"
+
+int accuityLocationAccuityBank(int *NoOf, DAccuityLocationAccuityBank*& Recs)
+{
+message: #
+openapi: get "accuityLocationAccuityBank" Location
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationAccuityBank(connect)
+        Recs = rec.loadAccuityBank()
+        NoOf = len(Recs)
+        rc = 1 if NoOf > 0 else 0
+        return rc, NoOf, Recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationAccuityCorrespondent "accuitylocation.sh"
+
+int accuityLocationAccuityCorrespondent(int *NoOf, DAccuityLocationAccuityCorrespondent*& Recs)
+{
+message: #
+openapi: get "accuityLocationAccuityCorrespondent" Location
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationAccuityCorrespondent(connect)
+        Recs = rec.loadAccuityCorrespondent()
+        NoOf = len(Recs)
+        rc = 1 if NoOf > 0 else 0
+        return rc, NoOf, Recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationReqBankByName "accuitylocation.sh"
+
+int accuityLocationReqBankByName(char* Country, char* BankName, int *NoOf, DAccuityLocationReqBankByName*& Recs)
+{
+message: #
+openapi: get "accuityLocationReqBankByName/Country/{Country}/BankName/{BankName}" Location
+input
+    Country;
+    BankName;
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationReqBankByName(connect)
+        log_debug (f'LocationReqBankByName Country:{Country} BankName:{BankName}')
+        rec.Country = Country
+        rec.BankName = BankName
+        Recs = rec.loadReqBankByName()
+        NoOf = len(Recs)
+        rc = 1 if NoOf > 0 else 0
+        return rc, NoOf, Recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationReqBankByNameANDTown "accuitylocation.sh"
+
+int accuityLocationReqBankByNameANDTown(char* Country, char* BankName, char* Town, int *NoOf, DAccuityLocationReqBankByNameANDTown*& Recs)
+{
+message: #
+openapi: get "accuityLocationReqBankByNameANDTown/Country/{Country}/BankName/{BankName}/Town/{Town}" Location
+input
+    Country;
+    BankName;
+    Town;
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationReqBankByNameANDTown(connect)
+        log_debug (f'LocationReqBankByNameANDTown Country:{Country} BankName:{BankName} Town:{Town}')
+        rec.Country = Country
+        rec.BankName = BankName
+        rec.Town = Town
+        Recs = rec.loadReqBankByNameANDTown()
+        NoOf = len(Recs)
+        rc = 1 if NoOf > 0 else 0
+        return rc, NoOf, Recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationReqBankByNameOnly "accuitylocation.sh"
+
+int accuityLocationReqBankByNameOnly(char* BankName, int *NoOf, DAccuityLocationReqBankByNameOnly*& Recs)
+{
+message: #
+openapi: get "accuityLocationReqBankByNameOnly/BankName/{BankName}" Location
+input
+    BankName;
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationReqBankByNameOnly(connect)
+        log_debug (f'LocationReqBankByNameOnly BankName:{BankName}')
+        rec.BankName = BankName
+        Recs = rec.loadReqBankByNameOnly()
+        NoOf = len(Recs)
+        rc = 1 if NoOf > 0 else 0
+        return rc, NoOf, Recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationReqBankByNameOnlyANDTown "accuitylocation.sh"
+
+int accuityLocationReqBankByNameOnlyANDTown(char* BankName, char* Town, int *NoOf, DAccuityLocationReqBankByNameOnlyANDTown*& Recs)
+{
+message: #
+openapi: get "accuityLocationReqBankByNameOnlyANDTown/BankName/{BankName}/Town/{Town}" Location
+input
+    BankName;
+    Town;
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationReqBankByNameOnlyANDTown(connect)
+        log_debug (f'LocationReqBankByNameOnlyANDTown BankName:{BankName} Town:{Town}')
+        rec.BankName = BankName
+        rec.Town = Town
+        Recs = rec.loadReqBankByNameOnlyANDTown()
+        NoOf = len(Recs)
+        rc = 1 if NoOf > 0 else 0
+        return rc, NoOf, Recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationReqBankBySWIFT "accuitylocation.sh"
+
+int accuityLocationReqBankBySWIFT(char* SwiftAddress, int *NoOf, DAccuityLocationReqBankBySWIFT*& Recs)
+{
+message: #
+openapi: get "accuityLocationReqBankBySWIFT/SwiftAddress/{SwiftAddress}" Location
+input
+    SwiftAddress;
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationReqBankBySWIFT(connect)
+        log_debug (f'LocationReqBankBySWIFT SwiftAddress:{SwiftAddress}')
+        rec.SwiftAddress = SwiftAddress
+        Recs = rec.loadReqBankBySWIFT()
+        NoOf = len(Recs)
+        rc = 1 if NoOf > 0 else 0
+        return rc, NoOf, Recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationReqBankBySWIFTANDTown "accuitylocation.sh"
+
+int accuityLocationReqBankBySWIFTANDTown(char* SwiftAddress, char* Town, int *NoOf, DAccuityLocationReqBankBySWIFTANDTown*& Recs)
+{
+message: #
+openapi: get "accuityLocationReqBankBySWIFTANDTown/SwiftAddress/{SwiftAddress}/Town/{Town}" Location
+input
+    SwiftAddress;
+    Town;
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationReqBankBySWIFTANDTown(connect)
+        log_debug (f'LocationReqBankBySWIFTANDTown SwiftAddress:{SwiftAddress} Town:{Town}')
+        rec.SwiftAddress = SwiftAddress
+        rec.Town = Town
+        Recs = rec.loadReqBankBySWIFTANDTown()
+        NoOf = len(Recs)
+        rc = 1 if NoOf > 0 else 0
+        return rc, NoOf, Recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationReqDraftBanks "accuitylocation.sh"
+
+int accuityLocationReqDraftBanks(char* CurrId, char* Country, int *NoOf, DAccuityLocationReqDraftBanks*& Recs)
+{
+message: #
+openapi: get "accuityLocationReqDraftBanks/CurrId/{CurrId}/Country/{Country}" Location
+input
+    CurrId;
+    Country;
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationReqDraftBanks(connect)
+        log_debug (f'LocationReqBankDraftBanks CurrId:{CurrId} Country:{Country}')
+        rec.CurrId = CurrId
+        rec.Country = Country
+        Recs = rec.loadReqDraftBanks()
+        NoOf = len(Recs)
+        rc = 1 if NoOf > 0 else 0
+        return rc, NoOf, Recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationReqCountries "accuitylocation.sh"
+
+int accuityLocationReqCountries(int *NoOf, DAccuityLocationReqCountries*& Recs)
+{
+message: #
+openapi: get "accuityLocationReqCountries" Location
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationReqCountries(connect)
+        Recs = rec.loadReqCountries()
+        NoOf = len(Recs)
+        rc = 1 if NoOf > 0 else 0
+        return rc, NoOf, Recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityLocationReqPresentationCountries "accuitylocation.sh"
+
+int accuityLocationReqPresentationCountries(char* CurrId, int *NoOf, DAccuityLocationReqPresentationCountries*& Recs)
+{
+message: #
+openapi: get "accuityLocationReqPresentationCountries/CurrId/{CurrId}" Location
+input
+    CurrId;
+output
+    NoOf;
+    Recs size(NoOf);    
+code
+PYTHON:
+    try:
+        rec = DBAccuityLocationReqPresentationCountries(connect)
+        log_debug (f'LocationReqPresentationCountries CurrId:{CurrId}')
+        rec.CurrId = CurrId
+        Recs = rec.loadReqPresentationCountries()
+        NoOf = len(Recs)
+        rc = 1 if NoOf > 0 else 0
+        return rc, NoOf, Recs
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+//------------------------------------------------------------------------------
+
+struct DAccuityOfficer "accuityofficer.sh"
+
+void accuityOfficerInsert(DAccuityOfficer *newRec)
+{
+message: #
+openapi: post accuityOfficer Officer
+input
+    newRec;
+output
+    newRec;
+code
+PYTHON:
+    try:
+        write_audit('AccuityOfficer', ADD, newRec._fields(), None, newRec._data())
+        newRec.execInsert()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+        connect.rollback()
+    return newRec
+endcode
+}
+
+void accuityOfficerUpdate(DAccuityOfficer *newRec)
+{
+message: #
+openapi: put accuityOfficer Officer
+input
+    newRec;
+output
+    newRec;
+code
+PYTHON:
+    try:
+        oldRec = DBAccuityOfficer(connect)
+        oldRec.Id = newRec.Id
+        oldRec.execSelectOne()
+        write_audit('AccuityOfficer', CHANGE, newRec._fields(), oldRec._data(), newRec._data())
+        newRec.execUpdate()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+        connect.rollback()
+    return newRec
+endcode
+}
+
+struct DAccuityOfficerUpdateAllStatus "accuityofficer.sh"
+
+void accuityOfficerUpdateAllStatus(int status, char* usId)
+{
+message: #
+openapi: patch accuityOfficer Officer
+input
+  status;
+  usId;
+code
+PYTHON:
+    try:
+        rec = DBAccuityOfficerUpdateAllStatus(connect)
+        rec.runUpdateAllStatus(status, usId)
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+void accuityOfficerSelectOne(int Id, DAccuityOfficer *rec)
+{
+message: #
+openapi: get "accuityOfficer/Id/{Id}" Officer
+input
+    Id;
+output
+    rec;
+code
+PYTHON:
+    try:
+        rec = DBAccuityOfficer(connect)
+        rec.Id = Id
+        rec.execSelectOne()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+    return rec
+endcode
+}
+
+struct DAccuityOfficerDeleteOne "accuityofficer.sh"
+
+void accuityOfficerDeleteOne(int Id)
+{
+message: #
+openapi: delete "accuityOfficer/Id/{Id}" Officer
+input
+    Id;
+code
+PYTHON:
+    try:
+        rec = DBAccuityOfficerDeleteOne(connect)
+        rec.Id = Id
+        rec.execDeleteOne()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityOfficerExists "accuityofficer.sh"
+
+int accuityOfficerExists(int Id)
+{
+message: #
+openapi: get "accuityOfficerExists/Id/{Id}" Officer
+input
+    Id;
+code
+PYTHON:
+    try:
+        rec = DBAccuityOfficerExists(connect)
+        if rec.readExists(Id) == 1:
+            return rec.Count
+        else:
+            return 0
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+//------------------------------------------------------------------------------
+
+struct DAccuityRoutingAtt "accuityroutingatt.sh"
+
+void accuityRoutingAttInsert(DAccuityRoutingAtt *newRec)
+{
+message: #
+openapi: post accuityRoutingAtt RoutingAtt
+input
+    newRec;
+output
+    newRec;
+code
+PYTHON:
+    try:
+        write_audit('AccuityRoutingAtt', ADD, newRec._fields(), None, newRec._data())
+        newRec.execInsert()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+        connect.rollback()
+    return newRec
+endcode
+}
+
+void accuityRoutingAttUpdate(DAccuityRoutingAtt *newRec)
+{
+message: #
+openapi: put accuityRoutingAtt RoutingAtt
+input
+    newRec;
+output
+    newRec;
+code
+PYTHON:
+    try:
+        oldRec = DBAccuityRoutingAtt(connect)
+        oldRec.Id = newRec.Id
+        oldRec.execSelectOne()
+        write_audit('AccuityRoutingAtt', CHANGE, newRec._fields(), oldRec._data(), newRec._data())
+        newRec.execUpdate()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+        connect.rollback()
+    return newRec
+endcode
+}
+
+struct DAccuityRoutingAttUpdateAllStatus "accuityroutingatt.sh"
+
+void accuityRoutingAttUpdateAllStatus(int status, char* usId)
+{
+message: #
+openapi: patch accuityRoutingAtt RoutingAtt
+input
+  status;
+  usId;
+code
+PYTHON:
+    try:
+        rec = DBAccuityRoutingAttUpdateAllStatus(connect)
+        rec.runUpdateAllStatus(status, usId)
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+void accuityRoutingAttSelectOne(int Id, DAccuityRoutingAtt *rec)
+{
+message: #
+openapi: get "accuityRoutingAtt/Id/{Id}" RoutingAtt
+input
+    Id;
+output
+    rec;
+code
+PYTHON:
+    try:
+        rec = DBAccuityRoutingAtt(connect)
+        rec.Id = Id
+        rec.execSelectOne()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+    return rec
+endcode
+}
+
+struct DAccuityRoutingAttDeleteOne "accuityroutingatt.sh"
+
+void accuityRoutingAttDeleteOne(int Id)
+{
+message: #
+openapi: delete "accuityRoutingAtt/Id/{Id}" RoutingAtt
+input
+    Id;
+code
+PYTHON:
+    try:
+        rec = DBAccuityRoutingAttDeleteOne(connect)
+        rec.Id = Id
+        rec.execDeleteOne()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityRoutingAttExists "accuityroutingatt.sh"
+
+int accuityRoutingAttExists(int Id)
+{
+message: #
+openapi: get "accuityRoutingAttExists/Id/{Id}" RoutingAtt
+input
+    Id;
+code
+PYTHON:
+    try:
+        rec = DBAccuityRoutingAttExists(connect)
+        if rec.readExists(Id) == 1:
+            return rec.Count
+        else:
+            return 0
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+//------------------------------------------------------------------------------
+
+struct DAccuityRoutingCode          "accuityroutingcode.sh"
+
+void accuityRoutingCodeInsert(DAccuityRoutingCode *newRec)
+{
+message: #
+openapi: post accuityRoutingCode RoutingCode
+input
+    newRec;
+output
+    newRec;
+code
+PYTHON:
+    try:
+        write_audit('AccuityRoutingCode', ADD, newRec._fields(), '[]', newRec._data())
+        newRec.execInsert()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+        connect.rollback()
+    return newRec
+endcode
+}
+
+void accuityRoutingCodeUpdate(DAccuityRoutingCode *newRec)
+{
+message: #
+openapi: put accuityRoutingCode RoutingCode
+input
+    newRec;
+output
+    newRec;
+code
+PYTHON:
+    try:
+        oldRec = DBAccuityRoutingCode(connect)
+        oldRec.Id = newRec.Id
+        oldRec.execSelectOne()
+        write_audit('AccuityRoutingCode', CHANGE, newRec._fields(), oldRec._data(), newRec._data())
+        newRec.execUpdate()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+        connect.rollback()
+    return newRec
+endcode
+}
+
+struct DAccuityRoutingCodeUpdateAllStatus "accuityroutingcode.sh"
+
+void accuityRoutingCodeUpdateAllStatus(int status, char* usId)
+{
+message: #
+openapi: patch accuityRoutingCode RoutingCode
+input
+  status;
+  usId;
+code
+PYTHON:
+    try:
+        rec = DBAccuityRoutingCodeUpdateAllStatus(connect)
+        rec.runUpdateAllStatus(status, usId)
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+void accuityRoutingCodeSelectOne(int Id, DAccuityRoutingCode *rec)
+{
+message: #
+openapi: get "accuityRoutingCode/Id/{Id}" RoutingCode
+input
+    Id;
+output
+    rec;
+code
+PYTHON:
+    try:
+        rec = DBAccuityRoutingCode(connect)
+        rec.Id = Id
+        rec.execSelectOne()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+    return rec
+endcode
+}
+
+struct DAccuityRoutingCodeDeleteOne "accuityroutingcode.sh"
+
+void accuityRoutingCodeDeleteOne(int Id)
+{
+message: #
+openapi: delete "accuityRoutingCode/Id/{Id}" RoutingCode
+input
+    Id;
+code
+PYTHON:
+    try:
+        rec = DBAccuityRoutingCodeDeleteOne(connect)
+        rec.Id = Id
+        rec.execDeleteOne()
+        connect.commit()
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}
+
+struct DAccuityRoutingCodeExists "accuityroutingcode.sh"
+
+int accuityRoutingCodeExists(int Id)
+{
+message: #
+openapi: get "accuityRoutingCodeExists/Id/{Id}" RoutingCode
+input
+    Id;
+code
+PYTHON:
+    try:
+        rec = DBAccuityRoutingCodeExists(connect)
+        if rec.readExists(Id) == 1:
+            return rec.Count
+        else:
+            return 0
+    except DBError as db:
+        log_error ('DBError: value:{0} rc:{1} ociErr:{2}'.format(db.value, db.rc, db.ociErr))
+endcode
+}

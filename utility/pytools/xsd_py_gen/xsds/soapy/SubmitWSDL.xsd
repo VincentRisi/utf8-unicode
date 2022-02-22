@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="SubmitTransaction">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="channel" type="tnxsd:Channel" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="formReferenceNo" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="periodOfAssesment" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="formYear" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="transactionType" type="tnxsd:TransactionType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="transactionBody" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:simpleType name="Channel">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="Scanning" />
+          <xsd:enumeration value="InterFile" />
+          <xsd:enumeration value="EFiling" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="TransactionType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="EMP5" />
+          <xsd:enumeration value="EMP501" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="SubmitTransactionResponse">
+        <xsd:complexType />
+      </xsd:element>
+      <xsd:element name="MessageIdentification" type="tnxsd:MessageIdentification" />
+      <xsd:complexType name="MessageIdentification">
+        <xsd:anyAttribute />
+      </xsd:complexType>
+    </xsd:schema>

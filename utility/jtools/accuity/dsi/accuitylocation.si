@@ -1,0 +1,525 @@
+#
+
+SERVER   @DN29
+CONNECT  NPUD00/CONTROL
+
+TABLE AccuityLocation
+  LocationId       int
+  CountryCode      Char(2)
+  InstitutionType  Char(4)		NULL
+  OfficeType       Char(4)		NULL
+  NameAbbrev       Char(35)		NULL
+  NameFull         Char(100)	NULL
+  BranchName       Char(70)		NULL
+  AddressLine1     Char(35)		NULL
+  AddressLine2     Char(35)		NULL
+  City             Char(30)		NULL
+  StateAbbr        Char(3)		NULL
+  StateFull        Char(40)		NULL
+  PostalCode       Char(15)		NULL
+  CountryName      Char(35)		NULL
+  EmployerTaxId    Char(10)		NULL
+  DateOfFinancial  Char(8)		NULL
+  CurrentAssets    Char(14)		NULL
+  HeadOfficeId     Int			NULL 
+  InstitutionId    Int			NULL
+  CorrLocationType Int			NULL
+  CorrLocationId   Int			NULL
+  Status           TinyInt     (Active=0 Inactive=1 MarkForDelete=2 ConfirmDelete=3)
+  USId             Char(16)
+  TmStamp          timestamp
+
+KEY AccuityLocationKey PRIMARY
+  LocationId
+
+PROC Insert
+PROC Update
+PROC SelectOne
+PROC DeleteOne
+PROC DeleteAll
+PROC Exists
+
+# used by accuityimport
+PROC Truncate
+INPUT
+OUTPUT
+SQLCODE
+   TRUNCATE TABLE AccuityLocation
+ENDCODE
+
+PROC UpdateAllStatus 
+INPUT
+  Status        TINYINT
+  USId          CHAR(16)
+SQLCODE
+    UPDATE accuitylocation SET status = :Status, usid = :USId, tmstamp = SYSDATE;
+ENDCODE
+
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------- ALAMANACBANK.SI --------------------------------------------
+
+PROC Get
+INPUT
+  FinId            INT
+OUTPUT (Single)
+  BankName         CHAR(105)
+  Town             CHAR(35)
+  Country          CHAR(35)
+  SwiftAddress     CHAR(11)
+  NationalBankCode CHAR(20)
+  Status           TINYINT
+SQLCODE
+    SELECT DISTINCT
+        al.namefull, 
+        al.city AS Town, 
+        al.countryname AS Country, 
+        x.routingcodealt AS SwiftAddress, 
+        y.routingcodealt AS NationalBankCode, 
+        x.Status
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN accuityinstitutiontype i ON i.iso = al.countrycode 
+    LEFT OUTER JOIN accuityroutingcode y ON al.locationid = y.locationid AND y.routingtype = i.routing
+    WHERE al.locationid = :FinId AND
+    al.Status = 0;
+ENDCODE
+
+PROC GetBankCode
+INPUT
+  FinId            INT
+OUTPUT (Single)
+  NationalBankCode CHAR(20)
+SQLCODE
+    SELECT 
+        y.routingcodealt AS NationalBankCode
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN accuityinstitutiontype i ON i.iso = al.countrycode 
+    LEFT OUTER JOIN accuityroutingcode y ON al.locationid = y.locationid AND y.routingtype = i.routing
+    WHERE al.locationid = :FinId AND
+    al.Status = 0;
+ENDCODE
+
+PROC FinIdBankCodeCheck
+INPUT
+  FinId            INT
+  NationalBankCode CHAR(20)
+OUTPUT (Single)
+  MatchCount       INT
+SQLCODE
+    SELECT 
+        COUNT(*) AS MatchCount
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN accuityinstitutiontype i ON i.iso = al.countrycode 
+    LEFT OUTER JOIN accuityroutingcode y ON al.locationid = y.locationid AND y.routingtype = i.routing
+    WHERE al.locationid = :FinId AND
+    y.routingcodealt = :NationalBankCode AND
+    al.Status = 0;
+ENDCODE
+
+PROC SwiftLookup
+INPUT
+  SwiftAddress     CHAR(11)
+  Currency         CHAR(3)
+OUTPUT (Multiple)
+  SwiftAddressOut  CHAR(11)
+SQLCODE
+    SELECT DISTINCT
+        ac.clearingswiftwopadding AS SwiftAddressOut
+    FROM accuitycorrespondent ac
+    WHERE ac.ownerswiftwopadding  = :SwiftAddress 
+    AND ac.currencycode = :Currency 
+    AND ac.clearingsystem IN ('COM', 'FIN')
+    AND ac.Status = 0;
+ENDCODE
+
+PROC SwiftCountryLookup
+INPUT
+  SwiftAddress     CHAR(11)
+  Country          CHAR(35)
+OUTPUT (Multiple)
+  SwiftAddressOut  CHAR(11)
+SQLCODE 
+    Select distinct 
+        x2.routingcodealt 
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN accuitylocation al2 ON al.institutionid = al2.institutionid
+    LEFT OUTER JOIN accuityroutingcode x2 ON al2.locationid = x2.locationid AND x2.routingtype = 'SWIFT'
+    WHERE
+    x.routingcodealt = :SwiftAddress
+    AND al2.countrycode = :Country
+    AND al2.status = 0;
+ENDCODE
+
+PROC FinIdLookup
+INPUT
+  SwiftAddress     CHAR(11)
+OUTPUT (Multiple)
+  FinId            INT
+  BranchId         INT
+SQL CODE
+    SELECT DISTINCT
+        al.locationid AS FinId,
+        0 AS BranchId
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN bankfile bf ON x.routingcodealt = bf.swiftaddress
+    WHERE bf.SwiftAddress = :SwiftAddress AND 
+    al.Status = 0;
+ENDCODE
+
+#-------------------------------------------------------------------------------------------------------------------------------------- ALAMANACBANK.SI --------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------- DOMAIN.SI --------------------------------------------------
+
+PROC AccuityBank
+OUTPUT (Multiple)
+  FinId             INT
+  BranchId          INT
+  BankName          CHAR(105) NULL
+  Town              CHAR(35)  NULL
+  AddressLine1      CHAR(35)  NULL
+  AddressLine2      CHAR(35)  NULL
+  AddressLine3      CHAR(35)  NULL
+  AddressLine4      CHAR(35)  NULL
+  AddressLine5      CHAR(35)  NULL
+  Country           CHAR(35)  NULL
+  Telephone         CHAR(20)  NULL
+  Fax               CHAR(20)  NULL
+  Telex             CHAR(51)  NULL
+  SwiftAddress      CHAR(11)  NULL
+  NationalBankCode  CHAR(20)  NULL
+  RBIInsertDate     DATETIME
+  RBIChangeDate     DATETIME
+  Status            TINYINT
+SQL CODE
+        SELECT
+        al.LocationId AS FinId,
+        0 AS BranchId,
+        al.namefull,
+        al.city AS Town,
+        al.addressline1 AS AddressLine1,
+        al.addressline2 AS AddressLine2,
+        al.city AS AddressLine3,
+        al.statefull AS AddressLine4,
+        al.postalcode AS AddressLine5,
+        al.CountryName AS Country,
+        c.contactinfo,
+        '' AS Fax,
+        '' AS Telex,
+        x.routingcodealt,
+        y.routingcodealt AS NationalBankCode,
+        to_char(al.tmstamp, 'YYYYMMDDHH24MISS') AS RBIInsertDate,
+        to_char(al.tmstamp, 'YYYYMMDDHH24MISS') AS RBIChangeDate,
+        al.Status AS Status
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN accuityinstitutiontype i ON i.iso = al.countrycode 
+    LEFT OUTER JOIN accuityroutingcode y ON al.locationid = y.locationid AND y.routingtype = i.routing
+    LEFT OUTER JOIN accuitycontact c ON al.locationid = c.locationid and c.contacttype = 'TEL'
+    WHERE al.Status = 0
+    ORDER BY al.LocationId, 2, x.routingcodealt, al.CountryName, al.city, al.status;
+ENDCODE
+
+PROC AccuityCorrespondent
+OUTPUT (Multiple)
+  FinId             INT
+  CorrCurrency      CHAR(3)
+  CorrFinId         INT
+  CorrBranchId      INT
+  CorrBankName      CHAR(105) NULL
+  CorrTown          CHAR(35)  NULL
+  CorrCountry       CHAR(35)  NULL
+  CorrAccountNo     CHAR(75)  NULL
+  CorrSwiftAddress  CHAR(11)  NULL
+  PreferredInd      CHAR(1)   NULL
+  RBIInsertDate     DATETIME  NULL
+  RBIChangeDate     DATETIME  NULL
+  Status            TINYINT
+SQL CODE
+    SELECT DISTINCT
+        al.locationid AS FinId,
+        ac.currencycode AS CorrCurrency,
+        ac.locationid AS CorrFinId,
+        0 AS CorrBranchId,
+        acl.namefull AS CorrBankName,
+        acl.city AS CorrTown,
+        acl.countryname AS CorrCountry,
+        ac.ownerssiaccountno AS CorrAccountNo,
+        ac.holderswift AS CorrSwiftAddress,
+        ac.preferredssiind AS PreferredInd,
+        to_char(ac.tmstamp, 'YYYYMMDDHH24MISS') AS RBIInsertDate,
+        to_char(ac.tmstamp, 'YYYYMMDDHH24MISS') AS RBIChangeDate,
+        al.Status
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuitycorrespondent ac ON ac.locationid = al.locationid
+    LEFT OUTER JOIN accuitylocation acl on acl.locationid = ac.clearingaccuityid
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    WHERE al.status = 0
+    ORDER BY al.locationid, ac.currencycode, 3, 4, ac.holderswift, al.Status;
+ENDCODE
+
+#-------------------------------------------------------------------------------------------------------------------------------------- DOMAIN.SI --------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------- PAYENGINE.SI -----------------------------------------------
+
+PROC ReqBankByName
+INPUT
+  Country          CHAR(35)
+  BankName         CHAR(35)
+OUTPUT (Multiple)
+  FinId            INT
+  BranchId         INT
+  BankName         CHAR(35)
+  Town             CHAR(35)
+  Country          CHAR(35)
+  AddressLine1     CHAR(35)
+  SwiftAddress     CHAR(11)
+  NationalBankCode CHAR(20)
+SQL CODE
+    SELECT DISTINCT
+        al.locationid AS FinId, 
+        0 AS BranchId,
+        substr(bf.BankName,1,35), 
+        substr(bf.banktown,1,35) AS Town,
+        substr(al.countryname,1,35) AS Country, 
+        al.AddressLine1,
+        bf.SwiftAddress,
+        substr(y.routingcodealt,1,47) AS NationalBankCode
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN accuityroutingcode y ON al.locationid = y.locationid AND y.routingtype NOT IN ('SWIFT', 'BIC')
+    LEFT OUTER JOIN bankfile bf ON x.routingcodealt  = bf.swiftaddress
+    WHERE al.countryname = :Country AND
+    bf.BankName LIKE ('%'||(rtrim(:BankName)||'%')) AND
+    al.status = 0
+    ORDER BY 3, 4, 6, 5;
+ENDCODE
+
+PROC ReqBankByNameANDTown
+INPUT
+  Country          CHAR(35)
+  BankName         CHAR(35)
+  Town             CHAR(35)
+OUTPUT (Multiple)
+  FinId            INT
+  BranchId         INT
+  BankName         CHAR(35)
+  Town             CHAR(35)
+  Country          CHAR(35)
+  AddressLine1     CHAR(35)
+  SwiftAddress     CHAR(11)
+  NationalBankCode CHAR(47)
+SQL CODE
+    SELECT DISTINCT
+        al.locationid AS FinId, 
+        0 AS BranchId,
+        substr(bf.BankName,1,35), 
+        substr(bf.banktown,1,35) AS Town,
+        substr(al.countryname,1,35) AS Country, 
+        al.AddressLine1,
+        bf.SwiftAddress,
+        substr(y.routingcodealt,1,47) AS NationalBankCode
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN accuityroutingcode y ON al.locationid = y.locationid AND y.routingtype NOT IN ('SWIFT', 'BIC')
+    LEFT OUTER JOIN bankfile bf ON x.routingcodealt  = bf.swiftaddress
+    WHERE al.countryname = :Country AND
+    bf.BankName LIKE ('%'||(rtrim(:BankName)||'%')) AND
+    bf.banktown like ('%'||(rtrim(:Town)||'%')) AND
+    al.status = 0
+    ORDER BY 3, 4, 6, 5;
+ENDCODE
+
+PROC ReqBankByNameOnly
+INPUT
+  BankName         CHAR(35)
+OUTPUT (Multiple)
+  FinId            INT
+  BranchId         INT
+  BankName         CHAR(35)
+  Town             CHAR(35)
+  Country          CHAR(35)
+  AddressLine1     CHAR(70)
+  SwiftAddress     CHAR(11)
+  NationalBankCode CHAR(47)
+SQL CODE
+    SELECT DISTINCT
+        al.locationid AS FinId, 
+        0 AS BranchId,
+        substr(bf.BankName,1,35), 
+        substr(bf.banktown,1,35) AS Town,
+        substr(al.countryname,1,35) AS Country, 
+        al.AddressLine1,
+        bf.SwiftAddress,
+        substr(y.routingcodealt,1,47) AS NationalBankCode
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN accuityroutingcode y ON al.locationid = y.locationid AND y.routingtype NOT IN ('SWIFT', 'BIC')
+    LEFT OUTER JOIN bankfile bf ON x.routingcodealt  = bf.swiftaddress
+    WHERE bf.BankName LIKE ('%'||(rtrim(:BankName)||'%')) AND
+    al.status = 0
+    ORDER BY 3, 4, 6, 5;
+ENDCODE
+
+PROC ReqBankByNameOnlyANDTown
+INPUT
+  BankName         CHAR(35)
+  Town             CHAR(35)
+OUTPUT (Multiple)
+  FinId            INT
+  BranchId         INT
+  BankName         CHAR(35)
+  Town             CHAR(35)
+  Country          CHAR(35)
+  AddressLine1     CHAR(70)
+  SwiftAddress     CHAR(11)
+  NationalBankCode CHAR(47)
+SQL CODE
+    SELECT DISTINCT
+        al.locationid AS FinId, 
+        0 AS BranchId,
+        substr(bf.BankName,1,35) AS BankName, 
+        substr(bf.banktown,1,35) AS Town,
+        substr(al.countryname,1,35) AS Country, 
+        al.AddressLine1,
+        bf.SwiftAddress,
+        substr(y.routingcodealt,1,47) AS NationalBankCode
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN accuityroutingcode y ON al.locationid = y.locationid AND y.routingtype NOT IN ('SWIFT', 'BIC')
+    LEFT OUTER JOIN bankfile bf ON x.routingcodealt  = bf.swiftaddress
+    WHERE bf.BankName LIKE ('%'||(rtrim(:BankName)||'%')) AND
+    bf.banktown LIKE ('%'||(rtrim(:Town)||'%')) AND
+    al.status = 0
+    ORDER BY 3, 4, 6, 5;
+ENDCODE
+
+PROC ReqBankBySWIFTANDTown
+INPUT
+  SwiftAddress     CHAR(11)
+  Town             CHAR(35)
+OUTPUT (Multiple)
+  FinId            INT
+  BranchId         INT
+  BankName         CHAR(35)
+  Town             CHAR(35)
+  Country          CHAR(35)
+  AddressLine1     CHAR(70)
+  SwiftAddress     CHAR(11)
+  NationalBankCode CHAR(47)
+SQL CODE
+    SELECT DISTINCT
+        al.locationid AS FinId, 
+        0 AS BranchId,
+        substr(bf.BankName,1,35) AS BankName, 
+        substr(bf.banktown,1,35) AS Town,
+        substr(al.countryname,1,35) AS Country, 
+        al.AddressLine1,
+        bf.SwiftAddress,
+        substr(y.routingcodealt,1,47) AS NationalBankCode
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN accuityroutingcode y ON al.locationid = y.locationid AND y.routingtype NOT IN ('SWIFT', 'BIC')
+    LEFT OUTER JOIN bankfile bf ON x.routingcodealt  = bf.swiftaddress
+    WHERE bf.BankName LIKE ('%'||(rtrim(:BankName)||'%')) AND
+    bf.banktown LIKE ('%'||(rtrim(:Town)||'%')) AND
+    al.status = 0
+    ORDER BY 3, 4, 6, 5;
+ENDCODE
+
+PROC ReqBankBySWIFT
+INPUT
+  SwiftAddress     CHAR(11)
+OUTPUT (Multiple)
+  FinId            INT
+  BranchId         INT
+  BankName         CHAR(35)
+  Town             CHAR(35)
+  Country          CHAR(35)
+  AddressLine1     CHAR(70)
+  SwiftAddress     CHAR(11)
+  NationalBankCode CHAR(47)
+SQL CODE
+    SELECT DISTINCT
+        al.locationid AS FinId, 
+        0 AS BranchId,
+        substr(bf.BankName,1,35) AS BankName, 
+        substr(bf.banktown,1,35) AS Town,
+        substr(al.countryname,1,35) AS Country, 
+        al.AddressLine1,
+        bf.SwiftAddress,
+        substr(y.routingcodealt,1,47) AS NationalBankCode
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN accuityroutingcode y ON al.locationid = y.locationid AND y.routingtype NOT IN ('SWIFT', 'BIC')
+    LEFT OUTER JOIN bankfile bf ON x.routingcodealt  = bf.swiftaddress
+    WHERE bf.SwiftAddress LIKE ('%'||(rtrim(:SwiftAddress)||'%')) AND
+    al.status = 0
+    ORDER BY 3, 4, 6, 5;
+ENDCODE
+
+PROC ReqDraftBanks
+INPUT
+  CurrId           CHAR(4)
+  Country          CHAR(35)
+OUTPUT (Multiple)
+  FinId            INT
+  BranchId         INT
+  BankName         CHAR(35)
+  Town             CHAR(35)
+  Country          CHAR(35)
+  SwiftAddress     CHAR(11)
+SQL CODE
+    SELECT DISTINCT
+        al.locationid AS FinId, 
+        0 AS BranchId,
+        substr(bf.BankName,1,35) AS BankName, 
+        substr(bf.banktown,1,35) AS Town,
+        substr(al.countryname,1,35) AS Country, 
+        substr(bf.SwiftAddress,1,11) AS SwiftAddress,
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuitycorrespondent ac ON al.locationId = ac.locationid
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN accuityroutingcode y ON al.locationid = y.locationid AND y.routingtype NOT IN ('SWIFT', 'BIC')
+    LEFT OUTER JOIN bankfile bf ON x.routingcodealt = bf.swiftaddress
+    LEFT OUTER JOIN bankaccount ba ON acd.routingcodealt = ba.SwiftAddress
+    WHERE al.currencycode = :CurrId AND
+    ba.AccountTypeId IN ('NOSTRODRAFT','VOSTRO') AND
+    #a.BranchId = 0 AND
+    al.countryname LIKE ('%'||rtrim(:Country)||'%') AND
+    al.status = 0
+    ORDER BY 3, 4, 6, 5;
+ENDCODE
+
+PROC ReqCountries
+OUTPUT (Multiple)
+  Country          CHAR(35)
+SQL CODE
+    SELECT DISTINCT 
+        substr(al.countryname,1,35) AS Country 
+    FROM accuitylocation al 
+    WHERE al.status = 0
+    ORDER BY 1;
+ENDCODE  	
+
+PROC ReqPresentationCountries
+INPUT
+  CurrId           CHAR(4)
+OUTPUT (Multiple)
+  Country          CHAR(35)
+SQL CODE
+    SELECT DISTINCT 
+        substr(al.countryname,1,35) AS Country 
+    FROM accuitylocation al
+    LEFT OUTER JOIN accuityroutingcode x ON al.locationid = x.locationid AND x.routingtype = 'SWIFT'
+    LEFT OUTER JOIN bankaccount ba ON x.routingcodealt = ba.SwiftAddress
+    WHERE ba.currid = :CurrId AND 
+    ba.AccountTypeId IN ('NOSTRODRAFT','VOSTRO') AND
+    al.status = 0;
+ENDCODE
+
+#-------------------------------------------------------------------------------------------------------------------------------------- PAYENGINE.SI -----------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

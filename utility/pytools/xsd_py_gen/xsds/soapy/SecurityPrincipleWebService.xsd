@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="HelloWorld">
+        <xsd:complexType />
+      </xsd:element>
+      <xsd:element name="HelloWorldResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CheckAuthList">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="InAuth" type="tnxsd:AuthInput" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="AuthInput">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="AppName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="AuthListIn" type="tnxsd:ArrayOfAuthorizationRec" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfAuthorizationRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="AuthorizationRec" nillable="true" type="tnxsd:AuthorizationRec" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AuthorizationRec">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="AuthID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="AuthName" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="Authorised" type="xsd:boolean" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="CheckAuthListResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="CheckAuthListResult" type="tnxsd:AuthResponse" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="AuthResponse">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="AuthListOut" type="tnxsd:ArrayOfAuthorizationRec" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>

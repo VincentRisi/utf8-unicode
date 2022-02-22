@@ -1,0 +1,19 @@
+SERVER   @DN29
+CONNECT  NPUD00/CONTROL
+
+TABLE AccuitySubCategory
+	  Id            int
+    Category      char(50)
+    Abbreviation  char(10)
+    Description   char(250)
+    Usid          char(16)
+    Tmstamp       timestamp
+
+KEY AccuitySubCategoryKey PRIMARY
+  ID
+
+PROC Insert
+PROC Update
+PROC SelectOne
+PROC DeleteOne
+PROC Exists

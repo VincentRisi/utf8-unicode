@@ -1,0 +1,76 @@
+
+CC=xlC_r
+DEBUG_FLAGS=-qdbxextra
+#DEBUG_FLAGS=-G -qdbxextra
+CFLAGS = -g -M -qstaticinline -qfuncsect -qfullpath -qthreaded -D_H_MACROS -qtemplateregistry=$(REGISTRY_FILE) -qro -qroconst -qunique -qcheck=all -qarch=com -qinfo=ini -qlonglong $(PROFILECFLAGS) -DHAVE_MEMMOVE -DM_STDLIB -DXML_STATIC $(DEBUG_FLAGS)
+
+#----------------------------------------------------------------------
+#The name of the target you want to build (X), it will be converted
+# to libX.a
+#----------------------------------------------------------------------
+TARGET_NAME=expat_aix_d.901
+
+#----------------------------------------------------------------------
+#The locations of all your .C and .cpp files, seperated by :'s.
+#----------------------------------------------------------------------
+VPATH=.:../../../libs/expat/src
+
+#----------------------------------------------------------------------
+#Any flags you need to pass to the COMPILER (not the linker)
+#This will include any extra include paths ( -I ), and any
+#flags like -D or any -q flags.
+#----------------------------------------------------------------------
+
+MYCFLAGS=-I.\
+         -I../../../libs/libmain/src
+
+#----------------------------------------------------------------------
+#The .o files needed to create your TARGET_NAME
+#----------------------------------------------------------------------
+SOURCE_OBJECTS=\
+	xmlparse.o\
+	xmlrole.o\
+	xmltok.o
+ 
+#----------------------------------------------------------------------
+#The location to which your targer should be copied once it's complete
+# The copy line will be: cp cp $@ $(COPYTO_LOCATION)/$@
+#----------------------------------------------------------------------
+COPYTO_LOCATION=../../../bin
+
+#----------------------------------------------------------------------
+# !!!!!!!!!!!!!!!!!!!!!!!!!!END OF USER OPTIONS!!!!!!!!!!!!!!!!!!!!!!!!!!
+#----------------------------------------------------------------------
+
+#----------------------------------------------------------------------
+# The template registry file to use for the project. Default is
+# usually fine.
+#----------------------------------------------------------------------
+REGISTRY_FILE=/tmp/$(TARGET_NAME)_registry
+TARGET_NAME_LIB=lib$(TARGET_NAME).a
+
+.c.o:
+	@echo Compiling $<
+	$(CC) -c $(CFLAGS) $(UFLAGS) $(MYCFLAGS) $<
+
+all: $(COPYTO_LOCATION)/$(TARGET_NAME_LIB)
+
+$(TARGET_NAME_LIB): $(SOURCE_OBJECTS)
+	ar -vr $@ $(SOURCE_OBJECTS)
+	ranlib $(TARGET_NAME_LIB)
+	ls -1 *.u | awk '{print "include " $$1}' > ufiles
+
+install:
+	cp $(TARGET_NAME_LIB) $(COPYTO_LOCATION)/$(TARGET_NAME_LIB)
+
+$(COPYTO_LOCATION)/$(TARGET_NAME_LIB): $(TARGET_NAME_LIB)
+	cp $(TARGET_NAME_LIB) $(COPYTO_LOCATION)/$(TARGET_NAME_LIB)
+
+clean:
+	@rm -f $(REGISTRY_FILE) $(SOURCE_OBJECTS) $(TARGET_NAME_LIB) *.u
+	@echo "" > ufiles
+
+
+include ufiles
+
+

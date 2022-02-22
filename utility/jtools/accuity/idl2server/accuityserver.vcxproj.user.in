@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LocalDebuggerCommandArguments>-c${INI_FILE}</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerEnvironment>PYTHONPATH=${PYTHON3PATH};${PYD_DIR};${PYD_DIR}\accuity.zip
+CURRENT_SOURCE=${SRC_DIR}
+Metrics=0
+NoProcs=0
+LogLevel=0
+LogReceive=0
+LogTransmit=0
+LogDisplay=1</LocalDebuggerEnvironment>
+  </PropertyGroup>
+</Project>

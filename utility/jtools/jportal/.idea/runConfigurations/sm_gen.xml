@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="sm_gen" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="bbd.jportal.Compiler" />
+    <module name="jportal" />
+    <option name="PROGRAM_PARAMETERS" value="-f C:\sarsUtil\jtools\sm_gen\inputs.list -o C:\sarsUtil\jtools\sm_gen\out\sql\yaml2 SwaggerCode -o C:\sarsUtil\jtools\sm_gen\out\sql\yaml3 OpenApiCode -o C:\sarsUtil\jtools\sm_gen\out\sql\py -F param=qmark PyDBApiCode -o C:\sarsUtil\jtools\sm_gen\out\sql\sh CliCCode -o C:\sarsUtil\jtools\sm_gen\out\sql\python Python3CliCode" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="bbd.jportal.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

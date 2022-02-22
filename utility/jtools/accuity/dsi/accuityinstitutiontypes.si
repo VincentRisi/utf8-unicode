@@ -1,0 +1,20 @@
+SERVER   @DN29
+CONNECT  NPUD00/CONTROL
+
+TABLE AccuityInstitutionType
+	Id		int
+	Iso		char(5)
+	Routing	char(10)
+	Country	char(100)
+	Name	char(250)
+	USId	char(16)
+	Tmstamp	timestamp
+
+KEY AccuityInstitutionTypeKey PRIMARY
+  ID
+
+PROC Insert
+PROC Update
+PROC SelectOne
+PROC DeleteOne
+PROC Exists

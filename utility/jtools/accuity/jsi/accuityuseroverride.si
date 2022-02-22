@@ -1,0 +1,24 @@
+DATABASE MCPE FLAGS "param=named"
+PACKAGE  putty3.accuity
+OUTPUT   accuityuseroverride
+SERVER   DN29
+SCHEMA   NPUD00
+USERID   npu
+PASSWORD npudev
+
+TABLE AccuityUserOverride
+  Id        CHAR(64)
+  TableName       Char(64)    
+  AuditsId    INT
+  Status                 char(16)  {ACTIVE INACTIVE MARKED}
+  USId                    Char(16)
+  TmStamp          timestamp
+  
+ KEY AccuityUserOverrideKey PRIMARY
+  Id
+  TableName
+
+PROC SelectOne
+PROC Insert
+PROC Exists
+PROC Update

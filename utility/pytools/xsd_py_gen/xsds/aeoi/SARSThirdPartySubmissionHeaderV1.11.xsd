@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<schema
+	targetNamespace="http://www.sars.gov.za/enterpriseMessagingModel/ThirdPartySubmissionHeader/xml/schemas/version/1.11"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tdSubHeader="http://www.sars.gov.za/enterpriseMessagingModel/ThirdPartySubmissionHeader/xml/schemas/version/1.11">
+	<annotation>
+		<documentation>
+			2012-11-30 Qalo Gabela, Included Data Types for TCC - HTTPS on the
+			ChannelIdentifier and TCS on the DataTypeBeingSupplied
+			2012-10-22 Nisch Kanahia, Included Data Types for Insurance, Medical Schemes
+			and IT3s
+			2012-03-09 Dirk Grobler. ContactPersonName, ContactPersonSurname, ContactEmail
+			made optional.
+			2012-03-01 Dirk Grobler. Updated to align with version 3.0.0 of the External
+			BRS for Dividends Withholding Tax.
+			2011-12-15 Dirk Grobler, Updated to align with version 1.0.0 of withholding
+			tax, BusinessTelephoneNumber2 added.
+			2011-12-11 Nisch Kanahia, Updated to align with version 0.9.0 of withholding
+			tax and 0.5.0 of VIM External BRSes.
+			2011-11-17 Dirk Grobler. Updated to align with version 0.7.0 of External BRS.
+			2011-11-07 Dirk Grobler. Updated to align with version 0.6.0 of
+			External BRS. Replaced all elements with sequence elements.
+			2012-12-10 Ayanda Makinza Added TCR on the DataTypeBeingSupplied
+			element.
+			2013-01-24 Ayanda Makinza Added MQ on the ChannelIdentifier element.
+		</documentation>
+	</annotation>
+
+	<element name="ThirdPartySubmissionHeader" type="tdSubHeader:ThirdPartySubmissionHeaderStructure"></element>
+
+	<complexType name="ThirdPartySubmissionHeaderStructure">
+		<sequence>
+			<element name="SectionIdentifier" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="H"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="HeaderType" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="GH"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="MessageCreateDate" type="dateTime" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="FileLayoutVersion" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="int">
+						<maxInclusive value="9999"></maxInclusive>
+						<minInclusive value="1"></minInclusive>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="UniqueFileID" maxOccurs="1" minOccurs="1"
+				type="tdSubHeader:UniqueReferenceType"></element>
+			<element name="SARSRequestReference" type="tdSubHeader:UniqueReferenceType"
+				maxOccurs="1" minOccurs="0"></element>
+			<element name="TestDataIndicator" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="T"></enumeration>
+						<enumeration value="L"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="DataTypeBeingSupplied" maxOccurs="1"
+				minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="WHD"></enumeration>
+						<enumeration value="VSL"></enumeration>
+						<enumeration value="VLL"></enumeration>
+						<enumeration value="IPR"></enumeration>
+						<enumeration value="MED"></enumeration>
+						<enumeration value="INS"></enumeration>
+						<enumeration value="I3B"></enumeration>
+						<enumeration value="I3C"></enumeration>
+						<enumeration value="I3E"></enumeration>
+						<enumeration value="TCS"></enumeration>
+						<enumeration value="TCR"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="ChannelIdentifier" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="CD"></enumeration>
+						<enumeration value="IFL"></enumeration>
+						<enumeration value="HTTPS"></enumeration>
+						<enumeration value="MQ"></enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="SourceIdentifier" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<length value="144"></length>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="GroupID" type="tdSubHeader:UniqueReferenceType"
+				maxOccurs="1" minOccurs="1"></element>
+			<element name="GroupTotal" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="int">
+						<maxInclusive value="9999"></maxInclusive>
+						<minInclusive value="1"></minInclusive>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="UniqueGroupItemID" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="int">
+						<maxInclusive value="9999"></maxInclusive>
+						<minInclusive value="1"></minInclusive>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="SourceSystem" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<minLength value="1"></minLength>
+						<maxLength value="30"></maxLength>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="SourceSystemVersion" maxOccurs="1" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+						<minLength value="1"></minLength>
+						<maxLength value="10"></maxLength>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="ContactPersonName" maxOccurs="1" minOccurs="0">
+				<simpleType>
+					<restriction base="string">
+						<minLength value="1"></minLength>
+						<maxLength value="90"></maxLength>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="ContactPersonSurname" maxOccurs="1" minOccurs="0">
+				<simpleType>
+					<restriction base="string">
+						<minLength value="1"></minLength>
+						<maxLength value="53"></maxLength>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="BusinessTelephoneNumber1" type="tdSubHeader:TelNoType"
+				maxOccurs="1" minOccurs="0"></element>
+			<element name="BusinessTelephoneNumber2" type="tdSubHeader:TelNoType"
+				maxOccurs="1" minOccurs="0"></element>
+			<element name="CellPhoneNumber" type="tdSubHeader:TelNoType"
+				maxOccurs="1" minOccurs="0"></element>
+			<element name="ContactEmail" maxOccurs="1" minOccurs="0">
+				<simpleType>
+					<restriction base="string">
+						<minLength value="5"></minLength>
+						<maxLength value="80"></maxLength>
+					</restriction>
+				</simpleType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<simpleType name="UniqueReferenceType">
+		<restriction base="string">
+			<minLength value="1"></minLength>
+			<maxLength value="64"></maxLength>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="TelNoType">
+		<restriction base="string">
+			<pattern value="\d{9,15}"></pattern>
+		</restriction>
+	</simpleType>
+</schema>
